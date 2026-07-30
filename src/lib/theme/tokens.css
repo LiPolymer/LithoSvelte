@@ -43,6 +43,7 @@
     --color-lds-primary-solid: var(--md-sys-color-primary);
     --color-lds-primary-solid-content: var(--md-sys-color-on-primary);
     --color-lds-primary: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+    --color-lds-primary-hover: color-mix(in srgb, var(--md-sys-color-primary) 15%, transparent);
     --color-lds-primary-content: var(--md-sys-color-primary);
     --color-lds-primary-border-light: color-mix(in srgb, var(--md-sys-color-primary) 5%, transparent);
 

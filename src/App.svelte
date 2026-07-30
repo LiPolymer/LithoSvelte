@@ -102,7 +102,10 @@
           <article>
             <span>Actions / related commands</span>
             <ButtonGroup aria-label="File actions">
-              <PrimaryButton onclick={() => (lastAction = 'Download')}>
+              <PrimaryButton
+                expressive={false}
+                onclick={() => (lastAction = 'Download')}
+              >
                 Download
               </PrimaryButton>
               <TonalButton onclick={() => (lastAction = 'Browse')}>

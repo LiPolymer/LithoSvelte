@@ -5,18 +5,24 @@
     isButtonGroupValue,
   } from './buttonGroupContext'
 
+  type PrimaryButtonProps = HTMLButtonAttributes & {
+    expressive?: boolean
+  }
+
   let {
     children,
     class: className = '',
     type = 'button',
+    expressive = true,
     value,
     onclick: userOnclick,
     'aria-pressed': ariaPressed,
     ...attributes
-  }: HTMLButtonAttributes = $props()
+  }: PrimaryButtonProps = $props()
 
   const buttonGroup = getButtonGroupContext()
   let isOption = $derived(buttonGroup?.mode === 'options')
+  let isExpressive = $derived(expressive && !buttonGroup)
   let isSelected = $derived(
     isOption &&
       isButtonGroupValue(value) &&
@@ -39,11 +45,15 @@
   }
 </script>
 
+{#if buttonGroup}
+  <span class="lds-button-group__divider" aria-hidden="true"></span>
+{/if}
+
 <button
   {...attributes}
   {type}
   {value}
-  class={`lds-btn lds-btn--primary ${isSelected ? 'lds-btn--selected' : ''} ${className}`}
+  class={`lds-btn lds-btn--primary ${isExpressive ? 'lds-btn--primary-expressive' : ''} ${isSelected ? 'lds-btn--selected' : ''} ${className}`}
   aria-pressed={isOption ? isSelected : ariaPressed}
   onclick={handleClick}
 >

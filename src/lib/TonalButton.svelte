@@ -39,6 +39,10 @@
   }
 </script>
 
+{#if buttonGroup}
+  <span class="lds-button-group__divider" aria-hidden="true"></span>
+{/if}
+
 <button
   {...attributes}
   {type}
