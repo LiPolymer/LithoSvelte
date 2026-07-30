@@ -115,7 +115,7 @@
     width: min(18rem, calc(100vw - 2rem));
     padding: 0.8rem;
     border: 0.15rem solid var(--color-lds-primary-border-light);
-    border-radius: 0.3em;
+    border-radius: var(--radius-lds-md);
     color: var(--md-sys-color-on-surface);
     background:
       color-mix(
@@ -176,7 +176,7 @@
   .reset {
     padding: 0.35rem 0.55rem;
     border: 0;
-    border-radius: 0.2em;
+    border-radius: var(--radius-lds-sm);
     color: var(--md-sys-color-primary);
     background: transparent;
     font-size: 0.75rem;
@@ -226,7 +226,7 @@
     min-width: 0;
     padding: 0.4rem 0.55rem;
     border: 0.1rem solid transparent;
-    border-radius: 0.2em;
+    border-radius: var(--radius-lds-sm);
     color: var(--md-sys-color-on-surface);
     background:
       color-mix(
@@ -290,7 +290,7 @@
     height: 0.4rem;
     margin-top: 0.8rem;
     overflow: hidden;
-    border-radius: 0.1em;
+    border-radius: var(--radius-lds-xs);
   }
 
   .palette span {
@@ -317,10 +317,13 @@
   button,
   input {
     transition:
-      color 100ms ease-out,
-      background-color 100ms ease-out,
-      border-color 100ms ease-out,
-      border-radius 100ms cubic-bezier(0.25, 1, 0.5, 1);
+      color var(--lds-motion-duration-fast) var(--lds-motion-easing-state),
+      background-color var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-state),
+      border-color var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-state),
+      border-radius var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-shape);
   }
 
   button:focus-visible,
