@@ -5,4 +5,11 @@
     --color-lds-primary: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
     --color-lds-primary-content: var(--md-sys-color-primary);
     --color-lds-primary-border-light: color-mix(in srgb, var(--md-sys-color-primary) 5%, transparent);
+
+    --color-lds-secondary: color-mix(in srgb, var(--md-sys-color-secondary) 12%, transparent);
+    --color-lds-secondary-hover: color-mix(in srgb, var(--md-sys-color-secondary) 18%, transparent);
+    --color-lds-secondary-content: var(--md-sys-color-secondary);
+
+    --color-lds-checkbox-fill: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
+    --color-lds-state-hover: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
 }
