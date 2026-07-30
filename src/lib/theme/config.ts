@@ -6,6 +6,6 @@ export interface ThemeConfig {
 }
 
 export const themeConfig = {
-    seed: '#6e83ad',
+    seed: '#a4e12a',
     mode: 'system',
 } satisfies ThemeConfig

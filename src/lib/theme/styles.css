@@ -1,0 +1,32 @@
+/*button*/
+.lds-btn {
+    border-radius: 0.2em;
+    padding: 0.5em 1em 0.5em 1em;
+    border: 0 solid transparent;
+    transition:
+            transform 100ms cubic-bezier(0.34, 1.56, 0.64, 1),
+            border-radius 100ms cubic-bezier(0.25, 1, 0.5, 1),
+            border 100ms ease-out;
+}
+
+.lds-btn:hover {
+    border-radius: 0.3em;
+    border-width: 0.15rem;
+    border-color: var(--color-lds-primary-border-light);
+}
+
+.lds-btn:active {
+    border-radius: 0.1em;
+    transform: scale(98%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .lds-btn {
+        transition: none;
+    }
+}
+
+
+
+.heroText {
+}

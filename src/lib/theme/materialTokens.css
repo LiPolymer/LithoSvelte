@@ -1,0 +1,83 @@
+:root {
+    --md-sys-color-primary: #2d5da7;
+    --md-sys-color-on-primary: #ffffff;
+    --md-sys-color-primary-container: #d7e2ff;
+    --md-sys-color-on-primary-container: #001b3f;
+
+    --md-sys-color-secondary: #565e71;
+    --md-sys-color-on-secondary: #ffffff;
+    --md-sys-color-secondary-container: #dae2f9;
+    --md-sys-color-on-secondary-container: #131c2c;
+
+    --md-sys-color-tertiary: #705574;
+    --md-sys-color-on-tertiary: #ffffff;
+    --md-sys-color-tertiary-container: #fad8fc;
+    --md-sys-color-on-tertiary-container: #29132e;
+
+    --md-sys-color-error: #ba1a1a;
+    --md-sys-color-on-error: #ffffff;
+    --md-sys-color-error-container: #ffdad6;
+    --md-sys-color-on-error-container: #410002;
+
+    --md-sys-color-background: #fdfbff;
+    --md-sys-color-on-background: #1a1b1f;
+
+    --md-sys-color-surface: #fdfbff;
+    --md-sys-color-on-surface: #1a1b1f;
+    --md-sys-color-surface-variant: #e0e2ec;
+    --md-sys-color-on-surface-variant: #44474e;
+
+    --md-sys-color-outline: #74777f;
+    --md-sys-color-outline-variant: #c4c6d0;
+
+    --md-sys-color-shadow: #000000;
+    --md-sys-color-scrim: #000000;
+
+    --md-sys-color-inverse-surface: #2f3033;
+    --md-sys-color-inverse-on-surface: #f2f0f4;
+    --md-sys-color-inverse-primary: #abc7ff;
+}
+
+/*
+ * Tailwind adapter.
+ * `inline` makes utilities directly reference the runtime Material variables.
+ */
+@theme inline {
+    --color-md-primary: var(--md-sys-color-primary);
+    --color-md-on-primary: var(--md-sys-color-on-primary);
+    --color-md-primary-container: var(--md-sys-color-primary-container);
+    --color-md-on-primary-container: var(--md-sys-color-on-primary-container);
+
+    --color-md-secondary: var(--md-sys-color-secondary);
+    --color-md-on-secondary: var(--md-sys-color-on-secondary);
+    --color-md-secondary-container: var(--md-sys-color-secondary-container);
+    --color-md-on-secondary-container: var(--md-sys-color-on-secondary-container);
+
+    --color-md-tertiary: var(--md-sys-color-tertiary);
+    --color-md-on-tertiary: var(--md-sys-color-on-tertiary);
+    --color-md-tertiary-container: var(--md-sys-color-tertiary-container);
+    --color-md-on-tertiary-container: var(--md-sys-color-on-tertiary-container);
+
+    --color-md-error: var(--md-sys-color-error);
+    --color-md-on-error: var(--md-sys-color-on-error);
+    --color-md-error-container: var(--md-sys-color-error-container);
+    --color-md-on-error-container: var(--md-sys-color-on-error-container);
+
+    --color-md-background: var(--md-sys-color-background);
+    --color-md-on-background: var(--md-sys-color-on-background);
+
+    --color-md-surface: var(--md-sys-color-surface);
+    --color-md-on-surface: var(--md-sys-color-on-surface);
+    --color-md-surface-variant: var(--md-sys-color-surface-variant);
+    --color-md-on-surface-variant: var(--md-sys-color-on-surface-variant);
+
+    --color-md-outline: var(--md-sys-color-outline);
+    --color-md-outline-variant: var(--md-sys-color-outline-variant);
+
+    --color-md-shadow: var(--md-sys-color-shadow);
+    --color-md-scrim: var(--md-sys-color-scrim);
+
+    --color-md-inverse-surface: var(--md-sys-color-inverse-surface);
+    --color-md-inverse-on-surface: var(--md-sys-color-inverse-on-surface);
+    --color-md-inverse-primary: var(--md-sys-color-inverse-primary);
+}
