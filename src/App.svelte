@@ -1,4 +1,5 @@
 <script lang="ts">
+  import ButtonGroup from './lib/ButtonGroup.svelte'
   import Checkbox from './lib/Checkbox.svelte'
   import GhostButton from './lib/GhostButton.svelte'
   import PrimaryButton from './lib/PrimaryButton.svelte'
@@ -10,6 +11,8 @@
   let notifications = true
   let displayName = ''
   let email = 'hello@litho.design'
+  let viewMode: string | number = 'list'
+  let lastAction = 'Nothing yet'
 </script>
 
 <svelte:head>
@@ -93,6 +96,38 @@
               </tr>
             </tbody>
           </table>
+        </div>
+
+        <div class="button-group-grid">
+          <article>
+            <span>Actions / related commands</span>
+            <ButtonGroup aria-label="File actions">
+              <PrimaryButton onclick={() => (lastAction = 'Download')}>
+                Download
+              </PrimaryButton>
+              <TonalButton onclick={() => (lastAction = 'Browse')}>
+                Browse
+              </TonalButton>
+              <GhostButton onclick={() => (lastAction = 'Delete')}>
+                Delete
+              </GhostButton>
+            </ButtonGroup>
+            <small>Last action: {lastAction}</small>
+          </article>
+
+          <article>
+            <span>Options / one active view</span>
+            <ButtonGroup
+              mode="options"
+              bind:value={viewMode}
+              aria-label="View mode"
+            >
+              <GhostButton value="list">List</GhostButton>
+              <GhostButton value="board">Board</GhostButton>
+              <GhostButton value="timeline">Timeline</GhostButton>
+            </ButtonGroup>
+            <small>Current view: {viewMode}</small>
+          </article>
         </div>
       </section>
 
@@ -228,6 +263,8 @@
   .section-index,
   .section-heading > p,
   .theme-dock > p,
+  .button-group-grid article > span,
+  .button-group-grid article > small,
   .checkbox-grid article > span,
   .text-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
@@ -357,10 +394,31 @@
     gap: 0.5rem;
   }
 
+  .button-group-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+
   .text-field-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
+  }
+
+  .button-group-grid article {
+    display: grid;
+    min-width: 0;
+    gap: 0.75rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
   }
 
   .checkbox-grid article {
@@ -402,6 +460,10 @@
   .checkbox-grid article :global(.lds-checkbox) {
     align-self: end;
     justify-self: start;
+  }
+
+  .button-group-grid article :global(.lds-button-group) {
+    align-self: end;
   }
 
   .text-field-grid article :global(.lds-text-field) {
@@ -456,6 +518,10 @@
     }
 
     .checkbox-grid {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .button-group-grid {
       grid-template-columns: minmax(0, 1fr);
     }
 

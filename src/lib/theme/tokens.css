@@ -27,10 +27,14 @@
     --lds-motion-easing-shape-soft: var(--ease-lds-shape-soft);
     --lds-motion-easing-spring: var(--ease-lds-spring);
 
-    --lds-field-control-min-height: 2.375rem;
-    --lds-field-control-min-height-touch: 2.75rem;
+    --lds-control-min-height: 2.375rem;
+    --lds-control-min-height-touch: 2.75rem;
+    --lds-control-font-size: 0.875rem;
+    --lds-control-padding-inline: 0.75rem;
+    --lds-control-gap: 0.4em;
+
     --lds-field-padding-inline: 0.625rem;
-    --lds-field-padding-block: 0.45rem;
+    --lds-field-padding-block: 0.4rem;
     --lds-field-gap: 0.25rem;
 }
 
@@ -48,6 +52,10 @@
 
     --color-lds-checkbox-fill: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
     --color-lds-state-hover: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+    --color-lds-group-surface: color-mix(in srgb, var(--md-sys-color-secondary) 4%, transparent);
+    --color-lds-group-divider: color-mix(in srgb, var(--md-sys-color-outline-variant) 65%, transparent);
+    --color-lds-option-selected: color-mix(in srgb, var(--md-sys-color-primary) 13%, transparent);
+    --color-lds-option-selected-hover: color-mix(in srgb, var(--md-sys-color-primary) 17%, transparent);
 
     --color-lds-field: color-mix(in srgb, var(--md-sys-color-primary) 4%, transparent);
     --color-lds-field-hover: color-mix(in srgb, var(--md-sys-color-primary) 7%, transparent);
