@@ -26,6 +26,12 @@
     --lds-motion-easing-shape: var(--ease-lds-shape);
     --lds-motion-easing-shape-soft: var(--ease-lds-shape-soft);
     --lds-motion-easing-spring: var(--ease-lds-spring);
+
+    --lds-field-control-min-height: 2.375rem;
+    --lds-field-control-min-height-touch: 2.75rem;
+    --lds-field-padding-inline: 0.625rem;
+    --lds-field-padding-block: 0.45rem;
+    --lds-field-gap: 0.25rem;
 }
 
 /* Color tokens. */
@@ -42,4 +48,10 @@
 
     --color-lds-checkbox-fill: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
     --color-lds-state-hover: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+
+    --color-lds-field: color-mix(in srgb, var(--md-sys-color-primary) 4%, transparent);
+    --color-lds-field-hover: color-mix(in srgb, var(--md-sys-color-primary) 7%, transparent);
+    --color-lds-field-focus: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+    --color-lds-field-error: color-mix(in srgb, var(--md-sys-color-error) 6%, transparent);
+    --color-lds-field-error-highlighted: color-mix(in srgb, var(--md-sys-color-primary) 30%, var(--md-sys-color-error));
 }
