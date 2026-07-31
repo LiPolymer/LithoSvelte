@@ -4,7 +4,7 @@
 
   export type IconSize = number | string
 
-  type IconProps = Omit<
+  export type IconProps = Omit<
     SVGAttributes<SVGSVGElement>,
     | 'aria-hidden'
     | 'aria-label'

@@ -14,7 +14,7 @@
     currentTarget: EventTarget & HTMLSelectElement
   }
 
-  type SelectProps = Omit<
+  export type SelectProps = Omit<
     HTMLButtonAttributes,
     | 'children'
     | 'class'

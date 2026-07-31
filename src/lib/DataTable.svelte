@@ -16,7 +16,7 @@
     currentTarget: EventTarget & HTMLTableElement
   }
 
-  type DataTableProps = Omit<
+  export type DataTableProps = Omit<
     HTMLTableAttributes,
     | 'children'
     | 'class'

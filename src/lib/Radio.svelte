@@ -7,7 +7,7 @@
     currentTarget: EventTarget & HTMLInputElement
   }
 
-  type RadioProps = Omit<
+  export type RadioProps = Omit<
     HTMLInputAttributes,
     | 'checked'
     | 'children'

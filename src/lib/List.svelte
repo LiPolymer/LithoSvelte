@@ -15,7 +15,7 @@
     currentTarget: EventTarget & HTMLUListElement
   }
 
-  type ListProps = Omit<
+  export type ListProps = Omit<
     HTMLAttributes<HTMLUListElement>,
     'children' | 'class' | 'onfocusin' | 'onkeydown'
   > & {

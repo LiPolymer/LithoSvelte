@@ -6,9 +6,9 @@
     type RadioValue,
   } from './radioGroupContext'
 
-  type RadioGroupOrientation = 'horizontal' | 'vertical'
+  export type RadioGroupOrientation = 'horizontal' | 'vertical'
 
-  type RadioGroupProps = Omit<
+  export type RadioGroupProps = Omit<
     HTMLFieldsetAttributes,
     'children' | 'class' | 'disabled' | 'name'
   > & {

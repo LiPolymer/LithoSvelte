@@ -5,6 +5,8 @@
     isButtonGroupValue,
   } from './buttonGroupContext'
 
+  export type TonalButtonProps = HTMLButtonAttributes
+
   let {
     children,
     class: className = '',
@@ -13,7 +15,7 @@
     onclick: userOnclick,
     'aria-pressed': ariaPressed,
     ...attributes
-  }: HTMLButtonAttributes = $props()
+  }: TonalButtonProps = $props()
 
   const buttonGroup = getButtonGroupContext()
   let isOption = $derived(buttonGroup?.mode === 'options')

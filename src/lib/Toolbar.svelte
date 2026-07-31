@@ -15,7 +15,7 @@
     currentTarget: EventTarget & HTMLDivElement
   }
 
-  type ToolbarProps = Omit<
+  export type ToolbarProps = Omit<
     HTMLAttributes<HTMLDivElement>,
     'aria-orientation' | 'children' | 'class' | 'onfocusin' | 'onkeydown' | 'role'
   > & {

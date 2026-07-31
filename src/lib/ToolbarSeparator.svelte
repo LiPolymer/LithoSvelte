@@ -5,9 +5,9 @@
     type ToolbarOrientation,
   } from './toolbarContext'
 
-  type SeparatorOrientation = ToolbarOrientation
+  export type SeparatorOrientation = ToolbarOrientation
 
-  type ToolbarSeparatorProps = Omit<
+  export type ToolbarSeparatorProps = Omit<
     HTMLAttributes<HTMLSpanElement>,
     'aria-orientation' | 'class' | 'role'
   > & {

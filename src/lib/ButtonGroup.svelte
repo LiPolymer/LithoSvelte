@@ -13,7 +13,7 @@
     currentTarget: EventTarget & HTMLDivElement
   }
 
-  type ButtonGroupProps = Omit<
+  export type ButtonGroupProps = Omit<
     HTMLAttributes<HTMLDivElement>,
     'children' | 'class' | 'onkeydown' | 'role'
   > & {

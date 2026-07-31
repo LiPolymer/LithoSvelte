@@ -3,7 +3,7 @@
   import Checkbox from './Checkbox.svelte'
   import { getDataTableContext } from './dataTableContext'
 
-  type DataTableSelectAllProps = Omit<
+  export type DataTableSelectAllProps = Omit<
     HTMLThAttributes,
     'children' | 'class' | 'scope'
   > & {

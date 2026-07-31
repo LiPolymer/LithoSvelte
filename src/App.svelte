@@ -1,30 +1,33 @@
 <script lang="ts">
-  import ButtonGroup from './lib/ButtonGroup.svelte'
-  import Checkbox from './lib/Checkbox.svelte'
-  import Combobox from './lib/Combobox.svelte'
-  import DataTable from './lib/DataTable.svelte'
-  import DataTableRow from './lib/DataTableRow.svelte'
-  import DataTableSelectAll from './lib/DataTableSelectAll.svelte'
-  import type { DataTableValue } from './lib/dataTableContext'
-  import GhostButton from './lib/GhostButton.svelte'
-  import Icon from './lib/Icon.svelte'
-  import IconButton from './lib/IconButton.svelte'
-  import List from './lib/List.svelte'
-  import ListItem from './lib/ListItem.svelte'
-  import type { ListValue } from './lib/listContext'
-  import type { ListboxOption, ListboxValue } from './lib/listbox'
-  import PrimaryButton from './lib/PrimaryButton.svelte'
-  import Radio from './lib/Radio.svelte'
-  import RadioGroup from './lib/RadioGroup.svelte'
-  import type { RadioValue } from './lib/radioGroupContext'
-  import Select from './lib/Select.svelte'
-  import Switch from './lib/Switch.svelte'
-  import TextField from './lib/TextField.svelte'
-  import Toolbar from './lib/Toolbar.svelte'
-  import ToolbarSeparator from './lib/ToolbarSeparator.svelte'
-  import Tooltip from './lib/Tooltip.svelte'
-  import TonalButton from './lib/TonalButton.svelte'
-  import ThemeSeedPicker from './lib/theme/ThemeSeedPicker.svelte'
+  import {
+    ButtonGroup,
+    Checkbox,
+    Combobox,
+    DataTable,
+    DataTableRow,
+    DataTableSelectAll,
+    GhostButton,
+    Icon,
+    IconButton,
+    List,
+    ListItem,
+    PrimaryButton,
+    Radio,
+    RadioGroup,
+    Select,
+    Switch,
+    TextField,
+    ThemeSeedPicker,
+    TonalButton,
+    Toolbar,
+    ToolbarSeparator,
+    Tooltip,
+    type DataTableValue,
+    type ListboxOption,
+    type ListboxValue,
+    type ListValue,
+    type RadioValue,
+  } from './lib'
 
   let expressiveMotion = false
   let notifications = true

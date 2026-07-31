@@ -5,7 +5,7 @@
     isButtonGroupValue,
   } from './buttonGroupContext'
 
-  type PrimaryButtonProps = HTMLButtonAttributes & {
+  export type PrimaryButtonProps = HTMLButtonAttributes & {
     expressive?: boolean
   }
 

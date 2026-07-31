@@ -4,9 +4,7 @@
 @import url("https://cdn.jsdelivr.net/npm/misans-webfont@4.3.1/misans/misans-bold/result.min.css");
 
 @import "tailwindcss";
-@import "./lib/theme/materialTokens.css";
-@import "./lib/theme/tokens.css";
-@import "./lib/theme/styles.css";
+@import "./lib/styles.css";
 
 @theme {
   --font-sans: "MiSans", system-ui, "Segoe UI", sans-serif;

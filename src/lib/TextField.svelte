@@ -7,7 +7,7 @@
     currentTarget: EventTarget & HTMLInputElement
   }
 
-  type TextFieldProps = Omit<
+  export type TextFieldProps = Omit<
     HTMLInputAttributes,
     'children' | 'class' | 'disabled' | 'readonly' | 'required' | 'type' | 'value'
   > & {

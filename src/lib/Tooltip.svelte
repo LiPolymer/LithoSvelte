@@ -3,7 +3,7 @@
 
   export type TooltipPlacement = 'top' | 'right' | 'bottom' | 'left'
 
-  type TooltipProps = {
+  export type TooltipProps = {
     content: string
     children: Snippet
     placement?: TooltipPlacement

@@ -16,7 +16,7 @@
     currentTarget: EventTarget & HTMLTableRowElement
   }
 
-  type DataTableRowProps = Omit<
+  export type DataTableRowProps = Omit<
     HTMLAttributes<HTMLTableRowElement>,
     'aria-selected' | 'children' | 'class' | 'onclick' | 'onkeydown'
   > & {

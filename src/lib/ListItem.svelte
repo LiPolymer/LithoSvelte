@@ -7,7 +7,7 @@
     currentTarget: EventTarget & HTMLButtonElement
   }
 
-  type ListItemProps = Omit<
+  export type ListItemProps = Omit<
     HTMLButtonAttributes,
     | 'aria-pressed'
     | 'children'

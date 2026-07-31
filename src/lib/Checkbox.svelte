@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte'
   import type { HTMLInputAttributes } from 'svelte/elements'
 
-  type CheckboxProps = Omit<
+  export type CheckboxProps = Omit<
     HTMLInputAttributes,
     'checked' | 'children' | 'class' | 'indeterminate' | 'type'
   > & {

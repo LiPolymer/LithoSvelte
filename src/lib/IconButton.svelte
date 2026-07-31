@@ -6,10 +6,10 @@
   } from './buttonGroupContext'
   import Icon, { type IconSize } from './Icon.svelte'
 
-  type IconButtonVariant = 'ghost' | 'tonal' | 'primary'
-  type IconButtonSize = 'compact' | 'default'
+  export type IconButtonVariant = 'ghost' | 'tonal' | 'primary'
+  export type IconButtonSize = 'compact' | 'default'
 
-  type IconButtonProps = Omit<HTMLButtonAttributes, 'children'> & {
+  export type IconButtonProps = Omit<HTMLButtonAttributes, 'children'> & {
     icon: string
     label: string
     variant?: IconButtonVariant

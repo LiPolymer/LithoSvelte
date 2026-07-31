@@ -2,7 +2,7 @@
   import type { Snippet } from 'svelte'
   import type { HTMLInputAttributes } from 'svelte/elements'
 
-  type SwitchProps = Omit<
+  export type SwitchProps = Omit<
     HTMLInputAttributes,
     'checked' | 'children' | 'class' | 'disabled' | 'role' | 'type'
   > & {

@@ -10,7 +10,7 @@
     currentTarget: EventTarget & HTMLInputElement
   }
 
-  type ComboboxProps = Omit<
+  export type ComboboxProps = Omit<
     HTMLInputAttributes,
     | 'children'
     | 'class'
