@@ -67,11 +67,20 @@
     --lds-list-item-padding-block: 0.35rem;
     --lds-list-item-gap: 0.55rem;
     --lds-list-leading-size: 1.75rem;
+    --lds-list-actions-edge-margin: 0.5rem;
     --lds-list-divider-leading-inset: calc(
         var(--lds-list-item-padding-inline)
         + var(--lds-list-leading-size)
         + var(--lds-list-item-gap)
     );
+
+    --lds-data-table-min-width: 48rem;
+    --lds-data-table-row-min-height: var(--lds-control-min-height);
+    --lds-data-table-cell-padding-inline: 0.55rem;
+    --lds-data-table-cell-padding-block: 0.35rem;
+    --lds-data-table-selection-column-width: 2.5rem;
+    --lds-data-table-actions-edge-margin: 0.1875rem;
+    --lds-data-table-sticky-offset: 0rem;
 }
 
 /* Color tokens. */
@@ -133,4 +142,12 @@
     --color-lds-list-selected-hover: var(--color-lds-option-selected-hover);
     --color-lds-list-leading: color-mix(in srgb, var(--md-sys-color-secondary) 8%, transparent);
     --color-lds-list-leading-selected: color-mix(in srgb, var(--md-sys-color-primary) 12%, transparent);
+
+    --color-lds-data-table-surface: color-mix(in srgb, var(--md-sys-color-secondary) 2%, transparent);
+    --color-lds-data-table-header: color-mix(in srgb, var(--md-sys-color-secondary) 7%, var(--md-sys-color-surface));
+    --color-lds-data-table-border: var(--color-lds-list-border);
+    --color-lds-data-table-divider: var(--color-lds-list-divider);
+    --color-lds-data-table-hover: var(--color-lds-list-hover);
+    --color-lds-data-table-selected: var(--color-lds-list-selected);
+    --color-lds-data-table-selected-hover: var(--color-lds-list-selected-hover);
 }

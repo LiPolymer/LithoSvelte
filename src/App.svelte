@@ -2,6 +2,10 @@
   import ButtonGroup from './lib/ButtonGroup.svelte'
   import Checkbox from './lib/Checkbox.svelte'
   import Combobox from './lib/Combobox.svelte'
+  import DataTable from './lib/DataTable.svelte'
+  import DataTableRow from './lib/DataTableRow.svelte'
+  import DataTableSelectAll from './lib/DataTableSelectAll.svelte'
+  import type { DataTableValue } from './lib/dataTableContext'
   import GhostButton from './lib/GhostButton.svelte'
   import Icon from './lib/Icon.svelte'
   import IconButton from './lib/IconButton.svelte'
@@ -42,6 +46,8 @@
   let selectedWorkspace: ListValue | undefined = 'litho'
   let workspaceLayout: string | number = 'list'
   let workspaceActivity = 'Ready'
+  let selectedWorkItems: DataTableValue[] = ['keyboard']
+  let workItemActivity = 'Ready'
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -484,10 +490,232 @@
         </div>
       </section>
 
+      <section class="lab-section" aria-labelledby="data-table-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">04 / Structured data</p>
+            <h2 id="data-table-lab-title">Data table</h2>
+          </div>
+          <p>Native table semantics with dense selection and row-level tools.</p>
+        </div>
+
+        <div class="data-table-lab">
+          <header class="data-table-lab-header">
+            <div>
+              <span>Open work items</span>
+              <small aria-live="polite">
+                {selectedWorkItems.length} selected · {workItemActivity}
+              </small>
+            </div>
+
+            <Toolbar aria-label="Work item table controls">
+              <Tooltip content="Filter work items">
+                <IconButton
+                  icon="filter"
+                  label="Filter work items"
+                  onclick={() => (workItemActivity = 'Filter opened')}
+                />
+              </Tooltip>
+              <Tooltip content="Choose columns">
+                <IconButton
+                  icon="applications"
+                  label="Choose columns"
+                  onclick={() => (workItemActivity = 'Columns opened')}
+                />
+              </Tooltip>
+
+              <ToolbarSeparator />
+
+              <Tooltip content="Export work items">
+                <IconButton
+                  icon="download"
+                  label="Export work items"
+                  variant="tonal"
+                  onclick={() => (workItemActivity = 'Export requested')}
+                />
+              </Tooltip>
+            </Toolbar>
+          </header>
+
+          <DataTable
+            selectionMode="multiple"
+            bind:selected={selectedWorkItems}
+            aria-label="Open work items"
+            onselectionchange={(selection) =>
+              (workItemActivity = `${selection.length} rows selected`)}
+          >
+            <thead>
+              <tr>
+                <DataTableSelectAll />
+                <th scope="col">Work item</th>
+                <th scope="col">Status</th>
+                <th scope="col">Assignee</th>
+                <th scope="col" class="lds-data-table__cell--numeric">
+                  Updated
+                </th>
+                <th scope="col">
+                  <span class="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <DataTableRow
+                value="tokens"
+                selectionLabel="Select token taxonomy audit"
+              >
+                <td>
+                  <div class="lds-data-table__cell-stack">
+                    <span class="lds-data-table__primary">
+                      Token taxonomy audit
+                    </span>
+                    <span class="lds-data-table__secondary">
+                      #42 · Design system
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="data-table-status" data-state="review">
+                    In review
+                  </span>
+                </td>
+                <td>Mira Chen</td>
+                <td class="lds-data-table__cell--numeric">4m</td>
+                <td class="lds-data-table__actions-cell">
+                  <Toolbar aria-label="Token taxonomy audit actions">
+                    <Tooltip content="Edit work item">
+                      <IconButton
+                        icon="pencil"
+                        label="Edit token taxonomy audit"
+                        onclick={() => (workItemActivity = 'Editor opened')}
+                      />
+                    </Tooltip>
+                    <Tooltip content="More actions">
+                      <IconButton
+                        icon="ellipsis_v"
+                        label="More token taxonomy audit actions"
+                        onclick={() => (workItemActivity = 'Row menu opened')}
+                      />
+                    </Tooltip>
+                  </Toolbar>
+                </td>
+              </DataTableRow>
+
+              <DataTableRow
+                value="keyboard"
+                selectionLabel="Select data table keyboard navigation"
+              >
+                <td>
+                  <div class="lds-data-table__cell-stack">
+                    <span class="lds-data-table__primary">
+                      Data table keyboard navigation
+                    </span>
+                    <span class="lds-data-table__secondary">
+                      #38 · Accessibility
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="data-table-status" data-state="progress">
+                    In progress
+                  </span>
+                </td>
+                <td>Sora Kim</td>
+                <td class="lds-data-table__cell--numeric">18m</td>
+                <td class="lds-data-table__actions-cell">
+                  <Toolbar aria-label="Keyboard navigation actions">
+                    <Tooltip content="Open work item">
+                      <IconButton
+                        icon="eye"
+                        label="Open keyboard navigation work item"
+                        onclick={() => (workItemActivity = 'Work item opened')}
+                      />
+                    </Tooltip>
+                    <Tooltip content="More actions">
+                      <IconButton
+                        icon="ellipsis_v"
+                        label="More keyboard navigation actions"
+                        onclick={() => (workItemActivity = 'Row menu opened')}
+                      />
+                    </Tooltip>
+                  </Toolbar>
+                </td>
+              </DataTableRow>
+
+              <DataTableRow
+                value="tooltip"
+                selectionLabel="Select tooltip collision handling"
+              >
+                <td>
+                  <div class="lds-data-table__cell-stack">
+                    <span class="lds-data-table__primary">
+                      Tooltip collision handling
+                    </span>
+                    <span class="lds-data-table__secondary">
+                      #31 · Interaction
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="data-table-status" data-state="ready">
+                    Ready
+                  </span>
+                </td>
+                <td>Sam Rivera</td>
+                <td class="lds-data-table__cell--numeric">1h</td>
+                <td class="lds-data-table__actions-cell">
+                  <Toolbar aria-label="Tooltip collision actions">
+                    <Tooltip content="Start work">
+                      <IconButton
+                        icon="play"
+                        label="Start tooltip collision work"
+                        onclick={() => (workItemActivity = 'Work started')}
+                      />
+                    </Tooltip>
+                    <Tooltip content="More actions">
+                      <IconButton
+                        icon="ellipsis_v"
+                        label="More tooltip collision actions"
+                        onclick={() => (workItemActivity = 'Row menu opened')}
+                      />
+                    </Tooltip>
+                  </Toolbar>
+                </td>
+              </DataTableRow>
+
+              <DataTableRow
+                value="legacy"
+                selectionLabel="Select legacy importer cleanup"
+                disabled
+              >
+                <td>
+                  <div class="lds-data-table__cell-stack">
+                    <span class="lds-data-table__primary">
+                      Legacy importer cleanup
+                    </span>
+                    <span class="lds-data-table__secondary">
+                      #12 · Archived
+                    </span>
+                  </div>
+                </td>
+                <td>
+                  <span class="data-table-status" data-state="blocked">
+                    Blocked
+                  </span>
+                </td>
+                <td>Niko Petrova</td>
+                <td class="lds-data-table__cell--numeric">2d</td>
+                <td class="lds-data-table__actions-cell"></td>
+              </DataTableRow>
+            </tbody>
+          </DataTable>
+        </div>
+      </section>
+
       <section class="lab-section" aria-labelledby="checkbox-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">04 / Selection</p>
+            <p class="section-index">05 / Selection</p>
             <h2 id="checkbox-lab-title">Checkbox</h2>
           </div>
           <p>Click or use the keyboard to inspect its real interaction states.</p>
@@ -527,7 +755,7 @@
       <section class="lab-section" aria-labelledby="radio-switch-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">05 / Choice semantics</p>
+            <p class="section-index">06 / Choice semantics</p>
             <h2 id="radio-switch-lab-title">Radio &amp; switch</h2>
           </div>
           <p>Exclusive choices and immediate binary settings stay native.</p>
@@ -584,7 +812,7 @@
       <section class="lab-section" aria-labelledby="text-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">06 / Input</p>
+            <p class="section-index">07 / Input</p>
             <h2 id="text-field-lab-title">Text field</h2>
           </div>
           <p>Probe content hierarchy, focus, errors and non-editable states.</p>
@@ -648,7 +876,7 @@
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">07 / Input selection</p>
+            <p class="section-index">08 / Input selection</p>
             <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
           </div>
           <p>
@@ -763,6 +991,8 @@
   .toolbar-lab small,
   .list-lab-header span,
   .list-lab-header small,
+  .data-table-lab-header span,
+  .data-table-lab-header small,
   .checkbox-grid article > span,
   .selection-control-grid article > span,
   .text-field-grid article > span,
@@ -959,13 +1189,15 @@
     transform: scaleX(-1);
   }
 
-  .list-lab {
+  .list-lab,
+  .data-table-lab {
     display: grid;
     min-width: 0;
     gap: 0.5rem;
   }
 
-  .list-lab-header {
+  .list-lab-header,
+  .data-table-lab-header {
     display: flex;
     min-width: 0;
     justify-content: space-between;
@@ -981,28 +1213,72 @@
       );
   }
 
-  .list-lab-header > div {
+  .list-lab-header > div,
+  .data-table-lab-header > div {
     display: grid;
     min-width: 0;
     gap: 0.05rem;
   }
 
   .list-lab-header span,
-  .list-lab-header small {
+  .list-lab-header small,
+  .data-table-lab-header span,
+  .data-table-lab-header small {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-  .list-lab-header span {
+  .list-lab-header span,
+  .data-table-lab-header span {
     color: var(--md-sys-color-on-surface);
     font-weight: 500;
     line-height: 1.2;
   }
 
-  .list-lab-header small {
+  .list-lab-header small,
+  .data-table-lab-header small {
     font-size: 0.68rem;
     line-height: 1.2;
+  }
+
+  .data-table-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.12rem 0.32rem;
+    border-radius: var(--lds-shape-rest);
+    color: var(--md-sys-color-on-surface-variant);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 9%,
+        transparent
+      );
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+
+  .data-table-status[data-state='review'],
+  .data-table-status[data-state='progress'] {
+    color: var(--color-lds-primary-content);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-primary) 11%,
+        transparent
+      );
+  }
+
+  .data-table-status[data-state='blocked'] {
+    color: var(--md-sys-color-error);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-error) 8%,
+        transparent
+      );
   }
 
   .text-field-grid,
@@ -1174,7 +1450,8 @@
       align-items: start;
     }
 
-    .list-lab-header {
+    .list-lab-header,
+    .data-table-lab-header {
       display: grid;
       align-items: start;
     }

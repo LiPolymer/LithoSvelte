@@ -28,7 +28,8 @@
 - Inputs: Checkbox, Radio/RadioGroup, Switch, TextField, Select, and searchable
   Combobox. TextField, Select, and Combobox share FieldShell.
 - Dense action and collection primitives: Icon, Tooltip, Toolbar,
-  ToolbarSeparator, List, and ListItem.
+  ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
+  supplies its multiple-selection header control.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
 - App.svelte is the component lab and manual visual-regression surface.
@@ -53,6 +54,9 @@
   and reduced-motion tokens while preserving their native inputs. Radio is an
   exclusive choice inside RadioGroup; Switch represents an immediate binary
   setting and exposes native checkbox semantics with `role="switch"`.
+- Checkbox supports the native DOM `indeterminate` property and displays a
+  mixed-state mark; use it for partial group selection rather than simulating
+  the state with a decorative icon.
 - Radio uses a diamond indicator with Checkbox's rest/hover/pressed corner
   sequence. Switch applies its hover-soft and pressed-tight shape changes to
   both the track and its thumb.
@@ -68,13 +72,30 @@
 - Toolbar does not clip focus outlines. Toolbar GhostButton motion uses the
   faster grouped-control timing, and ToolbarSeparator infers the visual
   orientation from its Toolbar.
+- Contextual Toolbars in ListItem and DataTableRow keep Toolbar's single Tab
+  stop and arrow-key behavior, but remove shell gap/padding/layout border so
+  their geometry matches a compact ButtonGroup. Their quiet shell border is an
+  inset shadow, preventing hover/focus chrome from changing measured size.
+  Each row variant has an end-margin token matched to its own top/bottom
+  breathing room; do not reuse one inset across List and denser DataTable rows.
 - List uses semantic `ul`/`li` structure with one row button and an optional
   sibling actions region. Up/Down and Home/End move the row roving focus;
   nested horizontal Toolbars retain Left/Right and their own Tab stop. List
   dividers belong to the `li`, so row-button press motion never transforms
   them. The dividers immediately before and after the selected row are hidden
-  so they do not cut through its fill. Single-selection rows expose
+  so they do not cut through its fill. A selected row uses TonalButton's quiet
+  rest/hover-soft/pressed shape sequence and fast shape timing; keyboard focus
+  alone does not soften its corners. Single-selection rows expose
   `aria-pressed` and support `bind:value`.
+- DataTable preserves native table markup inside an overflow viewport. Enabled
+  rows use one vertical roving-focus stop: Up/Down and Home/End move, Space
+  toggles selection, and pointer selection focuses the row. Row checkboxes are
+  pointer targets with `tabindex="-1"`; the focused row and its `aria-selected`
+  state provide the efficient keyboard path. The select-all Checkbox remains a
+  normal Tab stop and exposes checked/mixed/unchecked states. Disabled rows are
+  skipped, nested controls keep their own keys, and row Toolbars remain one Tab
+  stop each. Selected-row divider suppression and quiet Tonal-like corner
+  treatment mirror Compact List.
 - Readonly TextField remains focusable/selectable but has no special focus
   border, glow, or radius.
 - `commitOnEnter` on TextField must ignore IME composition, briefly show the
@@ -128,6 +149,10 @@
 - ListItem must be nested in List. Its leading snippet is decorative and must
   not contain interactive content; place independent commands in its actions
   snippet, preferably inside Toolbar.
+- DataTableRow and DataTableSelectAll must be nested in DataTable. Multiple
+  selection uses `bind:selected` with string/number row values. Interactive
+  cell content is excluded from row-click selection; consumers may also call
+  `preventDefault()` in a row handler to veto compound selection behavior.
 - Reuse Litho controls in internal tools such as ThemeSeedPicker. Keep native
   controls only where they provide unique platform behavior, such as
   `<input type="color">`.
@@ -148,8 +173,6 @@
 
 ## Suggested roadmap
 
-1. Add DataTable primitives to stress density, selection, keyboard navigation,
-   and overflow behavior.
-2. Add component-level interaction tests and screenshot regression coverage.
-3. Revisit GitLab-style animated icons later; do not add the Vue-based
+1. Add component-level interaction tests and screenshot regression coverage.
+2. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.
