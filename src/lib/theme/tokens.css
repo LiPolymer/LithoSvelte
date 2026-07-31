@@ -53,8 +53,9 @@
 
     --lds-tooltip-max-width: 18rem;
     --lds-tooltip-backdrop-blur: 0.65rem;
-    --lds-layer-popover: 900;
-    --lds-layer-tooltip: 1000;
+    --lds-layer-floating-base: 900;
+    --lds-layer-popover: var(--lds-layer-floating-base);
+    --lds-layer-tooltip: calc(var(--lds-layer-floating-base) + 100);
 
     --lds-toolbar-gap: 0.2rem;
     --lds-toolbar-padding: 0.2rem;

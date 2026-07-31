@@ -132,13 +132,29 @@
     background: var(--color-lds-option-selected-hover);
 }
 
+/*floating and overlay primitives*/
+.lds-floating-layer {
+    --lds-floating-arrow-offset: 50%;
+
+    position: fixed;
+}
+
+.lds-floating-layer[data-positioned='false'] {
+    visibility: hidden !important;
+}
+
+.lds-overlay {
+    position: fixed;
+    isolation: isolate;
+    inset: 0;
+}
+
 /*tooltip*/
 .lds-tooltip-anchor {
     display: contents;
 }
 
 .lds-tooltip {
-    position: fixed;
     z-index: var(--lds-layer-tooltip);
     max-width: min(var(--lds-tooltip-max-width), calc(100vw - 1rem));
     opacity: 0;
@@ -209,7 +225,7 @@
 
 .lds-tooltip[data-placement='top'] > .lds-tooltip__arrow,
 .lds-tooltip[data-placement='bottom'] > .lds-tooltip__arrow {
-    left: var(--lds-tooltip-arrow-offset);
+    left: var(--lds-floating-arrow-offset);
     width: 0.8rem;
     height: 0.45rem;
     transform: translateX(-50%);
@@ -245,7 +261,7 @@
 
 .lds-tooltip[data-placement='left'] > .lds-tooltip__arrow,
 .lds-tooltip[data-placement='right'] > .lds-tooltip__arrow {
-    top: var(--lds-tooltip-arrow-offset);
+    top: var(--lds-floating-arrow-offset);
     width: 0.45rem;
     height: 0.8rem;
     transform: translateY(-50%);

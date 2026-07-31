@@ -21,6 +21,13 @@
   theme configuration.
 - Put reusable reference and semantic tokens in `tokens.css`. Component state
   styling currently lives in `styles.css`.
+- `src/lib/index.ts` is the stable TypeScript/component entry and
+  `src/lib/styles.css` is the stable stylesheet entry. Keep implementation
+  contexts and low-level overlay machinery out of the public barrel until
+  their APIs are intentionally promoted.
+- `src/lib/internal/overlay` owns portal transport, anchored floating
+  positioning, and the shared overlay stack. It must remain appearance- and
+  component-semantics-neutral.
 
 ## Current component foundation
 
@@ -30,6 +37,8 @@
 - Dense action and collection primitives: Icon, Tooltip, Toolbar,
   ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
   supplies its multiple-selection header control.
+- FloatingLayer and Overlay are internal infrastructure for Tooltip and future
+  Popover, Menu, and Dialog components rather than consumer-facing components.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
 - App.svelte is the component lab and manual visual-regression surface.
@@ -66,6 +75,15 @@
   trigger center.
 - Tooltip reveal expands only its surface horizontally. Text keeps its natural
   proportions and is revealed by clipping; the arrow is never scaled.
+- Tooltip delegates fixed positioning to FloatingLayer. FloatingLayer portals
+  its surface, flips and shifts at viewport edges, tracks the anchor through
+  captured scroll/resize and ResizeObserver updates, and leaves visual motion
+  to the owning component.
+- Managed floating layers and overlays share one opening-order stack. Only the
+  topmost managed overlay may handle Escape or outside-pointer dismissal.
+  Overlay can restore the previously focused element and locks body scrolling
+  while any modal layer is present. A consumer-provided `present` state may
+  outlive `open` so exit motion can finish before unmounting.
 - Toolbar is one Tab stop with roving focus. Horizontal toolbars use Left/Right,
   vertical toolbars use Up/Down, and Home/End jump to boundaries. Nested
   composites that call `preventDefault()` keep ownership of their key event.
@@ -117,6 +135,10 @@
   matches the field body's exact width, begins at `top: 100%` without
   translucent overlap, omits its top border, and reuses Tooltip's Tonal
   surface, border, shadow, and backdrop treatment.
+- ListboxPopup intentionally stays inside FieldShell instead of being portaled:
+  its exact shared width, joined border, and delayed corner restoration are
+  part of the field geometry. Do not migrate it merely to make every popup use
+  the same transport mechanism.
 - Combobox opens the complete option set on focus, filters only after the user
   types, keeps DOM focus on its input, and uses `aria-activedescendant`.
   Arrow/Home/End navigate enabled options, Enter selects outside IME
@@ -138,6 +160,10 @@
   `default` sizes.
 - Tooltip should wrap one focusable trigger. Preserve the trigger's existing
   `aria-describedby` values when adding or removing the tooltip description.
+- Content rendered inside Overlay identifies its interactive surface with
+  `data-lds-overlay-surface`; pointer events elsewhere in the overlay root are
+  considered outside interactions. Dialog-specific role, initial focus, and
+  focus containment belong to Dialog rather than the generic Overlay layer.
 - Toolbar must restore consumer tabindex attributes when it is destroyed and
   skip disabled, hidden, nested-toolbar, and explicit `tabindex="-1"` items.
 - Select and Combobox share `ListboxOption` (`value`, `label`, optional
@@ -173,6 +199,9 @@
 
 ## Suggested roadmap
 
-1. Add component-level interaction tests and screenshot regression coverage.
-2. Revisit GitLab-style animated icons later; do not add the Vue-based
+1. Build Popover/Menu on the floating and overlay foundation, including shared
+   trigger ownership and keyboard navigation.
+2. Build Dialog/AlertDialog with their semantic roles, initial-focus policy,
+   focus containment, and exit presence on top of Overlay.
+3. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.
