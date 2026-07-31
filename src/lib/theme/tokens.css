@@ -23,6 +23,7 @@
     --lds-motion-duration-fast: 100ms;
     --lds-motion-duration-settle: 120ms;
     --lds-motion-duration-menu-reveal: 180ms;
+    --lds-motion-duration-tree-reveal: 180ms;
     --lds-motion-duration-listbox-reveal: 300ms;
     --lds-motion-duration-collapse: 120ms;
     --lds-motion-duration-reveal: 600ms;
@@ -65,6 +66,23 @@
     --lds-badge-padding-inline: 0.4rem;
     --lds-badge-gap: 0.3rem;
     --lds-badge-icon-size: 0.75rem;
+    --lds-card-padding-compact: 0.75rem;
+    --lds-card-padding: 1rem;
+    --lds-card-gap-compact: 0.6rem;
+    --lds-card-gap: 1rem;
+    --lds-card-outline-width: 0.1rem;
+    --lds-navigation-tree-padding: 0.2rem;
+    --lds-navigation-tree-item-min-height: 1.875rem;
+    --lds-navigation-tree-item-padding-inline: 0.4rem;
+    --lds-navigation-tree-item-gap: 0.35rem;
+    --lds-navigation-tree-indent: 0.75rem;
+    --lds-navigation-tree-icon-size: 0.875rem;
+    --lds-navigation-tree-disclosure-size: 0.75rem;
+    --lds-tabs-list-padding: 0.2rem;
+    --lds-tab-min-height: var(--lds-control-min-height-compact);
+    --lds-tab-padding-inline: 0.55rem;
+    --lds-tab-gap: 0.35rem;
+    --lds-tab-icon-size: 0.875rem;
     --lds-layer-floating-base: 900;
     --lds-layer-popover: var(--lds-layer-floating-base);
     --lds-layer-tooltip: calc(var(--lds-layer-floating-base) + 100);
@@ -167,6 +185,31 @@
     --color-lds-badge-error: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
     --color-lds-badge-error-content: var(--md-sys-color-error);
     --color-lds-badge-error-border: var(--md-sys-color-error);
+
+    --color-lds-card-subtle: color-mix(in srgb, var(--md-sys-color-secondary) 5%, transparent);
+    --color-lds-card-filled: color-mix(in srgb, var(--md-sys-color-secondary) 8%, var(--md-sys-color-surface));
+    --color-lds-card-outlined: transparent;
+    --color-lds-card-outline: color-mix(in srgb, var(--md-sys-color-outline-variant) 55%, transparent);
+    --color-lds-card-content: var(--md-sys-color-on-surface);
+
+    --color-lds-navigation-tree-surface: var(--color-lds-list-surface);
+    --color-lds-navigation-tree-border: var(--color-lds-list-border);
+    --color-lds-navigation-tree-content: var(--md-sys-color-on-surface);
+    --color-lds-navigation-tree-muted: var(--md-sys-color-on-surface-variant);
+    --color-lds-navigation-tree-guide: var(--color-lds-group-divider);
+    --color-lds-navigation-tree-hover: var(--color-lds-list-hover);
+    --color-lds-navigation-tree-selected: var(--color-lds-list-selected);
+    --color-lds-navigation-tree-selected-hover: var(--color-lds-list-selected-hover);
+    --color-lds-tabs-surface: var(--color-lds-group-surface);
+    --color-lds-tabs-border: var(--color-lds-toolbar-border);
+    --color-lds-tab-content: var(--md-sys-color-on-surface-variant);
+    --color-lds-tab-hover: var(--color-lds-state-hover);
+    --color-lds-tab-selected: var(--color-lds-option-selected);
+    --color-lds-tab-selected-hover: var(--color-lds-option-selected-hover);
+    --color-lds-tab-selected-content: var(--color-lds-primary-content);
+    --color-lds-tab-indicator: var(--md-sys-color-primary);
+    --color-lds-tab-panel-surface: var(--color-lds-list-surface);
+    --color-lds-tab-panel-border: var(--color-lds-list-border);
 
     --color-lds-toolbar-surface: var(--color-lds-group-surface);
     --color-lds-toolbar-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);

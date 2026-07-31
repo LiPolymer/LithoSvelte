@@ -2,6 +2,7 @@
   import {
     Badge,
     ButtonGroup,
+    Card,
     Checkbox,
     Combobox,
     DataTable,
@@ -19,11 +20,16 @@
     MenuRadioGroup,
     MenuRadioItem,
     MenuSeparator,
+    NavigationTree,
+    NavigationTreeItem,
     PrimaryButton,
     Radio,
     RadioGroup,
     Select,
     Switch,
+    Tab,
+    TabPanel,
+    Tabs,
     TextField,
     ThemeSeedPicker,
     TonalButton,
@@ -35,6 +41,7 @@
     type ListboxValue,
     type ListValue,
     type MenuValue,
+    type NavigationTreeValue,
     type RadioValue,
   } from './lib'
 
@@ -64,6 +71,18 @@
   let showArchivedWorkspaces = false
   let compactMenuMetadata = true
   let workspaceSort: MenuValue = 'recent'
+  let activeLabSection: NavigationTreeValue | undefined = 'button-lab-title'
+  let navigationTreePreview: NavigationTreeValue | undefined = 'tree-overview'
+  let navigationTab = 'overview'
+
+  function navigateLab(value: NavigationTreeValue) {
+    const heading = document.getElementById(String(value))
+    const section = heading?.closest('section')
+    const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches
+      ? 'auto'
+      : 'smooth'
+    section?.scrollIntoView({ behavior, block: 'start' })
+  }
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -116,6 +135,93 @@
   </header>
 
   <div class="lab-layout">
+    <aside class="lab-sidebar" aria-label="Lab navigation and controls">
+      <NavigationTree
+        label="Component lab sections"
+        bind:value={activeLabSection}
+        onvaluechange={navigateLab}
+      >
+        <NavigationTreeItem label="Actions" icon="applications" expanded>
+          <NavigationTreeItem
+            value="button-lab-title"
+            label="Buttons"
+            icon="play"
+          />
+          <NavigationTreeItem
+            value="toolbar-lab-title"
+            label="Toolbar"
+            icon="settings"
+          />
+          <NavigationTreeItem
+            value="menu-lab-title"
+            label="Menu"
+            icon="ellipsis_v"
+          />
+        </NavigationTreeItem>
+
+        <NavigationTreeItem label="Collections" icon="list-bulleted" expanded>
+          <NavigationTreeItem
+            value="list-lab-title"
+            label="Compact list"
+            icon="list-bulleted"
+          />
+          <NavigationTreeItem
+            value="data-table-lab-title"
+            label="Data table"
+            icon="table"
+          />
+          <NavigationTreeItem
+            value="badge-lab-title"
+            label="Badge"
+            icon="status"
+          />
+          <NavigationTreeItem
+            value="card-lab-title"
+            label="Card"
+            icon="applications"
+          />
+        </NavigationTreeItem>
+
+        <NavigationTreeItem label="Inputs" icon="pencil" expanded>
+          <NavigationTreeItem
+            value="checkbox-lab-title"
+            label="Checkbox"
+            icon="check"
+          />
+          <NavigationTreeItem
+            value="radio-switch-lab-title"
+            label="Radio & switch"
+            icon="status"
+          />
+          <NavigationTreeItem
+            value="text-field-lab-title"
+            label="Text field"
+            icon="pencil"
+          />
+          <NavigationTreeItem
+            value="choice-field-lab-title"
+            label="Select & combobox"
+            icon="chevron-down"
+          />
+        </NavigationTreeItem>
+
+        <NavigationTreeItem label="Navigation" icon="link" expanded>
+          <NavigationTreeItem
+            value="navigation-lab-title"
+            label="Tree & tabs"
+            icon="project"
+          />
+        </NavigationTreeItem>
+      </NavigationTree>
+
+      <div class="theme-dock" aria-label="Theme controls">
+        <ThemeSeedPicker />
+        <p>
+          Change the seed or appearance mode to probe every component state.
+        </p>
+      </div>
+    </aside>
+
     <main class="lab-content">
       <section class="lab-section" aria-labelledby="button-lab-title">
         <div class="section-heading">
@@ -186,7 +292,7 @@
         </div>
 
         <div class="button-group-grid">
-          <article>
+          <Card as="article">
             <span>Actions / related commands</span>
             <ButtonGroup aria-label="File actions">
               <PrimaryButton
@@ -203,9 +309,9 @@
               </GhostButton>
             </ButtonGroup>
             <small>Last action: {lastAction}</small>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Options / one active view</span>
             <ButtonGroup
               mode="options"
@@ -217,10 +323,10 @@
               <GhostButton value="timeline">Timeline</GhostButton>
             </ButtonGroup>
             <small>Current view: {viewMode}</small>
-          </article>
+          </Card>
         </div>
 
-        <div class="icon-button-lab">
+        <Card class="icon-button-lab">
           <div>
             <span>Icon buttons / compact actions</span>
             <small>GitLab glyphs with Litho density and interaction states.</small>
@@ -265,7 +371,7 @@
               </Tooltip>
             </ButtonGroup>
           </div>
-        </div>
+        </Card>
       </section>
 
       <section class="lab-section" aria-labelledby="toolbar-lab-title">
@@ -277,7 +383,7 @@
           <p>One Tab stop, then arrow keys for efficient command navigation.</p>
         </div>
 
-        <div class="toolbar-lab">
+        <Card class="toolbar-lab">
           <div>
             <span>Document formatting</span>
             <small>Home and End jump to the toolbar boundaries.</small>
@@ -327,7 +433,7 @@
               <IconButton icon="ellipsis_h" label="More actions" />
             </Tooltip>
           </Toolbar>
-        </div>
+        </Card>
       </section>
 
       <section class="lab-section" aria-labelledby="list-lab-title">
@@ -732,33 +838,33 @@
         </div>
 
         <div class="checkbox-grid">
-          <article>
+          <Card as="article">
             <span>Interactive / unchecked</span>
             <Checkbox bind:checked={expressiveMotion}>
               Expressive motion
             </Checkbox>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Interactive / checked</span>
             <Checkbox bind:checked={notifications}>
               Notifications
             </Checkbox>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Disabled / unchecked</span>
             <Checkbox disabled>
               Expressive motion
             </Checkbox>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Disabled / checked</span>
             <Checkbox checked disabled>
               Notifications
             </Checkbox>
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -772,7 +878,7 @@
         </div>
 
         <div class="selection-control-grid">
-          <article>
+          <Card as="article">
             <span>Radio group / horizontal</span>
             <RadioGroup
               legend="Theme mode"
@@ -785,9 +891,9 @@
               <Radio value="dark">Dark</Radio>
               <Radio value="contrast" disabled>Contrast</Radio>
             </RadioGroup>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Radio group / error</span>
             <RadioGroup
               legend="Default visibility"
@@ -799,23 +905,23 @@
               <Radio value="internal">Internal</Radio>
               <Radio value="public">Public</Radio>
             </RadioGroup>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Switch / interactive</span>
             <div class="switch-stack">
               <Switch bind:checked={compactRows}>Compact rows</Switch>
               <Switch bind:checked={liveSync}>Live synchronization</Switch>
             </div>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Switch / disabled</span>
             <div class="switch-stack">
               <Switch disabled>External notifications</Switch>
               <Switch checked disabled>Audit logging</Switch>
             </div>
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -829,7 +935,7 @@
         </div>
 
         <div class="text-field-grid">
-          <article>
+          <Card as="article">
             <span>Default / empty</span>
             <TextField
               label="Display name"
@@ -838,9 +944,9 @@
               commitOnEnter
               bind:value={displayName}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Default / filled</span>
             <TextField
               label="Email"
@@ -848,9 +954,9 @@
               helperText="Used for account notifications."
               bind:value={email}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Error</span>
             <TextField
               label="Email"
@@ -859,9 +965,9 @@
               error="Enter a valid email address."
               required
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Readonly</span>
             <TextField
               label="Theme source"
@@ -869,9 +975,9 @@
               helperText="Generated by the active theme."
               readonly
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Disabled</span>
             <TextField
               label="Workspace"
@@ -879,7 +985,7 @@
               helperText="This field cannot be edited."
               disabled
             />
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -896,7 +1002,7 @@
         </div>
 
         <div class="menu-lab">
-          <article>
+          <Card as="article" class="menu-card">
             <div class="menu-lab__copy">
               <span>Commands + persistent options</span>
               <small>{menuActivity}</small>
@@ -964,9 +1070,9 @@
                 {/snippet}
               </MenuItem>
             </Menu>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article" class="menu-card">
             <div class="menu-lab__copy">
               <span>End-aligned contextual menu</span>
               <small>Arrow keys, Home/End and typeahead are active.</small>
@@ -1002,7 +1108,7 @@
                 {/snippet}
               </MenuItem>
             </Menu>
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -1019,7 +1125,7 @@
         </div>
 
         <div class="choice-field-grid">
-          <article>
+          <Card as="article">
             <span>Select / filled</span>
             <Select
               label="Access level"
@@ -1027,9 +1133,9 @@
               helperText="Owner is unavailable under the current policy."
               bind:value={accessLevel}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Select / error</span>
             <Select
               label="Default access"
@@ -1039,9 +1145,9 @@
               required
               bind:value={invalidAccessLevel}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Select / disabled</span>
             <Select
               label="Workflow"
@@ -1050,9 +1156,9 @@
               helperText="Managed by your organization."
               disabled
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Combobox / searchable</span>
             <Combobox
               label="Reviewer"
@@ -1061,9 +1167,9 @@
               helperText="Arrow keys navigate; Enter selects."
               bind:value={reviewer}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Combobox / error</span>
             <Combobox
               label="Required reviewer"
@@ -1073,9 +1179,9 @@
               required
               bind:value={missingReviewer}
             />
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Combobox / readonly</span>
             <Combobox
               label="Owner"
@@ -1084,7 +1190,7 @@
               readonly
               bind:value={owner}
             />
-          </article>
+          </Card>
         </div>
       </section>
 
@@ -1100,7 +1206,7 @@
         </div>
 
         <div class="badge-lab">
-          <article>
+          <Card as="article">
             <span>Soft / semantic icon</span>
             <div class="badge-row">
               <Badge icon="status-neutral">Neutral</Badge>
@@ -1111,9 +1217,9 @@
               <Badge tone="tertiary" icon="review-list">Tertiary</Badge>
               <Badge tone="error" icon="status-failed">Error</Badge>
             </div>
-          </article>
+          </Card>
 
-          <article>
+          <Card as="article">
             <span>Outline / semantic icon</span>
             <div class="badge-row">
               <Badge variant="outline" icon="status-neutral">Neutral</Badge>
@@ -1128,17 +1234,132 @@
               </Badge>
               <Badge tone="error" variant="outline" icon="error">Error</Badge>
             </div>
-          </article>
+          </Card>
+        </div>
+      </section>
+
+      <section class="lab-section" aria-labelledby="navigation-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">11 / Navigation</p>
+            <h2 id="navigation-lab-title">Tree & tabs</h2>
+          </div>
+          <p>
+            Hierarchical destinations and peer views with distinct keyboard
+            models.
+          </p>
+        </div>
+
+        <div class="navigation-lab">
+          <Card as="article">
+            <span>Navigation tree / nested destinations</span>
+            <NavigationTree
+              label="Workspace navigation preview"
+              bind:value={navigationTreePreview}
+            >
+              <NavigationTreeItem label="Workspace" icon="project" expanded>
+                <NavigationTreeItem
+                  value="tree-overview"
+                  label="Overview"
+                  icon="applications"
+                />
+                <NavigationTreeItem
+                  value="tree-activity"
+                  label="Activity"
+                  icon="status-running"
+                />
+              </NavigationTreeItem>
+
+              <NavigationTreeItem label="Manage" icon="settings" expanded>
+                <NavigationTreeItem
+                  value="tree-members"
+                  label="Members"
+                  icon="users"
+                />
+                <NavigationTreeItem
+                  value="tree-integrations"
+                  label="Integrations"
+                  icon="link"
+                  disabled
+                />
+              </NavigationTreeItem>
+            </NavigationTree>
+          </Card>
+
+          <Card as="article">
+            <span>Tabs / automatic activation</span>
+            <Tabs label="Workspace views" bind:value={navigationTab}>
+              {#snippet tabs()}
+                <Tab value="overview" icon="project">Overview</Tab>
+                <Tab value="activity" icon="status-running">Activity</Tab>
+                <Tab value="notes" icon="comment">Notes</Tab>
+              {/snippet}
+
+              <TabPanel value="overview">
+                <div class="navigation-panel-copy">
+                  <strong>Overview</strong>
+                  <span>Stable project context without leaving the page.</span>
+                </div>
+              </TabPanel>
+
+              <TabPanel value="activity">
+                <div class="navigation-panel-copy">
+                  <strong>Activity</strong>
+                  <span>Recent changes, optimized for quick scanning.</span>
+                </div>
+              </TabPanel>
+
+              <TabPanel value="notes">
+                <div class="navigation-panel-copy">
+                  <strong>Notes</strong>
+                  <span>Supporting information for the current workspace.</span>
+                </div>
+              </TabPanel>
+            </Tabs>
+          </Card>
+        </div>
+      </section>
+
+      <section class="lab-section" aria-labelledby="card-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">12 / Containers</p>
+            <h2 id="card-lab-title">Card</h2>
+          </div>
+          <p>
+            Non-interactive grouping surfaces with explicit hierarchy and
+            density.
+          </p>
+        </div>
+
+        <div class="card-lab">
+          <Card as="article">
+            <span>Subtle / default density</span>
+            <div class="card-demo-copy">
+              <h3>Quiet grouping</h3>
+              <p>Blends into its parent while preserving content rhythm.</p>
+            </div>
+          </Card>
+
+          <Card as="article" variant="filled" density="compact">
+            <span>Filled / compact density</span>
+            <div class="card-demo-copy">
+              <h3>Dense summary</h3>
+              <p>Uses a firmer surface when nearby groups need separation.</p>
+            </div>
+          </Card>
+
+          <Card as="article" variant="outlined">
+            <span>Outlined / default density</span>
+            <div class="card-demo-copy">
+              <h3>Explicit boundary</h3>
+              <p>Keeps the fill quiet and lets the container edge speak.</p>
+            </div>
+          </Card>
         </div>
       </section>
     </main>
 
-    <aside class="theme-dock" aria-label="Theme controls">
-      <ThemeSeedPicker />
-      <p>
-        Change the seed or appearance mode to probe every component state.
-      </p>
-    </aside>
   </div>
 </div>
 
@@ -1160,21 +1381,23 @@
   .section-index,
   .section-heading > p,
   .theme-dock > p,
-  .button-group-grid article > span,
-  .button-group-grid article > small,
-  .icon-button-lab span,
-  .icon-button-lab small,
-  .toolbar-lab span,
-  .toolbar-lab small,
+  .button-group-grid :global(.lds-card > span),
+  .button-group-grid :global(.lds-card > small),
+  :global(.icon-button-lab) span,
+  :global(.icon-button-lab) small,
+  :global(.toolbar-lab) span,
+  :global(.toolbar-lab) small,
   .list-lab-header span,
   .list-lab-header small,
   .data-table-lab-header span,
   .data-table-lab-header small,
-  .checkbox-grid article > span,
-  .selection-control-grid article > span,
-  .text-field-grid article > span,
-  .choice-field-grid article > span,
-  .badge-lab article > span {
+  .checkbox-grid :global(.lds-card > span),
+  .selection-control-grid :global(.lds-card > span),
+  .text-field-grid :global(.lds-card > span),
+  .choice-field-grid :global(.lds-card > span),
+  .badge-lab :global(.lds-card > span),
+  .navigation-lab :global(.lds-card > span),
+  .card-lab :global(.lds-card > span) {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
   }
@@ -1185,21 +1408,13 @@
     gap: 0.5rem;
   }
 
-  .menu-lab article {
+  .menu-lab :global(.menu-card) {
     display: flex;
     min-width: 0;
     min-height: 7rem;
     align-items: end;
     justify-content: space-between;
     gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
   .menu-lab__copy {
@@ -1227,25 +1442,66 @@
     gap: 0.5rem;
   }
 
-  .badge-lab article {
-    display: grid;
-    min-width: 0;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
-  }
-
   .badge-row {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     gap: 0.35rem;
+  }
+
+  .navigation-lab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .navigation-lab :global(.lds-card) {
+    align-content: start;
+  }
+
+  .navigation-panel-copy {
+    display: grid;
+    gap: 0.2rem;
+    min-height: 3rem;
+    align-content: center;
+  }
+
+  .navigation-panel-copy strong {
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .navigation-panel-copy span {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+  }
+
+  .card-lab {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .card-demo-copy {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+  }
+
+  .card-demo-copy h3,
+  .card-demo-copy p {
+    margin: 0;
+  }
+
+  .card-demo-copy h3 {
+    font-family: var(--heading);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .card-demo-copy p {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
   }
 
   .lab-kicker,
@@ -1277,9 +1533,21 @@
 
   .lab-layout {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) auto;
-    gap: clamp(1.5rem, 4vw, 4rem);
+    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
+    gap: clamp(1.25rem, 3vw, 3rem);
     align-items: start;
+  }
+
+  .lab-sidebar {
+    position: sticky;
+    top: 1rem;
+    display: grid;
+    max-height: calc(100dvh - 2rem);
+    gap: 1rem;
+    padding: 0.15rem;
+    margin: -0.15rem;
+    overflow-y: auto;
+    scrollbar-gutter: stable;
   }
 
   .lab-content {
@@ -1290,6 +1558,7 @@
 
   .lab-section {
     min-width: 0;
+    scroll-margin-block-start: 1rem;
     padding: clamp(1rem, 2.5vw, 2rem);
     border: 0.15rem solid var(--color-lds-primary-border-light);
     border-radius: var(--radius-lds-md);
@@ -1379,23 +1648,15 @@
     margin-top: 1rem;
   }
 
-  .icon-button-lab {
+  :global(.icon-button-lab) {
     display: flex;
     justify-content: space-between;
     align-items: end;
     gap: 1rem;
     margin-top: 0.5rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .icon-button-lab > div:first-child {
+  :global(.icon-button-lab) > div:first-child {
     display: grid;
     gap: 0.2rem;
   }
@@ -1412,27 +1673,19 @@
     justify-content: flex-end;
   }
 
-  .toolbar-lab {
+  :global(.toolbar-lab) {
     display: flex;
     justify-content: space-between;
     align-items: end;
     gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .toolbar-lab > div {
+  :global(.toolbar-lab) > div {
     display: grid;
     gap: 0.2rem;
   }
 
-  .toolbar-lab :global(.toolbar-undo .lds-icon) {
+  :global(.toolbar-lab .toolbar-undo .lds-icon) {
     transform: scaleX(-1);
   }
 
@@ -1496,81 +1749,40 @@
     gap: 0.5rem;
   }
 
-  .button-group-grid article {
-    display: grid;
-    min-width: 0;
+  .button-group-grid :global(.lds-card) {
     gap: 0.75rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .checkbox-grid article {
-    display: grid;
-    gap: 1rem;
+  .checkbox-grid :global(.lds-card) {
     min-height: 7rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .selection-control-grid article {
-    display: grid;
-    min-width: 0;
+  .selection-control-grid :global(.lds-card) {
     min-height: 10rem;
-    gap: 1rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .text-field-grid article,
-  .choice-field-grid article {
-    display: grid;
-    gap: 1rem;
+  .text-field-grid :global(.lds-card),
+  .choice-field-grid :global(.lds-card) {
     min-height: 9rem;
-    padding: 1rem;
-    border-radius: var(--radius-lds-sm);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 5%,
-        transparent
-      );
   }
 
-  .checkbox-grid article > span,
-  .selection-control-grid article > span {
+  .checkbox-grid :global(.lds-card > span),
+  .selection-control-grid :global(.lds-card > span) {
     align-self: start;
   }
 
-  .text-field-grid article > span,
-  .choice-field-grid article > span {
+  .text-field-grid :global(.lds-card > span),
+  .choice-field-grid :global(.lds-card > span) {
     align-self: start;
   }
 
-  .checkbox-grid article :global(.lds-checkbox) {
+  .checkbox-grid :global(.lds-card .lds-checkbox) {
     align-self: end;
     justify-self: start;
   }
 
-  .selection-control-grid article :global(.lds-radio-group),
-  .selection-control-grid article .switch-stack {
+  .selection-control-grid :global(.lds-card .lds-radio-group),
+  .selection-control-grid :global(.lds-card .switch-stack) {
     align-self: end;
   }
 
@@ -1579,21 +1791,23 @@
     gap: 0.15rem;
   }
 
-  .button-group-grid article :global(.lds-button-group) {
+  .button-group-grid :global(.lds-card .lds-button-group) {
     align-self: end;
   }
 
-  .text-field-grid article :global(.lds-text-field),
-  .choice-field-grid article :global(.lds-field) {
+  .text-field-grid :global(.lds-card .lds-text-field),
+  .choice-field-grid :global(.lds-card .lds-field) {
     align-self: end;
   }
 
   .theme-dock {
-    position: sticky;
-    top: 1rem;
     display: grid;
     gap: 0.75rem;
-    width: min-content;
+    width: auto;
+  }
+
+  .theme-dock :global(.theme-seed-picker) {
+    width: 100%;
   }
 
   .theme-dock > p {
@@ -1606,14 +1820,12 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .theme-dock {
+    .lab-sidebar {
       position: static;
       grid-row: 1;
-      width: auto;
-    }
-
-    .theme-dock :global(.theme-seed-picker) {
-      width: 100%;
+      grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.75fr);
+      max-height: none;
+      overflow: visible;
     }
 
     .theme-dock > p {
@@ -1644,7 +1856,7 @@
       grid-template-columns: minmax(0, 1fr);
     }
 
-    .icon-button-lab {
+    :global(.icon-button-lab) {
       display: grid;
       align-items: start;
     }
@@ -1653,7 +1865,7 @@
       justify-content: flex-start;
     }
 
-    .toolbar-lab {
+    :global(.toolbar-lab) {
       display: grid;
       align-items: start;
     }
@@ -1667,7 +1879,13 @@
     .text-field-grid,
     .choice-field-grid,
     .menu-lab,
-    .badge-lab {
+    .badge-lab,
+    .navigation-lab,
+    .card-lab {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .lab-sidebar {
       grid-template-columns: minmax(0, 1fr);
     }
   }

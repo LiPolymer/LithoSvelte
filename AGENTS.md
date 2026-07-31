@@ -38,6 +38,10 @@
   ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
   supplies its multiple-selection header control.
 - Badge is the compact, non-interactive metadata and status primitive.
+- Card is the non-interactive grouping surface for content hierarchy. Lab
+  example tiles use Card instead of maintaining parallel surface recipes.
+- Navigation primitives: NavigationTree/NavigationTreeItem for hierarchical
+  destinations and Tabs/Tab/TabPanel for peer views.
 - Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
   MenuCheckboxItem, and MenuRadioGroup/MenuRadioItem.
 - FloatingLayer and Overlay are internal infrastructure used by Tooltip and
@@ -116,6 +120,27 @@
   seed-derived tones success or warning: a dynamic Material seed does not
   guarantee that secondary or tertiary hues remain green or yellow. Readable
   badge text, rather than color alone, carries the status meaning.
+- Card is intentionally static: it has no hover, pressed, selected, or whole-
+  surface click behavior. `subtle`, `filled`, and `outlined` express container
+  hierarchy; `compact` and `default` adjust only reusable padding and gap.
+  Card defaults to a semantic-neutral `div`, while `as` may opt into `article`,
+  `section`, or `aside` when the content genuinely has that meaning.
+- NavigationTree is compact-first: its desktop rows are 30px and coarse
+  pointers expand them to 44px. It is one roving Tab stop. Up/Down traverse
+  visible enabled items, Home/End move to the boundaries, typeahead finds
+  labels, and direction-aware Left/Right collapse, expand, or move between a
+  branch and its children. Branch items only own disclosure state; leaf items
+  own selection and expose the current destination.
+- NavigationTree branch groups reveal downward from their fixed top edge using
+  Menu's reveal easing and a dedicated short duration; child rows retain their
+  natural proportions and are exposed by clipping. Collapse uses the faster
+  shared collapse timing, keeps the group mounted until its visual height is
+  zero, and removes collapsed descendants from keyboard navigation immediately.
+- Tabs use automatic activation because their panels switch immediately with
+  no network wait. Horizontal Tabs use Left/Right, vertical Tabs use Up/Down,
+  Home/End move to boundaries, disabled tabs are skipped, and the selected tab
+  is the composite's single Tab stop. Tab and TabPanel IDs remain linked through
+  `aria-controls` and `aria-labelledby`.
 - Toolbar is one Tab stop with roving focus. Horizontal toolbars use Left/Right,
   vertical toolbars use Up/Down, and Home/End jump to boundaries. Nested
   composites that call `preventDefault()` keep ownership of their key event.
@@ -203,6 +228,18 @@
 - Badge preserves native span attributes and remains non-interactive. Use a
   real button or future Chip component when the label can be activated or
   removed; do not add button roles or click behavior to Badge.
+- Card preserves native attributes for its selected root element, but do not
+  turn the entire Card into a button or link. Put real controls inside it, use
+  `article` only for independently meaningful content, and keep the default
+  `div` for ordinary visual grouping.
+- NavigationTreeItem with children is a disclosure branch and does not need a
+  value; a leaf supplies a value. Keep nested items inside their owning branch
+  so tree levels and parent navigation remain valid. Consumer item and tree
+  handlers run first, and `preventDefault()` vetoes compound behavior.
+- Tabs receives tab triggers through its named `tabs` snippet and TabPanel
+  children through its default snippet. Every TabPanel value must match one
+  Tab value. Consumer Tab and Tabs handlers run first, and `preventDefault()`
+  vetoes automatic selection or keyboard movement.
 - Toolbar must restore consumer tabindex attributes when it is destroyed and
   skip disabled, hidden, nested-toolbar, and explicit `tabindex="-1"` items.
 - Select and Combobox share `ListboxOption` (`value`, `label`, optional
