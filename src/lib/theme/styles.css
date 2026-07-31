@@ -590,6 +590,81 @@
     display: grid;
 }
 
+/*badge*/
+.lds-badge {
+    --lds-badge-surface: var(--color-lds-badge-neutral);
+    --lds-badge-content: var(--color-lds-badge-neutral-content);
+    --lds-badge-border: var(--color-lds-badge-neutral-border);
+
+    display: inline-flex;
+    min-height: var(--lds-badge-min-height);
+    max-width: 100%;
+    align-items: center;
+    gap: var(--lds-badge-gap);
+    padding: 0.1rem var(--lds-badge-padding-inline);
+    border: 0.1rem solid transparent;
+    border-radius: var(--lds-shape-rest);
+    color: var(--lds-badge-content);
+    font-size: 0.68rem;
+    font-weight: 500;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    transition:
+            border-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-badge--soft {
+    border-color:
+        color-mix(in srgb, var(--lds-badge-border) 12%, transparent);
+    background: var(--lds-badge-surface);
+}
+
+.lds-badge--outline {
+    border-color:
+        color-mix(in srgb, var(--lds-badge-border) 45%, transparent);
+    background: transparent;
+}
+
+.lds-badge--primary {
+    --lds-badge-surface: var(--color-lds-badge-primary);
+    --lds-badge-content: var(--color-lds-badge-primary-content);
+    --lds-badge-border: var(--color-lds-badge-primary-border);
+}
+
+.lds-badge--secondary {
+    --lds-badge-surface: var(--color-lds-badge-secondary);
+    --lds-badge-content: var(--color-lds-badge-secondary-content);
+    --lds-badge-border: var(--color-lds-badge-secondary-border);
+}
+
+.lds-badge--tertiary {
+    --lds-badge-surface: var(--color-lds-badge-tertiary);
+    --lds-badge-content: var(--color-lds-badge-tertiary-content);
+    --lds-badge-border: var(--color-lds-badge-tertiary-border);
+}
+
+.lds-badge--error {
+    --lds-badge-surface: var(--color-lds-badge-error);
+    --lds-badge-content: var(--color-lds-badge-error-content);
+    --lds-badge-border: var(--color-lds-badge-error-border);
+}
+
+.lds-badge__icon {
+    flex: 0 0 var(--lds-badge-icon-size);
+}
+
+.lds-badge__content {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 /*button group*/
 .lds-button-group {
     display: inline-flex;
@@ -2020,7 +2095,8 @@
     .lds-menu__clip,
     .lds-menu__item,
     .lds-menu__indicator .lds-icon,
-    .lds-menu__radio-mark {
+    .lds-menu__radio-mark,
+    .lds-badge {
         transition: none;
     }
 }

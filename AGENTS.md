@@ -37,6 +37,7 @@
 - Dense action and collection primitives: Icon, Tooltip, Toolbar,
   ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
   supplies its multiple-selection header control.
+- Badge is the compact, non-interactive metadata and status primitive.
 - Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
   MenuCheckboxItem, and MenuRadioGroup/MenuRadioItem.
 - FloatingLayer and Overlay are internal infrastructure used by Tooltip and
@@ -106,6 +107,15 @@
   keyboard navigation.
 - Consecutive checked checkbox/radio menu items merge their touching corners
   into one compact selection block while retaining the outer group corners.
+- Badge is deliberately a single compact 20px size. It supports soft and
+  outline treatments and requires a GitLab icon that communicates the status,
+  but it is not a Chip, Button, or notification-count overlay. The icon remains
+  decorative to assistive technology because the visible text is the
+  accessible status label.
+- Badge tones are neutral, primary, secondary, tertiary, and error. Do not name
+  seed-derived tones success or warning: a dynamic Material seed does not
+  guarantee that secondary or tertiary hues remain green or yellow. Readable
+  badge text, rather than color alone, carries the status meaning.
 - Toolbar is one Tab stop with roving focus. Horizontal toolbars use Left/Right,
   vertical toolbars use Up/Down, and Home/End jump to boundaries. Nested
   composites that call `preventDefault()` keep ownership of their key event.
@@ -190,6 +200,9 @@
   trigger and item handlers run first; `preventDefault()` vetoes compound open,
   selection, or close behavior. MenuRadioItem must be nested in both Menu and
   MenuRadioGroup.
+- Badge preserves native span attributes and remains non-interactive. Use a
+  real button or future Chip component when the label can be activated or
+  removed; do not add button roles or click behavior to Badge.
 - Toolbar must restore consumer tabindex attributes when it is destroyed and
   skip disabled, hidden, nested-toolbar, and explicit `tabindex="-1"` items.
 - Select and Combobox share `ListboxOption` (`value`, `label`, optional

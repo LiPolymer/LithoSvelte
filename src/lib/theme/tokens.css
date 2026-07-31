@@ -61,6 +61,10 @@
     --lds-menu-padding: 0.2rem;
     --lds-menu-item-padding-inline: 0.5rem;
     --lds-menu-item-gap: 0.45rem;
+    --lds-badge-min-height: 1.25rem;
+    --lds-badge-padding-inline: 0.4rem;
+    --lds-badge-gap: 0.3rem;
+    --lds-badge-icon-size: 0.75rem;
     --lds-layer-floating-base: 900;
     --lds-layer-popover: var(--lds-layer-floating-base);
     --lds-layer-tooltip: calc(var(--lds-layer-floating-base) + 100);
@@ -147,6 +151,22 @@
     --color-lds-menu-hover: var(--color-lds-listbox-option-hover);
     --color-lds-menu-checked: color-mix(in srgb, var(--md-sys-color-primary) 9%, transparent);
     --color-lds-menu-danger-hover: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
+
+    --color-lds-badge-neutral: color-mix(in srgb, var(--md-sys-color-secondary) 8%, transparent);
+    --color-lds-badge-neutral-content: var(--md-sys-color-on-surface-variant);
+    --color-lds-badge-neutral-border: var(--md-sys-color-outline-variant);
+    --color-lds-badge-primary: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
+    --color-lds-badge-primary-content: var(--md-sys-color-primary);
+    --color-lds-badge-primary-border: var(--md-sys-color-primary);
+    --color-lds-badge-secondary: color-mix(in srgb, var(--md-sys-color-secondary) 10%, transparent);
+    --color-lds-badge-secondary-content: var(--md-sys-color-secondary);
+    --color-lds-badge-secondary-border: var(--md-sys-color-secondary);
+    --color-lds-badge-tertiary: color-mix(in srgb, var(--md-sys-color-tertiary) 10%, transparent);
+    --color-lds-badge-tertiary-content: var(--md-sys-color-tertiary);
+    --color-lds-badge-tertiary-border: var(--md-sys-color-tertiary);
+    --color-lds-badge-error: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
+    --color-lds-badge-error-content: var(--md-sys-color-error);
+    --color-lds-badge-error-border: var(--md-sys-color-error);
 
     --color-lds-toolbar-surface: var(--color-lds-group-surface);
     --color-lds-toolbar-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);

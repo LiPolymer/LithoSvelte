@@ -1,3 +1,4 @@
+export { default as Badge } from './Badge.svelte'
 export { default as ButtonGroup } from './ButtonGroup.svelte'
 export { default as Checkbox } from './Checkbox.svelte'
 export { default as Combobox } from './Combobox.svelte'
@@ -28,6 +29,7 @@ export { default as Tooltip } from './Tooltip.svelte'
 export { default as TonalButton } from './TonalButton.svelte'
 export { default as ThemeSeedPicker } from './theme/ThemeSeedPicker.svelte'
 
+export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge.svelte'
 export type { ButtonGroupProps } from './ButtonGroup.svelte'
 export type { CheckboxProps } from './Checkbox.svelte'
 export type { ComboboxProps } from './Combobox.svelte'

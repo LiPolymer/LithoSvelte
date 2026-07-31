@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    Badge,
     ButtonGroup,
     Checkbox,
     Combobox,
@@ -590,9 +591,7 @@
                   </div>
                 </td>
                 <td>
-                  <span class="data-table-status" data-state="review">
-                    In review
-                  </span>
+                  <Badge tone="tertiary" icon="review-list">In review</Badge>
                 </td>
                 <td>Mira Chen</td>
                 <td class="lds-data-table__cell--numeric">4m</td>
@@ -631,9 +630,9 @@
                   </div>
                 </td>
                 <td>
-                  <span class="data-table-status" data-state="progress">
+                  <Badge tone="primary" icon="status-running">
                     In progress
-                  </span>
+                  </Badge>
                 </td>
                 <td>Sora Kim</td>
                 <td class="lds-data-table__cell--numeric">18m</td>
@@ -672,9 +671,7 @@
                   </div>
                 </td>
                 <td>
-                  <span class="data-table-status" data-state="ready">
-                    Ready
-                  </span>
+                  <Badge variant="outline" icon="check-circle">Ready</Badge>
                 </td>
                 <td>Sam Rivera</td>
                 <td class="lds-data-table__cell--numeric">1h</td>
@@ -714,9 +711,7 @@
                   </div>
                 </td>
                 <td>
-                  <span class="data-table-status" data-state="blocked">
-                    Blocked
-                  </span>
+                  <Badge tone="error" icon="entity-blocked">Blocked</Badge>
                 </td>
                 <td>Niko Petrova</td>
                 <td class="lds-data-table__cell--numeric">2d</td>
@@ -1092,6 +1087,50 @@
           </article>
         </div>
       </section>
+
+      <section class="lab-section" aria-labelledby="badge-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">10 / Metadata</p>
+            <h2 id="badge-lab-title">Badge</h2>
+          </div>
+          <p>
+            Compact, non-interactive metadata with seed-aware semantic tones.
+          </p>
+        </div>
+
+        <div class="badge-lab">
+          <article>
+            <span>Soft / semantic icon</span>
+            <div class="badge-row">
+              <Badge icon="status-neutral">Neutral</Badge>
+              <Badge tone="primary" icon="status-running">Primary</Badge>
+              <Badge tone="secondary" icon="status-scheduled">
+                Secondary
+              </Badge>
+              <Badge tone="tertiary" icon="review-list">Tertiary</Badge>
+              <Badge tone="error" icon="status-failed">Error</Badge>
+            </div>
+          </article>
+
+          <article>
+            <span>Outline / semantic icon</span>
+            <div class="badge-row">
+              <Badge variant="outline" icon="status-neutral">Neutral</Badge>
+              <Badge tone="primary" variant="outline" icon="progress">
+                Primary
+              </Badge>
+              <Badge tone="secondary" variant="outline" icon="clock">
+                Secondary
+              </Badge>
+              <Badge tone="tertiary" variant="outline" icon="review-checkmark">
+                Tertiary
+              </Badge>
+              <Badge tone="error" variant="outline" icon="error">Error</Badge>
+            </div>
+          </article>
+        </div>
+      </section>
     </main>
 
     <aside class="theme-dock" aria-label="Theme controls">
@@ -1134,7 +1173,8 @@
   .checkbox-grid article > span,
   .selection-control-grid article > span,
   .text-field-grid article > span,
-  .choice-field-grid article > span {
+  .choice-field-grid article > span,
+  .badge-lab article > span {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
   }
@@ -1179,6 +1219,33 @@
   .menu-lab__copy small {
     font-size: 0.68rem;
     white-space: nowrap;
+  }
+
+  .badge-lab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .badge-lab article {
+    display: grid;
+    min-width: 0;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
+  .badge-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem;
   }
 
   .lab-kicker,
@@ -1422,45 +1489,6 @@
     line-height: 1.2;
   }
 
-  .data-table-status {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.12rem 0.32rem;
-    border-radius: var(--lds-shape-rest);
-    color: var(--md-sys-color-on-surface-variant);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-secondary) 9%,
-        transparent
-      );
-    font-size: 0.68rem;
-    font-weight: 500;
-    line-height: 1.2;
-    white-space: nowrap;
-  }
-
-  .data-table-status[data-state='review'],
-  .data-table-status[data-state='progress'] {
-    color: var(--color-lds-primary-content);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-primary) 11%,
-        transparent
-      );
-  }
-
-  .data-table-status[data-state='blocked'] {
-    color: var(--md-sys-color-error);
-    background:
-      color-mix(
-        in srgb,
-        var(--md-sys-color-error) 8%,
-        transparent
-      );
-  }
-
   .text-field-grid,
   .choice-field-grid {
     display: grid;
@@ -1638,7 +1666,8 @@
 
     .text-field-grid,
     .choice-field-grid,
-    .menu-lab {
+    .menu-lab,
+    .badge-lab {
       grid-template-columns: minmax(0, 1fr);
     }
   }
