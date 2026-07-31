@@ -5,6 +5,8 @@
   import IconButton from './lib/IconButton.svelte'
   import PrimaryButton from './lib/PrimaryButton.svelte'
   import TextField from './lib/TextField.svelte'
+  import Toolbar from './lib/Toolbar.svelte'
+  import ToolbarSeparator from './lib/ToolbarSeparator.svelte'
   import Tooltip from './lib/Tooltip.svelte'
   import TonalButton from './lib/TonalButton.svelte'
   import ThemeSeedPicker from './lib/theme/ThemeSeedPicker.svelte'
@@ -15,6 +17,8 @@
   let email = 'hello@litho.design'
   let viewMode: string | number = 'list'
   let lastAction = 'Nothing yet'
+  let boldActive = true
+  let italicActive = false
 </script>
 
 <svelte:head>
@@ -183,10 +187,72 @@
         </div>
       </section>
 
+      <section class="lab-section" aria-labelledby="toolbar-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">02 / Composite actions</p>
+            <h2 id="toolbar-lab-title">Toolbar</h2>
+          </div>
+          <p>One Tab stop, then arrow keys for efficient command navigation.</p>
+        </div>
+
+        <div class="toolbar-lab">
+          <div>
+            <span>Document formatting</span>
+            <small>Home and End jump to the toolbar boundaries.</small>
+          </div>
+
+          <Toolbar aria-label="Document formatting">
+            <Tooltip content="Undo">
+              <IconButton icon="redo" label="Undo" class="toolbar-undo" />
+            </Tooltip>
+            <Tooltip content="Redo unavailable">
+              <IconButton icon="redo" label="Redo" disabled />
+            </Tooltip>
+
+            <ToolbarSeparator />
+
+            <ButtonGroup aria-label="Text formatting">
+              <Tooltip content="Bold">
+                <IconButton
+                  icon="bold"
+                  label="Bold"
+                  aria-pressed={boldActive}
+                  onclick={() => (boldActive = !boldActive)}
+                />
+              </Tooltip>
+              <Tooltip content="Italic">
+                <IconButton
+                  icon="italic"
+                  label="Italic"
+                  aria-pressed={italicActive}
+                  onclick={() => (italicActive = !italicActive)}
+                />
+              </Tooltip>
+              <Tooltip content="Underline">
+                <IconButton icon="underline" label="Underline" />
+              </Tooltip>
+            </ButtonGroup>
+
+            <ToolbarSeparator />
+
+            <Tooltip content="Insert link">
+              <IconButton icon="link" label="Insert link" />
+            </Tooltip>
+            <Tooltip content="Add comment">
+              <IconButton icon="comment" label="Add comment" />
+            </Tooltip>
+            <Tooltip content="More actions">
+              <IconButton icon="ellipsis_h" label="More actions" />
+            </Tooltip>
+          </Toolbar>
+        </div>
+      </section>
+
       <section class="lab-section" aria-labelledby="checkbox-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">02 / Selection</p>
+            <p class="section-index">03 / Selection</p>
             <h2 id="checkbox-lab-title">Checkbox</h2>
           </div>
           <p>Click or use the keyboard to inspect its real interaction states.</p>
@@ -226,7 +292,7 @@
       <section class="lab-section" aria-labelledby="text-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">03 / Input</p>
+            <p class="section-index">04 / Input</p>
             <h2 id="text-field-lab-title">Text field</h2>
           </div>
           <p>Probe content hierarchy, focus, errors and non-editable states.</p>
@@ -319,6 +385,8 @@
   .button-group-grid article > small,
   .icon-button-lab span,
   .icon-button-lab small,
+  .toolbar-lab span,
+  .toolbar-lab small,
   .checkbox-grid article > span,
   .text-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
@@ -488,6 +556,30 @@
     justify-content: flex-end;
   }
 
+  .toolbar-lab {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
+  .toolbar-lab > div {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .toolbar-lab :global(.toolbar-undo .lds-icon) {
+    transform: scaleX(-1);
+  }
+
   .text-field-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -619,6 +711,11 @@
 
     .icon-button-rows {
       justify-content: flex-start;
+    }
+
+    .toolbar-lab {
+      display: grid;
+      align-items: start;
     }
 
     .text-field-grid {

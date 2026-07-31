@@ -42,7 +42,12 @@
     --lds-field-gap: 0.25rem;
 
     --lds-tooltip-max-width: 18rem;
+    --lds-tooltip-backdrop-blur: 0.65rem;
     --lds-layer-tooltip: 1000;
+
+    --lds-toolbar-gap: 0.2rem;
+    --lds-toolbar-padding: 0.2rem;
+    --lds-toolbar-separator-inset: 0.35rem;
 }
 
 /* Color tokens. */
@@ -75,4 +80,8 @@
     --color-lds-tooltip-content: var(--color-lds-secondary-content);
     --color-lds-tooltip-border: var(--color-lds-secondary-hover);
     --color-lds-tooltip-shadow: color-mix(in srgb, var(--md-sys-color-shadow) 10%, transparent);
+
+    --color-lds-toolbar-surface: var(--color-lds-group-surface);
+    --color-lds-toolbar-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
+    --color-lds-toolbar-divider: var(--color-lds-group-divider);
 }

@@ -163,6 +163,8 @@
     border-radius: var(--lds-shape-hover-soft);
     background: var(--color-lds-tooltip-surface);
     box-shadow: 0 0.35rem 1rem var(--color-lds-tooltip-shadow);
+    -webkit-backdrop-filter: blur(var(--lds-tooltip-backdrop-blur));
+    backdrop-filter: blur(var(--lds-tooltip-backdrop-blur));
     inset: 0;
     transform: scaleX(3%);
     transform-origin: center;
@@ -373,6 +375,17 @@
     z-index: 2;
 }
 
+.lds-button-group > .lds-btn:not(:disabled):active,
+.lds-button-group > .lds-btn:not(:disabled)[data-demo-state='pressed'],
+.lds-button-group
+    > .lds-tooltip-anchor
+    > .lds-btn:not(:disabled):active,
+.lds-button-group
+    > .lds-tooltip-anchor
+    > .lds-btn:not(:disabled)[data-demo-state='pressed'] {
+    border-radius: var(--lds-shape-pressed);
+}
+
 .lds-button-group--options > .lds-btn--selected,
 .lds-button-group--options
     > .lds-tooltip-anchor
@@ -388,6 +401,64 @@
     > .lds-tooltip-anchor
     > .lds-btn--selected:not(:disabled):hover {
     background: var(--color-lds-option-selected-hover);
+}
+
+/*toolbar*/
+.lds-toolbar {
+    display: inline-flex;
+    width: fit-content;
+    max-width: 100%;
+    gap: var(--lds-toolbar-gap);
+    padding: var(--lds-toolbar-padding);
+    border: 0.1rem solid var(--color-lds-toolbar-border);
+    border-radius: var(--lds-shape-hover-soft);
+    background: var(--color-lds-toolbar-surface);
+    isolation: isolate;
+}
+
+.lds-toolbar--horizontal {
+    align-items: stretch;
+    flex-direction: row;
+}
+
+.lds-toolbar--vertical {
+    align-items: stretch;
+    flex-direction: column;
+}
+
+.lds-toolbar .lds-btn--ghost,
+.lds-toolbar .lds-btn--ghost:not(:disabled):hover {
+    --lds-btn-shape-duration: var(--lds-motion-duration-fast);
+    --lds-btn-fill-duration: var(--lds-motion-duration-fast);
+}
+
+.lds-toolbar .lds-btn {
+    position: relative;
+}
+
+.lds-toolbar .lds-btn:not(:disabled):hover,
+.lds-toolbar .lds-btn:focus-visible {
+    z-index: 2;
+}
+
+.lds-toolbar__separator {
+    display: block;
+    flex: none;
+    border-radius: 999px;
+    background: var(--color-lds-toolbar-divider);
+    pointer-events: none;
+}
+
+.lds-toolbar__separator--vertical {
+    width: 0.1rem;
+    align-self: stretch;
+    margin-block: var(--lds-toolbar-separator-inset);
+}
+
+.lds-toolbar__separator--horizontal {
+    height: 0.1rem;
+    align-self: stretch;
+    margin-inline: var(--lds-toolbar-separator-inset);
 }
 
 /*checkbox*/
