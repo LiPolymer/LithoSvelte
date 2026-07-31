@@ -19,10 +19,10 @@
   }: CheckboxProps = $props()
 </script>
 
-<label class={`lds-checkbox ${className}`}>
+<label class={`lds-selection lds-checkbox ${className}`}>
   <input
     {...attributes}
-    class="lds-checkbox__input"
+    class="lds-selection__input lds-checkbox__input"
     type="checkbox"
     bind:checked
   />

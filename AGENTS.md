@@ -25,8 +25,8 @@
 ## Current component foundation
 
 - Buttons: Primary, Tonal, Ghost, IconButton, and ButtonGroup.
-- Inputs: Checkbox, TextField, Select, and searchable Combobox. TextField,
-  Select, and Combobox share FieldShell.
+- Inputs: Checkbox, Radio/RadioGroup, Switch, TextField, Select, and searchable
+  Combobox. TextField, Select, and Combobox share FieldShell.
 - Dense action primitives: Icon, Tooltip, Toolbar, and ToolbarSeparator.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
@@ -48,6 +48,13 @@
 - ButtonGroup pressed shape must win over its zero-radius and first/last-radius
   layout rules, including when a compact button is wrapped by Tooltip.
 - Disabled controls must not react to hover or active states.
+- Checkbox, Radio, and Switch share selection-control color, focus, density,
+  and reduced-motion tokens while preserving their native inputs. Radio is an
+  exclusive choice inside RadioGroup; Switch represents an immediate binary
+  setting and exposes native checkbox semantics with `role="switch"`.
+- Radio uses a diamond indicator with Checkbox's rest/hover/pressed corner
+  sequence. Switch applies its hover-soft and pressed-tight shape changes to
+  both the track and its thumb.
 - Tooltip uses Tonal colors and backdrop blur. Pointer hover is delayed,
   keyboard focus opens immediately, and Escape dismisses it. Its fixed-position
   surface flips at viewport edges while its arrow continues to track the
@@ -107,6 +114,9 @@
 - Select and Combobox share `ListboxOption` (`value`, `label`, optional
   `disabled` and `keywords`) and support `bind:value`. Combobox selection
   changes also expose `onvaluechange`.
+- Radio must be nested in RadioGroup. RadioGroup owns `name`, `required`,
+  disabled/error support text, `bind:value`, and `onvaluechange`; native radio
+  behavior retains browser arrow-key navigation and form submission.
 - Reuse Litho controls in internal tools such as ThemeSeedPicker. Keep native
   controls only where they provide unique platform behavior, such as
   `<input type="color">`.
@@ -127,11 +137,10 @@
 
 ## Suggested roadmap
 
-1. Add Radio/Switch where ButtonGroup or Checkbox semantics are insufficient.
-2. Build compact List primitives and integrate them with Toolbar in a realistic
+1. Build compact List primitives and integrate them with Toolbar in a realistic
    productivity layout.
-3. Add DataTable primitives to stress density, selection, keyboard navigation,
+2. Add DataTable primitives to stress density, selection, keyboard navigation,
    and overflow behavior.
-4. Add component-level interaction tests and screenshot regression coverage.
-5. Revisit GitLab-style animated icons later; do not add the Vue-based
+3. Add component-level interaction tests and screenshot regression coverage.
+4. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.

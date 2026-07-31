@@ -41,6 +41,11 @@
     --lds-control-padding-inline: 0.75rem;
     --lds-control-gap: 0.4em;
 
+    --lds-switch-track-width: 2.25em;
+    --lds-switch-track-height: 1.25em;
+    --lds-switch-thumb-size: 0.75em;
+    --lds-switch-track-inset: 0.15em;
+
     --lds-field-padding-inline: 0.625rem;
     --lds-field-padding-block: 0.4rem;
     --lds-field-gap: 0.25rem;
@@ -69,7 +74,18 @@
     --color-lds-secondary-hover: color-mix(in srgb, var(--md-sys-color-secondary) 18%, transparent);
     --color-lds-secondary-content: var(--md-sys-color-secondary);
 
-    --color-lds-checkbox-fill: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
+    --color-lds-selection-border: var(--md-sys-color-outline);
+    --color-lds-selection-border-hover: var(--md-sys-color-primary);
+    --color-lds-selection-fill: color-mix(in srgb, var(--md-sys-color-primary) 14%, transparent);
+    --color-lds-selection-mark: var(--md-sys-color-primary);
+    --color-lds-selection-hover-ring: var(--color-lds-primary-border-light);
+    --color-lds-selection-focus-ring: color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+    --color-lds-checkbox-fill: var(--color-lds-selection-fill);
+    --color-lds-radio-fill: var(--color-lds-selection-fill);
+    --color-lds-switch-track: color-mix(in srgb, var(--md-sys-color-secondary) 5%, transparent);
+    --color-lds-switch-track-selected: var(--color-lds-selection-fill);
+    --color-lds-switch-thumb: var(--md-sys-color-on-surface-variant);
+    --color-lds-switch-thumb-selected: var(--color-lds-selection-mark);
     --color-lds-state-hover: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
     --color-lds-group-surface: color-mix(in srgb, var(--md-sys-color-secondary) 4%, transparent);
     --color-lds-group-divider: color-mix(in srgb, var(--md-sys-color-outline-variant) 65%, transparent);

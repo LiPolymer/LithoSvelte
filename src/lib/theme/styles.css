@@ -461,10 +461,11 @@
     margin-inline: var(--lds-toolbar-separator-inset);
 }
 
-/*checkbox*/
-.lds-checkbox {
+/*selection controls*/
+.lds-selection {
     display: inline-flex;
     position: relative;
+    min-height: var(--lds-control-min-height);
     align-items: center;
     gap: 0.55em;
     color: var(--md-sys-color-on-surface);
@@ -473,22 +474,24 @@
     user-select: none;
 }
 
-.lds-checkbox__input {
+.lds-selection__input {
     position: absolute;
     width: 1px;
     height: 1px;
+    margin: 0;
     opacity: 0;
 }
 
+/*checkbox*/
 .lds-checkbox__box {
     display: grid;
     width: 1.15em;
     height: 1.15em;
     flex: 0 0 auto;
     place-items: center;
-    border: 0.1rem solid var(--md-sys-color-outline);
+    border: 0.1rem solid var(--color-lds-selection-border);
     border-radius: var(--lds-shape-rest);
-    color: var(--md-sys-color-primary);
+    color: var(--color-lds-selection-mark);
     background: transparent;
     transition:
             transform var(--lds-motion-duration-fast)
@@ -517,12 +520,12 @@
 
 .lds-checkbox:hover .lds-checkbox__input:not(:disabled) + .lds-checkbox__box {
     border-radius: var(--lds-shape-hover-compact);
-    border-color: var(--md-sys-color-primary);
-    box-shadow: 0 0 0 0.25em var(--color-lds-primary-border-light);
+    border-color: var(--color-lds-selection-border-hover);
+    box-shadow: 0 0 0 0.25em var(--color-lds-selection-hover-ring);
 }
 
 .lds-checkbox__input:checked + .lds-checkbox__box {
-    border-color: var(--md-sys-color-primary);
+    border-color: var(--color-lds-selection-border-hover);
     background: var(--color-lds-checkbox-fill);
 }
 
@@ -537,13 +540,239 @@
 }
 
 .lds-checkbox__input:focus-visible + .lds-checkbox__box {
-    outline: 0.1rem solid
-        color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+    outline: 0.1rem solid var(--color-lds-selection-focus-ring);
     outline-offset: 0.15rem;
 }
 
 .lds-checkbox__input:disabled + .lds-checkbox__box,
 .lds-checkbox__input:disabled ~ .lds-checkbox__label {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+/*radio group*/
+.lds-radio-group {
+    display: grid;
+    min-width: 0;
+    gap: 0.35rem;
+    padding: 0;
+    border: 0;
+    color: var(--md-sys-color-on-surface);
+}
+
+.lds-radio-group__legend,
+.lds-radio-group__support {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
+}
+
+.lds-radio-group__legend {
+    padding: 0 0.1rem;
+    font-weight: 500;
+}
+
+.lds-radio-group__required {
+    margin-inline-start: 0.2em;
+    color: var(--md-sys-color-primary);
+}
+
+.lds-radio-group__options {
+    min-width: 0;
+}
+
+.lds-radio-group--vertical .lds-radio-group__options {
+    display: grid;
+    gap: 0.1rem;
+}
+
+.lds-radio-group--horizontal .lds-radio-group__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.9rem;
+}
+
+.lds-radio-group__support {
+    min-height: 1em;
+    padding-inline: 0.1rem;
+    line-height: 1.3;
+}
+
+.lds-radio-group--error .lds-radio-group__legend,
+.lds-radio-group--error .lds-radio-group__support {
+    color: var(--md-sys-color-error);
+}
+
+.lds-radio-group--disabled .lds-radio-group__legend,
+.lds-radio-group--disabled .lds-radio-group__support {
+    opacity: 0.38;
+}
+
+/*radio*/
+.lds-radio__circle {
+    display: grid;
+    width: 1.15em;
+    height: 1.15em;
+    flex: 0 0 auto;
+    place-items: center;
+    border: 0.1rem solid var(--color-lds-selection-border);
+    border-radius: var(--lds-shape-rest);
+    background: transparent;
+    transform: rotate(45deg);
+    transition:
+            transform var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-spring),
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            border-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            box-shadow var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-radio__dot {
+    width: 0.48em;
+    height: 0.48em;
+    border-radius: var(--lds-shape-pressed);
+    opacity: 0;
+    background: var(--color-lds-selection-mark);
+    transform: scale(45%);
+    transition:
+            opacity var(--lds-motion-duration-instant)
+                var(--lds-motion-easing-state),
+            transform var(--lds-motion-duration-settle)
+                var(--lds-motion-easing-spring);
+}
+
+.lds-radio:hover .lds-radio__input:not(:disabled) + .lds-radio__circle {
+    border-radius: var(--lds-shape-hover-compact);
+    border-color: var(--color-lds-selection-border-hover);
+    box-shadow: 0 0 0 0.25em var(--color-lds-selection-hover-ring);
+}
+
+.lds-radio__input:checked + .lds-radio__circle {
+    border-color: var(--color-lds-selection-border-hover);
+    background: var(--color-lds-radio-fill);
+}
+
+.lds-radio__input:checked + .lds-radio__circle .lds-radio__dot {
+    opacity: 1;
+    transform: scale(100%);
+}
+
+.lds-radio:active .lds-radio__input:not(:disabled) + .lds-radio__circle {
+    border-radius: var(--lds-shape-pressed);
+    transform: rotate(45deg) scale(90%);
+}
+
+.lds-radio__input:focus-visible + .lds-radio__circle {
+    outline: 0.1rem solid var(--color-lds-selection-focus-ring);
+    outline-offset: 0.15rem;
+}
+
+.lds-radio__input:disabled + .lds-radio__circle,
+.lds-radio__input:disabled ~ .lds-radio__label {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+/*switch*/
+.lds-switch {
+    gap: 0.6em;
+}
+
+.lds-switch__track {
+    position: relative;
+    width: var(--lds-switch-track-width);
+    height: var(--lds-switch-track-height);
+    flex: 0 0 var(--lds-switch-track-width);
+    border: 0.1rem solid var(--color-lds-selection-border);
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-switch-track);
+    transition:
+            transform var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-spring),
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            border-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            box-shadow var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-switch__thumb {
+    position: absolute;
+    top: 50%;
+    left: var(--lds-switch-track-inset);
+    width: var(--lds-switch-thumb-size);
+    height: var(--lds-switch-thumb-size);
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-switch-thumb);
+    transform: translateY(-50%);
+    transition:
+            transform var(--lds-motion-duration-settle)
+                var(--lds-motion-easing-spring),
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-switch:hover .lds-switch__input:not(:disabled) + .lds-switch__track {
+    border-radius: var(--lds-shape-hover-soft);
+    border-color: var(--color-lds-selection-border-hover);
+    box-shadow: 0 0 0 0.25em var(--color-lds-selection-hover-ring);
+}
+
+.lds-switch:hover
+    .lds-switch__input:not(:disabled)
+    + .lds-switch__track
+    .lds-switch__thumb {
+    border-radius: var(--lds-shape-hover-soft);
+}
+
+.lds-switch__input:checked + .lds-switch__track {
+    border-color: var(--color-lds-selection-border-hover);
+    background: var(--color-lds-switch-track-selected);
+}
+
+.lds-switch__input:checked + .lds-switch__track .lds-switch__thumb {
+    background: var(--color-lds-switch-thumb-selected);
+    transform:
+        translateX(
+            calc(
+                var(--lds-switch-track-width)
+                - var(--lds-switch-thumb-size)
+                - var(--lds-switch-track-inset)
+                - var(--lds-switch-track-inset)
+                - 0.2rem
+            )
+        )
+        translateY(-50%);
+}
+
+.lds-switch:active .lds-switch__input:not(:disabled) + .lds-switch__track {
+    border-radius: var(--lds-shape-pressed);
+    transform: scale(96%);
+}
+
+.lds-switch:active
+    .lds-switch__input:not(:disabled)
+    + .lds-switch__track
+    .lds-switch__thumb {
+    border-radius: var(--lds-shape-pressed);
+}
+
+.lds-switch__input:focus-visible + .lds-switch__track {
+    outline: 0.1rem solid var(--color-lds-selection-focus-ring);
+    outline-offset: 0.15rem;
+}
+
+.lds-switch__input:disabled + .lds-switch__track,
+.lds-switch__input:disabled ~ .lds-switch__label {
     opacity: 0.38;
     cursor: not-allowed;
 }
@@ -950,7 +1179,7 @@
 
 @media (pointer: coarse) {
     .lds-btn,
-    .lds-checkbox,
+    .lds-selection,
     .lds-field__control {
         min-height: var(--lds-control-min-height-touch);
     }
@@ -964,6 +1193,10 @@
     .lds-btn,
     .lds-checkbox__box,
     .lds-checkbox__mark,
+    .lds-radio__circle,
+    .lds-radio__dot,
+    .lds-switch__track,
+    .lds-switch__thumb,
     .lds-field__control,
     .lds-tooltip,
     .lds-tooltip__surface,

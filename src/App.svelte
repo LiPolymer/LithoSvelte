@@ -6,7 +6,11 @@
   import IconButton from './lib/IconButton.svelte'
   import type { ListboxOption, ListboxValue } from './lib/listbox'
   import PrimaryButton from './lib/PrimaryButton.svelte'
+  import Radio from './lib/Radio.svelte'
+  import RadioGroup from './lib/RadioGroup.svelte'
+  import type { RadioValue } from './lib/radioGroupContext'
   import Select from './lib/Select.svelte'
+  import Switch from './lib/Switch.svelte'
   import TextField from './lib/TextField.svelte'
   import Toolbar from './lib/Toolbar.svelte'
   import ToolbarSeparator from './lib/ToolbarSeparator.svelte'
@@ -27,6 +31,10 @@
   let reviewer: ListboxValue | undefined = 'mira'
   let missingReviewer: ListboxValue | undefined
   let owner: ListboxValue | undefined = 'sora'
+  let themeMode: RadioValue | undefined = 'system'
+  let defaultVisibility: RadioValue | undefined
+  let compactRows = true
+  let liveSync = false
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -333,10 +341,67 @@
         </div>
       </section>
 
+      <section class="lab-section" aria-labelledby="radio-switch-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">04 / Choice semantics</p>
+            <h2 id="radio-switch-lab-title">Radio &amp; switch</h2>
+          </div>
+          <p>Exclusive choices and immediate binary settings stay native.</p>
+        </div>
+
+        <div class="selection-control-grid">
+          <article>
+            <span>Radio group / horizontal</span>
+            <RadioGroup
+              legend="Theme mode"
+              orientation="horizontal"
+              helperText="Follows the active workspace by default."
+              bind:value={themeMode}
+            >
+              <Radio value="system">System</Radio>
+              <Radio value="light">Light</Radio>
+              <Radio value="dark">Dark</Radio>
+              <Radio value="contrast" disabled>Contrast</Radio>
+            </RadioGroup>
+          </article>
+
+          <article>
+            <span>Radio group / error</span>
+            <RadioGroup
+              legend="Default visibility"
+              error="Choose a visibility level."
+              required
+              bind:value={defaultVisibility}
+            >
+              <Radio value="private">Private</Radio>
+              <Radio value="internal">Internal</Radio>
+              <Radio value="public">Public</Radio>
+            </RadioGroup>
+          </article>
+
+          <article>
+            <span>Switch / interactive</span>
+            <div class="switch-stack">
+              <Switch bind:checked={compactRows}>Compact rows</Switch>
+              <Switch bind:checked={liveSync}>Live synchronization</Switch>
+            </div>
+          </article>
+
+          <article>
+            <span>Switch / disabled</span>
+            <div class="switch-stack">
+              <Switch disabled>External notifications</Switch>
+              <Switch checked disabled>Audit logging</Switch>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section class="lab-section" aria-labelledby="text-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">04 / Input</p>
+            <p class="section-index">05 / Input</p>
             <h2 id="text-field-lab-title">Text field</h2>
           </div>
           <p>Probe content hierarchy, focus, errors and non-editable states.</p>
@@ -400,7 +465,7 @@
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">05 / Input selection</p>
+            <p class="section-index">06 / Input selection</p>
             <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
           </div>
           <p>
@@ -514,6 +579,7 @@
   .toolbar-lab span,
   .toolbar-lab small,
   .checkbox-grid article > span,
+  .selection-control-grid article > span,
   .text-field-grid article > span,
   .choice-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
@@ -637,7 +703,8 @@
     pointer-events: none;
   }
 
-  .checkbox-grid {
+  .checkbox-grid,
+  .selection-control-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
@@ -742,6 +809,21 @@
       );
   }
 
+  .selection-control-grid article {
+    display: grid;
+    min-width: 0;
+    min-height: 10rem;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
   .text-field-grid article,
   .choice-field-grid article {
     display: grid;
@@ -757,7 +839,8 @@
       );
   }
 
-  .checkbox-grid article > span {
+  .checkbox-grid article > span,
+  .selection-control-grid article > span {
     align-self: start;
   }
 
@@ -769,6 +852,16 @@
   .checkbox-grid article :global(.lds-checkbox) {
     align-self: end;
     justify-self: start;
+  }
+
+  .selection-control-grid article :global(.lds-radio-group),
+  .selection-control-grid article .switch-stack {
+    align-self: end;
+  }
+
+  .switch-stack {
+    display: grid;
+    gap: 0.15rem;
   }
 
   .button-group-grid article :global(.lds-button-group) {
@@ -827,7 +920,8 @@
       text-align: left;
     }
 
-    .checkbox-grid {
+    .checkbox-grid,
+    .selection-control-grid {
       grid-template-columns: minmax(0, 1fr);
     }
 
