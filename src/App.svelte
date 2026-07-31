@@ -1,9 +1,12 @@
 <script lang="ts">
   import ButtonGroup from './lib/ButtonGroup.svelte'
   import Checkbox from './lib/Checkbox.svelte'
+  import Combobox from './lib/Combobox.svelte'
   import GhostButton from './lib/GhostButton.svelte'
   import IconButton from './lib/IconButton.svelte'
+  import type { ListboxOption, ListboxValue } from './lib/listbox'
   import PrimaryButton from './lib/PrimaryButton.svelte'
+  import Select from './lib/Select.svelte'
   import TextField from './lib/TextField.svelte'
   import Toolbar from './lib/Toolbar.svelte'
   import ToolbarSeparator from './lib/ToolbarSeparator.svelte'
@@ -19,6 +22,47 @@
   let lastAction = 'Nothing yet'
   let boldActive = true
   let italicActive = false
+  let accessLevel: ListboxValue | undefined = 'maintainer'
+  let invalidAccessLevel: ListboxValue | undefined
+  let reviewer: ListboxValue | undefined = 'mira'
+  let missingReviewer: ListboxValue | undefined
+  let owner: ListboxValue | undefined = 'sora'
+
+  const accessOptions: readonly ListboxOption[] = [
+    { value: 'guest', label: 'Guest' },
+    { value: 'reporter', label: 'Reporter' },
+    { value: 'developer', label: 'Developer' },
+    { value: 'maintainer', label: 'Maintainer' },
+    { value: 'owner', label: 'Owner', disabled: true },
+  ]
+
+  const peopleOptions: readonly ListboxOption[] = [
+    {
+      value: 'mira',
+      label: 'Mira Chen',
+      keywords: ['design', 'taipei'],
+    },
+    {
+      value: 'sora',
+      label: 'Sora Kim',
+      keywords: ['frontend', 'seoul'],
+    },
+    {
+      value: 'niko',
+      label: 'Niko Petrova',
+      keywords: ['research', 'helsinki'],
+    },
+    {
+      value: 'sam',
+      label: 'Sam Rivera',
+      keywords: ['platform', 'remote'],
+    },
+    {
+      value: 'archived',
+      label: 'Archived account',
+      disabled: true,
+    },
+  ]
 </script>
 
 <svelte:head>
@@ -352,6 +396,88 @@
           </article>
         </div>
       </section>
+
+      <section class="lab-section" aria-labelledby="choice-field-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">05 / Input selection</p>
+            <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
+          </div>
+          <p>
+            One connected reveal surface for direct choice and filtered
+            keyboard search.
+          </p>
+        </div>
+
+        <div class="choice-field-grid">
+          <article>
+            <span>Select / filled</span>
+            <Select
+              label="Access level"
+              options={accessOptions}
+              helperText="Owner is unavailable under the current policy."
+              bind:value={accessLevel}
+            />
+          </article>
+
+          <article>
+            <span>Select / error</span>
+            <Select
+              label="Default access"
+              options={accessOptions}
+              placeholder="Choose a level"
+              error="Choose a default access level."
+              required
+              bind:value={invalidAccessLevel}
+            />
+          </article>
+
+          <article>
+            <span>Select / disabled</span>
+            <Select
+              label="Workflow"
+              options={accessOptions}
+              value="developer"
+              helperText="Managed by your organization."
+              disabled
+            />
+          </article>
+
+          <article>
+            <span>Combobox / searchable</span>
+            <Combobox
+              label="Reviewer"
+              options={peopleOptions}
+              placeholder="Search by name, team or location"
+              helperText="Arrow keys navigate; Enter selects."
+              bind:value={reviewer}
+            />
+          </article>
+
+          <article>
+            <span>Combobox / error</span>
+            <Combobox
+              label="Required reviewer"
+              options={peopleOptions}
+              placeholder="Search people"
+              error="Assign at least one reviewer."
+              required
+              bind:value={missingReviewer}
+            />
+          </article>
+
+          <article>
+            <span>Combobox / readonly</span>
+            <Combobox
+              label="Owner"
+              options={peopleOptions}
+              helperText="Inherited from the parent workspace."
+              readonly
+              bind:value={owner}
+            />
+          </article>
+        </div>
+      </section>
     </main>
 
     <aside class="theme-dock" aria-label="Theme controls">
@@ -388,7 +514,8 @@
   .toolbar-lab span,
   .toolbar-lab small,
   .checkbox-grid article > span,
-  .text-field-grid article > span {
+  .text-field-grid article > span,
+  .choice-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
   }
@@ -580,7 +707,8 @@
     transform: scaleX(-1);
   }
 
-  .text-field-grid {
+  .text-field-grid,
+  .choice-field-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 0.5rem;
@@ -614,7 +742,8 @@
       );
   }
 
-  .text-field-grid article {
+  .text-field-grid article,
+  .choice-field-grid article {
     display: grid;
     gap: 1rem;
     min-height: 9rem;
@@ -632,7 +761,8 @@
     align-self: start;
   }
 
-  .text-field-grid article > span {
+  .text-field-grid article > span,
+  .choice-field-grid article > span {
     align-self: start;
   }
 
@@ -645,7 +775,8 @@
     align-self: end;
   }
 
-  .text-field-grid article :global(.lds-text-field) {
+  .text-field-grid article :global(.lds-text-field),
+  .choice-field-grid article :global(.lds-field) {
     align-self: end;
   }
 
@@ -718,7 +849,8 @@
       align-items: start;
     }
 
-    .text-field-grid {
+    .text-field-grid,
+    .choice-field-grid {
       grid-template-columns: minmax(0, 1fr);
     }
   }

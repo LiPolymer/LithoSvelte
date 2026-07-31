@@ -548,21 +548,27 @@
     cursor: not-allowed;
 }
 
-/*text field*/
-.lds-text-field {
+/*field shell*/
+.lds-field {
     display: grid;
+    position: relative;
     width: 100%;
     gap: var(--lds-field-gap);
     color: var(--md-sys-color-on-surface);
+    isolation: isolate;
 }
 
-.lds-text-field__label,
-.lds-text-field__support {
+.lds-field--listbox-present {
+    z-index: var(--lds-layer-popover);
+}
+
+.lds-field__label,
+.lds-field__support {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
 }
 
-.lds-text-field__label {
+.lds-field__label {
     display: flex;
     align-items: baseline;
     gap: 0.2em;
@@ -570,12 +576,19 @@
     font-weight: 500;
 }
 
-.lds-text-field__required {
+.lds-field__required {
     color: var(--md-sys-color-primary);
 }
 
-.lds-text-field__control {
+.lds-field__body {
+    position: relative;
+    min-width: 0;
+}
+
+.lds-field__control {
     display: flex;
+    position: relative;
+    z-index: 2;
     min-height: var(--lds-control-min-height);
     align-items: center;
     padding-inline: var(--lds-field-padding-inline);
@@ -595,6 +608,74 @@
                 var(--lds-motion-easing-spring);
 }
 
+.lds-field__support {
+    min-height: 1em;
+    padding-inline: 0.1rem;
+    line-height: 1.3;
+}
+
+.lds-field:not(.lds-field--disabled):hover .lds-field__control {
+    border-radius: var(--lds-shape-hover-compact);
+    border-color:
+        color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent);
+    background: var(--color-lds-field-hover);
+}
+
+.lds-field:not(.lds-field--disabled):not(.lds-field--readonly)
+    .lds-field__control:focus-within {
+    border-radius: var(--lds-shape-hover-soft);
+    border-color:
+        color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+    background: var(--color-lds-field-focus);
+    box-shadow: 0 0 0 0.25em var(--color-lds-primary-border-light);
+}
+
+.lds-field--error .lds-field__label,
+.lds-field--error .lds-field__support {
+    color: var(--md-sys-color-error);
+}
+
+.lds-field--error .lds-field__control {
+    border-color:
+        color-mix(in srgb, var(--md-sys-color-error) 45%, transparent);
+    background: var(--color-lds-field-error);
+}
+
+.lds-field--error:not(.lds-field--disabled):hover
+    .lds-field__control {
+    border-color: var(--color-lds-field-error-highlighted);
+    background: var(--color-lds-field-error);
+}
+
+.lds-field--error:not(.lds-field--disabled):not(.lds-field--readonly)
+    .lds-field__control:focus-within {
+    border-color: var(--md-sys-color-error);
+    background: var(--color-lds-field-error);
+    box-shadow: 0 0 0 0.25em
+        color-mix(in srgb, var(--md-sys-color-error) 5%, transparent);
+}
+
+.lds-field--readonly .lds-field__control {
+    border-color:
+        color-mix(
+            in srgb,
+            var(--md-sys-color-outline-variant) 55%,
+            transparent
+        );
+    background: transparent;
+}
+
+.lds-field--disabled {
+    cursor: not-allowed;
+}
+
+.lds-field--disabled .lds-field__label,
+.lds-field--disabled .lds-field__control,
+.lds-field--disabled .lds-field__support {
+    opacity: 0.38;
+}
+
+/*text field*/
 .lds-text-field__input {
     width: 100%;
     min-width: 0;
@@ -614,94 +695,263 @@
     opacity: 0.55;
 }
 
-.lds-text-field__support {
-    min-height: 1em;
-    padding-inline: 0.1rem;
-    line-height: 1.3;
-}
-
-.lds-text-field:not(.lds-text-field--disabled):hover
-    .lds-text-field__control {
-    border-radius: var(--lds-shape-hover-compact);
-    border-color:
-        color-mix(in srgb, var(--md-sys-color-primary) 18%, transparent);
-    background: var(--color-lds-field-hover);
-}
-
-.lds-text-field:not(.lds-text-field--disabled):not(
-        .lds-text-field--readonly
-    )
-    .lds-text-field__control:focus-within {
-    border-radius: var(--lds-shape-hover-soft);
-    border-color:
-        color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
-    background: var(--color-lds-field-focus);
-    box-shadow: 0 0 0 0.25em var(--color-lds-primary-border-light);
-}
-
-.lds-text-field--error .lds-text-field__label,
-.lds-text-field--error .lds-text-field__support {
-    color: var(--md-sys-color-error);
-}
-
-.lds-text-field--error .lds-text-field__control {
-    border-color:
-        color-mix(in srgb, var(--md-sys-color-error) 45%, transparent);
-    background: var(--color-lds-field-error);
-}
-
-.lds-text-field--error:not(.lds-text-field--disabled):hover
-    .lds-text-field__control {
-    border-color: var(--color-lds-field-error-highlighted);
-    background: var(--color-lds-field-error);
-}
-
-.lds-text-field--error:not(.lds-text-field--disabled):not(
-        .lds-text-field--readonly
-    )
-    .lds-text-field__control:focus-within {
-    border-color: var(--md-sys-color-error);
-    background: var(--color-lds-field-error);
-    box-shadow: 0 0 0 0.25em
-        color-mix(in srgb, var(--md-sys-color-error) 5%, transparent);
-}
-
-.lds-text-field--readonly .lds-text-field__control {
-    border-color:
-        color-mix(
-            in srgb,
-            var(--md-sys-color-outline-variant) 55%,
-            transparent
-        );
-    background: transparent;
-}
-
 .lds-text-field.lds-text-field--committing:not(
         .lds-text-field--disabled
     ):not(.lds-text-field--readonly)
-    .lds-text-field__control:focus-within {
+    .lds-field__control:focus-within {
     border-radius: var(--lds-shape-pressed);
     transform: scale(0.98);
-}
-
-.lds-text-field--disabled {
-    cursor: not-allowed;
-}
-
-.lds-text-field--disabled .lds-text-field__label,
-.lds-text-field--disabled .lds-text-field__control,
-.lds-text-field--disabled .lds-text-field__support {
-    opacity: 0.38;
 }
 
 .lds-text-field--disabled .lds-text-field__input {
     cursor: not-allowed;
 }
 
+/*select*/
+.lds-select__trigger {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lds-control-gap);
+    padding-block: var(--lds-field-padding-block);
+    border: 0;
+    outline: 0;
+    color: var(--md-sys-color-on-surface);
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--lds-control-font-size);
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+}
+
+.lds-select__value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lds-select--placeholder .lds-select__value {
+    color:
+        color-mix(
+            in srgb,
+            var(--md-sys-color-on-surface-variant) 55%,
+            transparent
+        );
+}
+
+.lds-select__trigger .lds-icon {
+    flex: none;
+    color: var(--md-sys-color-on-surface-variant);
+    pointer-events: none;
+    transition: transform var(--lds-motion-duration-settle)
+        var(--lds-motion-easing-shape);
+}
+
+.lds-select--open .lds-select__trigger .lds-icon {
+    transform: rotate(180deg);
+}
+
+.lds-select--disabled .lds-select__trigger {
+    cursor: not-allowed;
+}
+
+.lds-select--readonly .lds-select__trigger {
+    cursor: default;
+}
+
+.lds-select__native {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+    pointer-events: none;
+    inset: 50% auto auto 0;
+}
+
+/*combobox*/
+.lds-combobox__input {
+    width: 100%;
+    min-width: 0;
+    flex: 1;
+    padding-block: var(--lds-field-padding-block);
+    border: 0;
+    outline: 0;
+    color: var(--md-sys-color-on-surface);
+    background: transparent;
+    caret-color: var(--md-sys-color-primary);
+    font-family: inherit;
+    font-size: var(--lds-control-font-size);
+    line-height: 1.25;
+}
+
+.lds-combobox__input::placeholder {
+    color: var(--md-sys-color-on-surface-variant);
+    opacity: 0.55;
+}
+
+.lds-combobox__toggle {
+    display: grid;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: 0 0 1.5rem;
+    padding: 0;
+    place-items: center;
+    border: 0;
+    border-radius: var(--lds-shape-rest);
+    outline: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    background: transparent;
+    cursor: pointer;
+}
+
+.lds-combobox__toggle .lds-icon {
+    transition: transform var(--lds-motion-duration-settle)
+        var(--lds-motion-easing-shape);
+}
+
+.lds-combobox--open .lds-combobox__toggle .lds-icon {
+    transform: rotate(180deg);
+}
+
+.lds-combobox__toggle:disabled,
+.lds-combobox--disabled .lds-combobox__input {
+    cursor: not-allowed;
+}
+
+.lds-field__listbox {
+    position: absolute;
+    z-index: 1;
+    top: 100%;
+    right: 0;
+    left: 0;
+    visibility: hidden;
+    color: var(--md-sys-color-on-surface);
+    pointer-events: none;
+    transition: visibility 0s linear
+        var(--lds-motion-duration-collapse);
+}
+
+.lds-field__listbox[data-open='true'] {
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+.lds-field.lds-field--listbox-present
+    > .lds-field__body
+    > .lds-field__control,
+.lds-field.lds-field--listbox-present
+    > .lds-field__body
+    > .lds-field__control:focus-within {
+    border-end-start-radius: 0;
+    border-end-end-radius: 0;
+}
+
+.lds-field__listbox-surface {
+    position: absolute;
+    z-index: 0;
+    border: 0.1rem solid var(--color-lds-listbox-border);
+    border-block-start: 0;
+    border-radius: 0 0 var(--lds-shape-hover-soft)
+        var(--lds-shape-hover-soft);
+    background: var(--color-lds-listbox-surface);
+    box-shadow: 0 0.5rem 1.4rem var(--color-lds-listbox-shadow);
+    -webkit-backdrop-filter: blur(var(--lds-tooltip-backdrop-blur));
+    backdrop-filter: blur(var(--lds-tooltip-backdrop-blur));
+    inset: 0;
+    pointer-events: none;
+    transform: scaleY(0.03);
+    transform-origin: top center;
+    transition: transform
+        var(--lds-motion-duration-collapse)
+        var(--lds-motion-easing-collapse);
+}
+
+.lds-field__listbox-clip {
+    position: relative;
+    z-index: 1;
+    max-height: var(--lds-listbox-max-height);
+    padding: 0.2rem;
+    overflow-y: auto;
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path
+        var(--lds-motion-duration-collapse)
+        var(--lds-motion-easing-collapse);
+}
+
+.lds-field__listbox[data-open='true']
+    > .lds-field__listbox-surface {
+    transform: scaleY(1);
+    transition-duration: var(--lds-motion-duration-listbox-reveal);
+    transition-timing-function: var(--lds-motion-easing-reveal);
+}
+
+.lds-field__listbox[data-open='true']
+    > .lds-field__listbox-clip {
+    clip-path: inset(0);
+    transition-duration: var(--lds-motion-duration-listbox-reveal);
+    transition-timing-function: var(--lds-motion-easing-reveal);
+}
+
+.lds-field__option {
+    display: flex;
+    width: 100%;
+    min-height: var(--lds-control-min-height-compact);
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--lds-control-gap);
+    padding: 0.35rem 0.5rem;
+    border: 0;
+    border-radius: var(--lds-shape-rest);
+    color: inherit;
+    background: transparent;
+    font-family: inherit;
+    font-size: var(--lds-control-font-size);
+    line-height: 1.25;
+    text-align: left;
+    cursor: pointer;
+}
+
+.lds-field__option--active {
+    border-radius: var(--lds-shape-hover-soft);
+    background: var(--color-lds-listbox-option-hover);
+}
+
+.lds-field__option[aria-selected='true'] {
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-listbox-option-selected);
+    font-weight: 500;
+}
+
+.lds-field__option[aria-selected='true'].lds-field__option--active {
+    background:
+        color-mix(
+            in srgb,
+            var(--color-lds-listbox-option-selected) 72%,
+            var(--color-lds-listbox-option-hover)
+        );
+}
+
+.lds-field__option:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+.lds-field__empty {
+    padding: 0.5rem;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
+}
+
 @media (pointer: coarse) {
     .lds-btn,
     .lds-checkbox,
-    .lds-text-field__control {
+    .lds-field__control {
         min-height: var(--lds-control-min-height-touch);
     }
 
@@ -714,10 +964,15 @@
     .lds-btn,
     .lds-checkbox__box,
     .lds-checkbox__mark,
-    .lds-text-field__control,
+    .lds-field__control,
     .lds-tooltip,
     .lds-tooltip__surface,
-    .lds-tooltip__clip {
+    .lds-tooltip__clip,
+    .lds-select__trigger .lds-icon,
+    .lds-combobox__toggle .lds-icon,
+    .lds-field__listbox,
+    .lds-field__listbox-surface,
+    .lds-field__listbox-clip {
         transition: none;
     }
 }

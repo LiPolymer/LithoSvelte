@@ -9,6 +9,7 @@
     --ease-lds-shape-soft: cubic-bezier(0.33, 1, 0.68, 1);
     --ease-lds-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
     --ease-lds-reveal: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-lds-collapse: cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 /* Semantic shape and motion tokens. */
@@ -21,6 +22,8 @@
     --lds-motion-duration-instant: 80ms;
     --lds-motion-duration-fast: 100ms;
     --lds-motion-duration-settle: 120ms;
+    --lds-motion-duration-listbox-reveal: 300ms;
+    --lds-motion-duration-collapse: 120ms;
     --lds-motion-duration-reveal: 600ms;
     --lds-motion-duration-ambient: 1800ms;
 
@@ -29,6 +32,7 @@
     --lds-motion-easing-shape-soft: var(--ease-lds-shape-soft);
     --lds-motion-easing-spring: var(--ease-lds-spring);
     --lds-motion-easing-reveal: var(--ease-lds-reveal);
+    --lds-motion-easing-collapse: var(--ease-lds-collapse);
 
     --lds-control-min-height-compact: 2rem;
     --lds-control-min-height: 2.375rem;
@@ -40,9 +44,11 @@
     --lds-field-padding-inline: 0.625rem;
     --lds-field-padding-block: 0.4rem;
     --lds-field-gap: 0.25rem;
+    --lds-listbox-max-height: 16rem;
 
     --lds-tooltip-max-width: 18rem;
     --lds-tooltip-backdrop-blur: 0.65rem;
+    --lds-layer-popover: 900;
     --lds-layer-tooltip: 1000;
 
     --lds-toolbar-gap: 0.2rem;
@@ -75,6 +81,11 @@
     --color-lds-field-focus: color-mix(in srgb, var(--md-sys-color-primary) 10%, transparent);
     --color-lds-field-error: color-mix(in srgb, var(--md-sys-color-error) 6%, transparent);
     --color-lds-field-error-highlighted: color-mix(in srgb, var(--md-sys-color-primary) 30%, var(--md-sys-color-error));
+    --color-lds-listbox-surface: var(--color-lds-tooltip-surface);
+    --color-lds-listbox-border: var(--color-lds-tooltip-border);
+    --color-lds-listbox-option-hover: color-mix(in srgb, var(--md-sys-color-primary) 8%, transparent);
+    --color-lds-listbox-option-selected: color-mix(in srgb, var(--md-sys-color-primary) 13%, transparent);
+    --color-lds-listbox-shadow: var(--color-lds-tooltip-shadow);
 
     --color-lds-tooltip-surface: var(--color-lds-secondary);
     --color-lds-tooltip-content: var(--color-lds-secondary-content);

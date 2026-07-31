@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onDestroy } from 'svelte'
   import type { HTMLInputAttributes } from 'svelte/elements'
+  import FieldShell from './FieldShell.svelte'
 
   type InputKeyboardEvent = KeyboardEvent & {
     currentTarget: EventTarget & HTMLInputElement
@@ -35,12 +36,15 @@
     type = 'text',
     commitOnEnter = false,
     oncommit,
+    id: inputId,
+    'aria-describedby': ariaDescribedBy,
+    'aria-invalid': ariaInvalid,
     onkeydown: userOnkeydown,
     ...attributes
   }: TextFieldProps = $props()
 
   const fieldId = $props.id()
-  const supportId = `${fieldId}-support`
+  let resolvedInputId = $derived(inputId ?? `${fieldId}-control`)
   let inputElement = $state<HTMLInputElement>()
   let committing = $state(false)
   let commitTimer: ReturnType<typeof setTimeout> | undefined
@@ -91,17 +95,23 @@
   })
 </script>
 
-<label class={rootClass}>
-  <span class="lds-text-field__label">
-    {label}
-    {#if required}
-      <span class="lds-text-field__required" aria-hidden="true">*</span>
-    {/if}
-  </span>
-
-  <span class="lds-text-field__control">
+<FieldShell
+  {label}
+  controlId={resolvedInputId}
+  controlDescribedBy={ariaDescribedBy}
+  controlInvalid={ariaInvalid}
+  {helperText}
+  {error}
+  class={rootClass}
+  {disabled}
+  {readonly}
+  {required}
+  partPrefix="lds-text-field"
+>
+  {#snippet children(field)}
     <input
       {...attributes}
+      id={field.id}
       class="lds-text-field__input"
       {type}
       {disabled}
@@ -110,18 +120,8 @@
       bind:this={inputElement}
       bind:value
       onkeydown={handleKeydown}
-      aria-invalid={error ? 'true' : undefined}
-      aria-describedby={error || helperText ? supportId : undefined}
+      aria-invalid={field.invalid}
+      aria-describedby={field.describedBy}
     />
-  </span>
-
-  {#if error || helperText}
-    <span
-      id={supportId}
-      class="lds-text-field__support"
-      aria-live={error ? 'polite' : undefined}
-    >
-      {error ?? helperText}
-    </span>
-  {/if}
-</label>
+  {/snippet}
+</FieldShell>
