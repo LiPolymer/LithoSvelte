@@ -2,8 +2,10 @@
   import ButtonGroup from './lib/ButtonGroup.svelte'
   import Checkbox from './lib/Checkbox.svelte'
   import GhostButton from './lib/GhostButton.svelte'
+  import IconButton from './lib/IconButton.svelte'
   import PrimaryButton from './lib/PrimaryButton.svelte'
   import TextField from './lib/TextField.svelte'
+  import Tooltip from './lib/Tooltip.svelte'
   import TonalButton from './lib/TonalButton.svelte'
   import ThemeSeedPicker from './lib/theme/ThemeSeedPicker.svelte'
 
@@ -131,6 +133,53 @@
             </ButtonGroup>
             <small>Current view: {viewMode}</small>
           </article>
+        </div>
+
+        <div class="icon-button-lab">
+          <div>
+            <span>Icon buttons / compact actions</span>
+            <small>GitLab glyphs with Litho density and interaction states.</small>
+          </div>
+
+          <div class="icon-button-rows">
+            <div
+              class="icon-button-row"
+              role="group"
+              aria-label="Icon button variants"
+            >
+              <Tooltip content="Edit">
+                <IconButton icon="pencil" label="Edit" />
+              </Tooltip>
+              <Tooltip content="Download" placement="bottom">
+                <IconButton
+                  icon="download"
+                  label="Download"
+                  variant="tonal"
+                />
+              </Tooltip>
+              <Tooltip content="Create">
+                <IconButton icon="plus" label="Create" variant="primary" />
+              </Tooltip>
+              <Tooltip content="Remove unavailable">
+                <IconButton icon="remove" label="Remove" disabled />
+              </Tooltip>
+              <Tooltip content="Settings">
+                <IconButton icon="settings" label="Settings" size="default" />
+              </Tooltip>
+            </div>
+
+            <ButtonGroup aria-label="Formatting actions">
+              <Tooltip content="Bold">
+                <IconButton icon="bold" label="Bold" />
+              </Tooltip>
+              <Tooltip content="Italic">
+                <IconButton icon="italic" label="Italic" />
+              </Tooltip>
+              <Tooltip content="Insert link">
+                <IconButton icon="link" label="Insert link" />
+              </Tooltip>
+            </ButtonGroup>
+          </div>
         </div>
       </section>
 
@@ -268,6 +317,8 @@
   .theme-dock > p,
   .button-group-grid article > span,
   .button-group-grid article > small,
+  .icon-button-lab span,
+  .icon-button-lab small,
   .checkbox-grid article > span,
   .text-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
@@ -404,6 +455,39 @@
     margin-top: 1rem;
   }
 
+  .icon-button-lab {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
+  .icon-button-lab > div:first-child {
+    display: grid;
+    gap: 0.2rem;
+  }
+
+  .icon-button-rows,
+  .icon-button-row {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .icon-button-rows {
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
   .text-field-grid {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -526,6 +610,15 @@
 
     .button-group-grid {
       grid-template-columns: minmax(0, 1fr);
+    }
+
+    .icon-button-lab {
+      display: grid;
+      align-items: start;
+    }
+
+    .icon-button-rows {
+      justify-content: flex-start;
     }
 
     .text-field-grid {

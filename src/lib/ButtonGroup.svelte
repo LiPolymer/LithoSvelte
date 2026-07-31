@@ -64,7 +64,7 @@
 
     const buttons = Array.from(
       event.currentTarget.querySelectorAll<HTMLButtonElement>(
-        ':scope > .lds-btn:not(:disabled)',
+        ':scope > .lds-btn:not(:disabled), :scope > .lds-tooltip-anchor > .lds-btn:not(:disabled)',
       ),
     )
     const currentButton = (event.target as Element | null)?.closest(

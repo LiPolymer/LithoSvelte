@@ -99,6 +99,199 @@
     cursor: not-allowed;
 }
 
+/*icon*/
+.lds-icon {
+    display: block;
+    flex: none;
+    color: currentColor;
+    pointer-events: none;
+}
+
+.lds-icon-btn {
+    --lds-icon-button-size: var(--lds-control-min-height);
+
+    width: var(--lds-icon-button-size);
+    height: var(--lds-icon-button-size);
+    min-height: var(--lds-icon-button-size);
+    flex: 0 0 var(--lds-icon-button-size);
+    padding: 0;
+    line-height: 0;
+}
+
+.lds-icon-btn--compact {
+    --lds-icon-button-size: var(--lds-control-min-height-compact);
+}
+
+.lds-icon-btn.lds-btn--selected {
+    z-index: 1;
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-option-selected);
+}
+
+.lds-icon-btn.lds-btn--selected:not(:disabled):hover {
+    background: var(--color-lds-option-selected-hover);
+}
+
+/*tooltip*/
+.lds-tooltip-anchor {
+    display: contents;
+}
+
+.lds-tooltip {
+    position: fixed;
+    z-index: var(--lds-layer-tooltip);
+    max-width: min(var(--lds-tooltip-max-width), calc(100vw - 1rem));
+    opacity: 0;
+    visibility: hidden;
+    color: var(--color-lds-tooltip-content);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.01em;
+    overflow-wrap: anywhere;
+    pointer-events: none;
+    transition:
+            opacity var(--lds-motion-duration-instant)
+                var(--lds-motion-easing-state),
+            visibility 0s linear var(--lds-motion-duration-reveal);
+}
+
+.lds-tooltip__surface {
+    position: absolute;
+    z-index: 0;
+    border: 0.1rem solid var(--color-lds-tooltip-border);
+    border-radius: var(--lds-shape-hover-soft);
+    background: var(--color-lds-tooltip-surface);
+    box-shadow: 0 0.35rem 1rem var(--color-lds-tooltip-shadow);
+    inset: 0;
+    transform: scaleX(3%);
+    transform-origin: center;
+    transition:
+            transform var(--lds-motion-duration-reveal)
+                var(--lds-motion-easing-reveal),
+            border-radius var(--lds-motion-duration-reveal)
+                var(--lds-motion-easing-reveal);
+}
+
+.lds-tooltip__clip {
+    position: relative;
+    z-index: 1;
+    display: block;
+    padding: 0.35rem 0.55rem;
+    clip-path: inset(0 50%);
+    transition:
+            clip-path var(--lds-motion-duration-reveal)
+                var(--lds-motion-easing-reveal);
+}
+
+.lds-tooltip__content {
+    display: block;
+}
+
+.lds-tooltip__arrow,
+.lds-tooltip__arrow::after {
+    position: absolute;
+    display: block;
+    content: "";
+    pointer-events: none;
+}
+
+.lds-tooltip__arrow {
+    z-index: 2;
+    background: var(--color-lds-tooltip-border);
+}
+
+.lds-tooltip__arrow::after {
+    background: var(--color-lds-tooltip-surface);
+}
+
+.lds-tooltip[data-placement='top'] > .lds-tooltip__arrow,
+.lds-tooltip[data-placement='bottom'] > .lds-tooltip__arrow {
+    left: var(--lds-tooltip-arrow-offset);
+    width: 0.8rem;
+    height: 0.45rem;
+    transform: translateX(-50%);
+}
+
+.lds-tooltip[data-placement='top'] > .lds-tooltip__arrow {
+    bottom: -0.42rem;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.lds-tooltip[data-placement='top'] > .lds-tooltip__arrow::after {
+    top: 0;
+    left: 50%;
+    width: 0.58rem;
+    height: 0.32rem;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform: translateX(-50%);
+}
+
+.lds-tooltip[data-placement='bottom'] > .lds-tooltip__arrow {
+    top: -0.42rem;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+}
+
+.lds-tooltip[data-placement='bottom'] > .lds-tooltip__arrow::after {
+    bottom: 0;
+    left: 50%;
+    width: 0.58rem;
+    height: 0.32rem;
+    clip-path: polygon(50% 0, 100% 100%, 0 100%);
+    transform: translateX(-50%);
+}
+
+.lds-tooltip[data-placement='left'] > .lds-tooltip__arrow,
+.lds-tooltip[data-placement='right'] > .lds-tooltip__arrow {
+    top: var(--lds-tooltip-arrow-offset);
+    width: 0.45rem;
+    height: 0.8rem;
+    transform: translateY(-50%);
+}
+
+.lds-tooltip[data-placement='left'] > .lds-tooltip__arrow {
+    right: -0.42rem;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+}
+
+.lds-tooltip[data-placement='left'] > .lds-tooltip__arrow::after {
+    top: 50%;
+    left: 0;
+    width: 0.32rem;
+    height: 0.58rem;
+    clip-path: polygon(0 0, 100% 50%, 0 100%);
+    transform: translateY(-50%);
+}
+
+.lds-tooltip[data-placement='right'] > .lds-tooltip__arrow {
+    left: -0.42rem;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+}
+
+.lds-tooltip[data-placement='right'] > .lds-tooltip__arrow::after {
+    top: 50%;
+    right: 0;
+    width: 0.32rem;
+    height: 0.58rem;
+    clip-path: polygon(100% 0, 0 50%, 100% 100%);
+    transform: translateY(-50%);
+}
+
+.lds-tooltip[data-visible='true'] {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+}
+
+.lds-tooltip[data-visible='true'] > .lds-tooltip__surface {
+    border-radius: var(--lds-shape-rest);
+    transform: scaleX(100%);
+}
+
+.lds-tooltip[data-visible='true'] > .lds-tooltip__clip {
+    clip-path: inset(0);
+}
+
 /*button group*/
 .lds-button-group {
     display: inline-flex;
@@ -110,54 +303,90 @@
     isolation: isolate;
 }
 
-.lds-button-group > .lds-btn {
+.lds-button-group > .lds-btn,
+.lds-button-group > .lds-tooltip-anchor > .lds-btn {
     position: relative;
     min-width: 0;
     border-radius: 0;
 }
 
-.lds-button-group > .lds-btn:first-of-type {
+.lds-button-group > .lds-button-group__divider:first-child + .lds-btn,
+.lds-button-group > .lds-tooltip-anchor:first-child > .lds-btn {
     border-start-start-radius: var(--lds-shape-rest);
     border-end-start-radius: var(--lds-shape-rest);
 }
 
-.lds-button-group > .lds-btn:last-of-type {
+.lds-button-group > .lds-btn:last-child,
+.lds-button-group > .lds-tooltip-anchor:last-child > .lds-btn {
     border-start-end-radius: var(--lds-shape-rest);
     border-end-end-radius: var(--lds-shape-rest);
 }
 
-.lds-button-group > .lds-button-group__divider {
-    width: 0.1rem;
-    flex: 0 0 0.1rem;
+.lds-button-group > .lds-button-group__divider,
+.lds-button-group > .lds-tooltip-anchor > .lds-button-group__divider {
+    position: relative;
+    z-index: 3;
+    width: 0;
+    flex: 0 0 0;
     align-self: stretch;
-    margin-block: 0.4rem;
-    background: var(--color-lds-group-divider);
     pointer-events: none;
+}
+
+.lds-button-group > .lds-button-group__divider::before,
+.lds-button-group
+    > .lds-tooltip-anchor
+    > .lds-button-group__divider::before {
+    position: absolute;
+    width: 0.1rem;
+    content: "";
+    inset-block: 0.4rem;
+    inset-inline-start: -0.05rem;
+    background: var(--color-lds-group-divider);
 }
 
 .lds-button-group > .lds-button-group__divider:first-child {
     display: none;
 }
 
+.lds-button-group
+    > .lds-tooltip-anchor:first-child
+    > .lds-button-group__divider:first-child {
+    display: none;
+}
+
 .lds-button-group > .lds-btn--ghost,
-.lds-button-group > .lds-btn--ghost:not(:disabled):hover {
+.lds-button-group > .lds-btn--ghost:not(:disabled):hover,
+.lds-button-group > .lds-tooltip-anchor > .lds-btn--ghost,
+.lds-button-group
+    > .lds-tooltip-anchor
+    > .lds-btn--ghost:not(:disabled):hover {
     --lds-btn-shape-duration: var(--lds-motion-duration-fast);
     --lds-btn-fill-duration: var(--lds-motion-duration-fast);
 }
 
 .lds-button-group > .lds-btn:not(:disabled):hover,
-.lds-button-group > .lds-btn:focus-visible {
+.lds-button-group > .lds-btn:focus-visible,
+.lds-button-group
+    > .lds-tooltip-anchor
+    > .lds-btn:not(:disabled):hover,
+.lds-button-group > .lds-tooltip-anchor > .lds-btn:focus-visible {
     z-index: 2;
 }
 
-.lds-button-group--options > .lds-btn--selected {
+.lds-button-group--options > .lds-btn--selected,
+.lds-button-group--options
+    > .lds-tooltip-anchor
+    > .lds-btn--selected {
     z-index: 1;
     color: var(--color-lds-primary-content);
     background: var(--color-lds-option-selected);
     font-weight: 600;
 }
 
-.lds-button-group--options > .lds-btn--selected:not(:disabled):hover {
+.lds-button-group--options > .lds-btn--selected:not(:disabled):hover,
+.lds-button-group--options
+    > .lds-tooltip-anchor
+    > .lds-btn--selected:not(:disabled):hover {
     background: var(--color-lds-option-selected-hover);
 }
 
@@ -404,13 +633,20 @@
     .lds-text-field__control {
         min-height: var(--lds-control-min-height-touch);
     }
+
+    .lds-icon-btn {
+        --lds-icon-button-size: var(--lds-control-min-height-touch);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .lds-btn,
     .lds-checkbox__box,
     .lds-checkbox__mark,
-    .lds-text-field__control {
+    .lds-text-field__control,
+    .lds-tooltip,
+    .lds-tooltip__surface,
+    .lds-tooltip__clip {
         transition: none;
     }
 }

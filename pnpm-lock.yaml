@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@gitlab/svgs':
+        specifier: 3.163.0
+        version: 3.163.0
       '@material/material-color-utilities':
         specifier: ^0.4.0
         version: 0.4.0
@@ -50,6 +53,9 @@ packages:
 
   '@emnapi/wasi-threads@1.2.2':
     resolution: {integrity: sha512-c95qOXkHdydNKhscBTebqEC1CVAZpyqOfVfBzQ1qgzyl3gfeldUjIggDbIZgDKsHLgnsM+igH7TJ/eAasaVuMA==}
+
+  '@gitlab/svgs@3.163.0':
+    resolution: {integrity: sha512-u2fQ3TLMT7RJaHVCS+3C/pv/frI/SAKc6EVCi+4yLOHV2azwDr2zylcQ9EMJ7nHfVPFs+zCr9RLNS5+UALrGCA==}
 
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
@@ -674,6 +680,8 @@ snapshots:
     dependencies:
       tslib: 2.8.1
     optional: true
+
+  '@gitlab/svgs@3.163.0': {}
 
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
