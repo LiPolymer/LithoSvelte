@@ -44,8 +44,12 @@
   destinations and Tabs/Tab/TabPanel for peer views.
 - Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
   MenuCheckboxItem, and MenuRadioGroup/MenuRadioItem.
+- Dialog is the modal work-surface primitive with compact/default/wide sizes,
+  named structural snippets, initial-focus policy, focus containment, exit
+  presence, and composable DialogClose actions. AlertDialog derives stricter
+  confirmation semantics from the same foundation.
 - FloatingLayer and Overlay are internal infrastructure used by Tooltip and
-  Menu, and reserved for future Popover and Dialog components rather than
+  Menu/Dialog, and reserved for future Popover components rather than
   consumer-facing components.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
@@ -58,6 +62,9 @@
 - PrimaryButton is expressive by default: its standalone hover may add a light
   border and slightly change size. `expressive={false}` opts into the quiet
   Tonal-like behavior. ButtonGroup disables expressive behavior automatically.
+- Keep quiet PrimaryButton hover specificity no stronger than the shared
+  pressed selector; pressed shape and scale must still win while the pointer
+  also matches `:hover`.
 - TonalButton and GhostButton do not expand on hover. Their hover shape becomes
   softer; pressed behavior still scales down.
 - Standalone GhostButton deliberately uses a slow ambient shape transition to
@@ -92,6 +99,32 @@
   Overlay can restore the previously focused element and locks body scrolling
   while any modal layer is present. A consumer-provided `present` state may
   outlive `open` so exit motion can finish before unmounting.
+- Dialog keeps logical `open` separate from visual `revealed` and exit
+  `present` state. Its modal backdrop and surface reveal only after the
+  portaled layer mounts; reverse motion finishes before Overlay unregisters,
+  restores focus, and releases its modal scroll lock.
+- Dialog keeps its complete title region visible while body and actions reveal
+  vertically through a `0fr`/`1fr` clipping track. The changing box remains
+  centered by layout throughout the transition and adds only a small centered
+  scale, never a directional translation.
+- Dialog's positioning layer must never become a scroll container during
+  reveal; clip it and leave any necessary overflow scrolling to the Dialog
+  body itself.
+- Keep the Dialog body overflow clipped until the opening transform reaches
+  its settled state. Enabling `overflow-y: auto` while its reveal track is
+  still shorter than the content produces a transient scrollbar.
+- Dialog owns `role="dialog"`, its generated title/description relationships,
+  Tab wrapping, and programmatic-focus containment. A nested overlay with a
+  newer stack order may retain focus, so Menu and future Popover content can
+  operate inside a Dialog without being pulled back to its surface.
+- Dialog's `initialFocus="first"` prioritizes `[autofocus]` or
+  `[data-lds-dialog-initial-focus]`, then the first content control while
+  skipping the built-in close button. `initialFocus="surface"` provides a calm
+  reading-first entry for informational dialogs.
+- AlertDialog requires description and actions, exposes `role="alertdialog"`,
+  hides the header close button, and ignores outside-pointer dismissal by
+  default. Put the least destructive action first and mark it with
+  `data-lds-dialog-initial-focus` when the choice carries material risk.
 - Menu is compact-first: desktop items use the 32px compact control height and
   coarse pointers expand them to 44px. Its surface reveals from the resolved
   anchor edge while item content keeps its natural proportions and is exposed
@@ -221,6 +254,13 @@
   `data-lds-overlay-surface`; pointer events elsewhere in the overlay root are
   considered outside interactions. Dialog-specific role, initial focus, and
   focus containment belong to Dialog rather than the generic Overlay layer.
+- Dialog requires a `title` snippet and accepts optional `trigger`,
+  `description`, default body, and `actions` snippets. It supports `bind:open`;
+  its trigger retains and restores consumer ARIA attributes, and a consumer
+  trigger handler may veto opening with `preventDefault()`.
+- DialogClose wraps one focusable action inside Dialog or AlertDialog. The
+  action's own click handler runs first, and `preventDefault()` vetoes the
+  compound close. Disabled and `aria-disabled` actions never close the layer.
 - Menu wraps exactly one focusable trigger, preferably a Litho button. Consumer
   trigger and item handlers run first; `preventDefault()` vetoes compound open,
   selection, or close behavior. MenuRadioItem must be nested in both Menu and
@@ -277,7 +317,5 @@
 
 1. Review the compact Menu prototype, then add nested submenus and a generic
    non-menu Popover only where real use cases require them.
-2. Build Dialog/AlertDialog with their semantic roles, initial-focus policy,
-   focus containment, and exit presence on top of Overlay.
-3. Revisit GitLab-style animated icons later; do not add the Vue-based
+2. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.

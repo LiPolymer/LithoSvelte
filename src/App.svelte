@@ -1,5 +1,6 @@
 <script lang="ts">
   import {
+    AlertDialog,
     Badge,
     ButtonGroup,
     Card,
@@ -8,6 +9,8 @@
     DataTable,
     DataTableRow,
     DataTableSelectAll,
+    Dialog,
+    DialogClose,
     GhostButton,
     Icon,
     IconButton,
@@ -74,6 +77,11 @@
   let activeLabSection: NavigationTreeValue | undefined = 'button-lab-title'
   let navigationTreePreview: NavigationTreeValue | undefined = 'tree-overview'
   let navigationTab = 'overview'
+  let summaryDialogOpen = false
+  let editDialogOpen = false
+  let dialogWorkspaceName = 'Litho Design System'
+  let alertDialogOpen = false
+  let wideDialogOpen = false
 
   function navigateLab(value: NavigationTreeValue) {
     const heading = document.getElementById(String(value))
@@ -156,6 +164,11 @@
             value="menu-lab-title"
             label="Menu"
             icon="ellipsis_v"
+          />
+          <NavigationTreeItem
+            value="dialog-lab-title"
+            label="Dialog"
+            icon="details-block"
           />
         </NavigationTreeItem>
 
@@ -1358,6 +1371,204 @@
           </Card>
         </div>
       </section>
+
+      <section class="lab-section" aria-labelledby="dialog-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">13 / Overlays</p>
+            <h2 id="dialog-lab-title">Dialog</h2>
+          </div>
+          <p>
+            Modal work surfaces with contained focus, explicit hierarchy and
+            reversible presence motion.
+          </p>
+        </div>
+
+        <div class="dialog-lab">
+          <Card as="article" class="dialog-card">
+            <span>Compact / surface focus</span>
+            <div class="dialog-demo-copy">
+              <h3>Review summary</h3>
+              <p>A short, low-interruption confirmation surface.</p>
+            </div>
+
+            <Dialog
+              bind:open={summaryDialogOpen}
+              size="compact"
+              initialFocus="surface"
+            >
+              {#snippet trigger()}
+                <TonalButton>Open summary</TonalButton>
+              {/snippet}
+
+              {#snippet title()}Ready to publish{/snippet}
+
+              {#snippet description()}
+                Check the final state before sharing this workspace.
+              {/snippet}
+
+              <div class="dialog-preview">
+                <Icon name="status_success" size={16} />
+                <div>
+                  <strong>All checks passed</strong>
+                  <span>8 components and 24 tokens will be published.</span>
+                </div>
+              </div>
+
+              {#snippet actions()}
+                <DialogClose>
+                  <GhostButton>Not now</GhostButton>
+                </DialogClose>
+                <DialogClose>
+                  <PrimaryButton expressive={false}>Publish</PrimaryButton>
+                </DialogClose>
+              {/snippet}
+            </Dialog>
+          </Card>
+
+          <Card as="article" class="dialog-card">
+            <span>Default / explicit initial focus</span>
+            <div class="dialog-demo-copy">
+              <h3>Edit workspace</h3>
+              <p>A compact form keeps the task in its current context.</p>
+            </div>
+
+            <Dialog bind:open={editDialogOpen}>
+              {#snippet trigger()}
+                <TonalButton>Edit details</TonalButton>
+              {/snippet}
+
+              {#snippet title()}Workspace details{/snippet}
+
+              {#snippet description()}
+                Update the label used across navigation and recent activity.
+              {/snippet}
+
+              <TextField
+                label="Workspace name"
+                bind:value={dialogWorkspaceName}
+                data-lds-dialog-initial-focus=""
+                commitOnEnter
+              />
+
+              {#snippet actions()}
+                <DialogClose>
+                  <GhostButton>Cancel</GhostButton>
+                </DialogClose>
+                <DialogClose>
+                  <PrimaryButton expressive={false}>Save changes</PrimaryButton>
+                </DialogClose>
+              {/snippet}
+            </Dialog>
+          </Card>
+
+          <Card as="article" class="dialog-card">
+            <span>Alert / least-destructive focus</span>
+            <div class="dialog-demo-copy">
+              <h3>Discard changes</h3>
+              <p>Requires an explicit decision and ignores backdrop clicks.</p>
+            </div>
+
+            <AlertDialog bind:open={alertDialogOpen} size="compact">
+              {#snippet trigger()}
+                <TonalButton>Open alert</TonalButton>
+              {/snippet}
+
+              {#snippet title()}Discard unsaved changes?{/snippet}
+
+              {#snippet description()}
+                The current workspace name will return to its saved value.
+              {/snippet}
+
+              <div class="dialog-alert-copy">
+                <Icon name="warning" size={16} />
+                <p>This action cannot be undone after leaving the editor.</p>
+              </div>
+
+              {#snippet actions()}
+                <DialogClose>
+                  <GhostButton data-lds-dialog-initial-focus="">
+                    Keep editing
+                  </GhostButton>
+                </DialogClose>
+                <DialogClose>
+                  <PrimaryButton expressive={false}>
+                    Discard changes
+                  </PrimaryButton>
+                </DialogClose>
+              {/snippet}
+            </AlertDialog>
+          </Card>
+
+          <Card as="article" class="dialog-card">
+            <span>Wide / overflow + nested overlay</span>
+            <div class="dialog-demo-copy">
+              <h3>Review workspace</h3>
+              <p>Exercises body scrolling and a Menu above the modal layer.</p>
+            </div>
+
+            <Dialog
+              bind:open={wideDialogOpen}
+              size="wide"
+              style="--lds-dialog-max-height: min(26rem, calc(100dvh - 2rem))"
+            >
+              {#snippet trigger()}
+                <TonalButton>Open wide dialog</TonalButton>
+              {/snippet}
+
+              {#snippet title()}Workspace review{/snippet}
+
+              {#snippet description()}
+                Verify scrolling, focus containment and nested overlay order.
+              {/snippet}
+
+              <div class="dialog-validation-list">
+                <div class="dialog-validation-row">
+                  <strong>Display options</strong>
+                  <span>The nested Menu should retain focus above Dialog.</span>
+                  <Menu label="Dialog display options">
+                    {#snippet trigger()}
+                      <TonalButton>Open nested menu</TonalButton>
+                    {/snippet}
+                    <MenuItem label="Compact metadata">
+                      {#snippet leading()}
+                        <Icon name="list-bulleted" size={14} />
+                      {/snippet}
+                    </MenuItem>
+                    <MenuItem label="Show activity">
+                      {#snippet leading()}
+                        <Icon name="history" size={14} />
+                      {/snippet}
+                    </MenuItem>
+                  </Menu>
+                </div>
+                <div class="dialog-validation-row">
+                  <strong>Keyboard containment</strong>
+                  <span>Tab and Shift+Tab remain inside the active dialog.</span>
+                </div>
+                <div class="dialog-validation-row">
+                  <strong>Overflow ownership</strong>
+                  <span>Only this body scrolls after reveal has settled.</span>
+                </div>
+                <div class="dialog-validation-row">
+                  <strong>Escape order</strong>
+                  <span>Escape closes the nested Menu before the Dialog.</span>
+                </div>
+                <div class="dialog-validation-row">
+                  <strong>Focus restoration</strong>
+                  <span>Closing returns focus to the wide-dialog trigger.</span>
+                </div>
+              </div>
+
+              {#snippet actions()}
+                <DialogClose>
+                  <PrimaryButton expressive={false}>Done</PrimaryButton>
+                </DialogClose>
+              {/snippet}
+            </Dialog>
+          </Card>
+        </div>
+      </section>
     </main>
 
   </div>
@@ -1397,7 +1608,8 @@
   .choice-field-grid :global(.lds-card > span),
   .badge-lab :global(.lds-card > span),
   .navigation-lab :global(.lds-card > span),
-  .card-lab :global(.lds-card > span) {
+  .card-lab :global(.lds-card > span),
+  .dialog-lab :global(.lds-card > span) {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
   }
@@ -1502,6 +1714,112 @@
   .card-demo-copy p {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
+  }
+
+  .dialog-lab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .dialog-lab :global(.dialog-card) {
+    min-height: 10rem;
+    align-content: start;
+  }
+
+  .dialog-lab :global(.lds-dialog-anchor > .lds-btn) {
+    align-self: end;
+    justify-self: start;
+  }
+
+  .dialog-demo-copy {
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .dialog-demo-copy h3,
+  .dialog-demo-copy p {
+    margin: 0;
+  }
+
+  .dialog-demo-copy h3 {
+    font-family: var(--heading);
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .dialog-demo-copy p,
+  .dialog-preview span {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
+  }
+
+  .dialog-preview {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0.55rem;
+    padding: 0.65rem;
+    border-radius: var(--lds-shape-rest);
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-option-selected);
+  }
+
+  .dialog-preview > div {
+    display: grid;
+    gap: 0.15rem;
+  }
+
+  .dialog-preview strong {
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .dialog-alert-copy {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+    gap: 0.55rem;
+    padding: 0.65rem;
+    border-radius: var(--lds-shape-rest);
+    color: var(--md-sys-color-error);
+    background: var(--color-lds-field-error);
+  }
+
+  .dialog-alert-copy p {
+    margin: 0;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
+  }
+
+  .dialog-validation-list {
+    display: grid;
+    gap: 0.35rem;
+  }
+
+  .dialog-validation-row {
+    display: grid;
+    min-height: 4rem;
+    align-content: center;
+    justify-items: start;
+    gap: 0.15rem;
+    padding: 0.65rem;
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-group-surface);
+  }
+
+  .dialog-validation-row strong {
+    font-size: 0.8125rem;
+    font-weight: 500;
+  }
+
+  .dialog-validation-row span {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+  }
+
+  .dialog-validation-row :global(.lds-menu-anchor > .lds-btn) {
+    margin-block-start: 0.35rem;
   }
 
   .lab-kicker,
@@ -1881,7 +2199,8 @@
     .menu-lab,
     .badge-lab,
     .navigation-lab,
-    .card-lab {
+    .card-lab,
+    .dialog-lab {
       grid-template-columns: minmax(0, 1fr);
     }
 

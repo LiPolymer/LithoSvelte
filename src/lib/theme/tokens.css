@@ -24,6 +24,7 @@
     --lds-motion-duration-settle: 120ms;
     --lds-motion-duration-menu-reveal: 180ms;
     --lds-motion-duration-tree-reveal: 180ms;
+    --lds-motion-duration-dialog-reveal: 240ms;
     --lds-motion-duration-listbox-reveal: 300ms;
     --lds-motion-duration-collapse: 120ms;
     --lds-motion-duration-reveal: 600ms;
@@ -62,6 +63,16 @@
     --lds-menu-padding: 0.2rem;
     --lds-menu-item-padding-inline: 0.5rem;
     --lds-menu-item-gap: 0.45rem;
+    --lds-dialog-width-compact: 24rem;
+    --lds-dialog-width: 32rem;
+    --lds-dialog-width-wide: 44rem;
+    --lds-dialog-max-height: calc(100dvh - 2rem);
+    --lds-dialog-viewport-padding: 1rem;
+    --lds-dialog-padding-inline: 1rem;
+    --lds-dialog-header-padding-block: 0.55rem;
+    --lds-dialog-padding-block: 0.85rem;
+    --lds-dialog-section-gap: 0.75rem;
+    --lds-dialog-backdrop-blur: 0.45rem;
     --lds-badge-min-height: 1.25rem;
     --lds-badge-padding-inline: 0.4rem;
     --lds-badge-gap: 0.3rem;
@@ -169,6 +180,14 @@
     --color-lds-menu-hover: var(--color-lds-listbox-option-hover);
     --color-lds-menu-checked: color-mix(in srgb, var(--md-sys-color-primary) 9%, transparent);
     --color-lds-menu-danger-hover: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
+
+    --color-lds-dialog-backdrop: color-mix(in srgb, var(--md-sys-color-shadow) 30%, transparent);
+    --color-lds-dialog-surface: color-mix(in srgb, var(--md-sys-color-secondary) 6%, var(--md-sys-color-surface));
+    --color-lds-dialog-content: var(--md-sys-color-on-surface);
+    --color-lds-dialog-muted: var(--md-sys-color-on-surface-variant);
+    --color-lds-dialog-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 60%, transparent);
+    --color-lds-dialog-divider: var(--color-lds-group-divider);
+    --color-lds-dialog-shadow: color-mix(in srgb, var(--md-sys-color-shadow) 20%, transparent);
 
     --color-lds-badge-neutral: color-mix(in srgb, var(--md-sys-color-secondary) 8%, transparent);
     --color-lds-badge-neutral-content: var(--md-sys-color-on-surface-variant);

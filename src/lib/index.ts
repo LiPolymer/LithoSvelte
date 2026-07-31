@@ -1,3 +1,4 @@
+export { default as AlertDialog } from './AlertDialog.svelte'
 export { default as Badge } from './Badge.svelte'
 export { default as ButtonGroup } from './ButtonGroup.svelte'
 export { default as Card } from './Card.svelte'
@@ -6,6 +7,8 @@ export { default as Combobox } from './Combobox.svelte'
 export { default as DataTable } from './DataTable.svelte'
 export { default as DataTableRow } from './DataTableRow.svelte'
 export { default as DataTableSelectAll } from './DataTableSelectAll.svelte'
+export { default as Dialog } from './Dialog.svelte'
+export { default as DialogClose } from './DialogClose.svelte'
 export { default as GhostButton } from './GhostButton.svelte'
 export { default as Icon } from './Icon.svelte'
 export { default as IconButton } from './IconButton.svelte'
@@ -35,6 +38,7 @@ export { default as Tooltip } from './Tooltip.svelte'
 export { default as TonalButton } from './TonalButton.svelte'
 export { default as ThemeSeedPicker } from './theme/ThemeSeedPicker.svelte'
 
+export type { AlertDialogProps } from './AlertDialog.svelte'
 export type { BadgeProps, BadgeTone, BadgeVariant } from './Badge.svelte'
 export type { ButtonGroupProps } from './ButtonGroup.svelte'
 export type {
@@ -48,6 +52,15 @@ export type { ComboboxProps } from './Combobox.svelte'
 export type { DataTableProps } from './DataTable.svelte'
 export type { DataTableRowProps } from './DataTableRow.svelte'
 export type { DataTableSelectAllProps } from './DataTableSelectAll.svelte'
+export type {
+  DialogInitialFocus,
+  DialogOpenChangeDetails,
+  DialogOpenChangeReason,
+  DialogProps,
+  DialogRole,
+  DialogSize,
+} from './Dialog.svelte'
+export type { DialogCloseProps } from './DialogClose.svelte'
 export type { GhostButtonProps } from './GhostButton.svelte'
 export type { IconProps, IconSize } from './Icon.svelte'
 export type {

@@ -29,6 +29,7 @@
     dismissOnPointerOutside?: boolean
     restoreFocus?: boolean
     portalTarget?: PortalTarget
+    element?: HTMLDivElement
     class?: string
     style?: string
     onpointerdown?: (event: OverlayPointerEvent) => void
@@ -47,6 +48,7 @@
     dismissOnPointerOutside = true,
     restoreFocus = true,
     portalTarget,
+    element = $bindable(),
     class: className = '',
     style: userStyle = '',
     onpointerdown: userOnpointerdown,
@@ -54,7 +56,6 @@
     ...attributes
   }: OverlayProps = $props()
 
-  let rootElement = $state<HTMLDivElement>()
   let registrationId = $state(0)
   let stackOrder = $state(0)
   let mounted = $derived(present ?? open)
@@ -104,7 +105,7 @@
   }
 
   $effect(() => {
-    if (!mounted || !rootElement) {
+    if (!mounted || !element) {
       registrationId = 0
       stackOrder = 0
       return
@@ -131,7 +132,7 @@
 
 <div
   {...attributes}
-  bind:this={rootElement}
+  bind:this={element}
   class={`lds-overlay ${className}`}
   style={resolvedStyle}
   hidden={!mounted}
