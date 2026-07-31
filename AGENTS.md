@@ -27,7 +27,8 @@
 - Buttons: Primary, Tonal, Ghost, IconButton, and ButtonGroup.
 - Inputs: Checkbox, Radio/RadioGroup, Switch, TextField, Select, and searchable
   Combobox. TextField, Select, and Combobox share FieldShell.
-- Dense action primitives: Icon, Tooltip, Toolbar, and ToolbarSeparator.
+- Dense action and collection primitives: Icon, Tooltip, Toolbar,
+  ToolbarSeparator, List, and ListItem.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
 - App.svelte is the component lab and manual visual-regression surface.
@@ -67,6 +68,13 @@
 - Toolbar does not clip focus outlines. Toolbar GhostButton motion uses the
   faster grouped-control timing, and ToolbarSeparator infers the visual
   orientation from its Toolbar.
+- List uses semantic `ul`/`li` structure with one row button and an optional
+  sibling actions region. Up/Down and Home/End move the row roving focus;
+  nested horizontal Toolbars retain Left/Right and their own Tab stop. List
+  dividers belong to the `li`, so row-button press motion never transforms
+  them. The dividers immediately before and after the selected row are hidden
+  so they do not cut through its fill. Single-selection rows expose
+  `aria-pressed` and support `bind:value`.
 - Readonly TextField remains focusable/selectable but has no special focus
   border, glow, or radius.
 - `commitOnEnter` on TextField must ignore IME composition, briefly show the
@@ -117,6 +125,9 @@
 - Radio must be nested in RadioGroup. RadioGroup owns `name`, `required`,
   disabled/error support text, `bind:value`, and `onvaluechange`; native radio
   behavior retains browser arrow-key navigation and form submission.
+- ListItem must be nested in List. Its leading snippet is decorative and must
+  not contain interactive content; place independent commands in its actions
+  snippet, preferably inside Toolbar.
 - Reuse Litho controls in internal tools such as ThemeSeedPicker. Keep native
   controls only where they provide unique platform behavior, such as
   `<input type="color">`.
@@ -137,10 +148,8 @@
 
 ## Suggested roadmap
 
-1. Build compact List primitives and integrate them with Toolbar in a realistic
-   productivity layout.
-2. Add DataTable primitives to stress density, selection, keyboard navigation,
+1. Add DataTable primitives to stress density, selection, keyboard navigation,
    and overflow behavior.
-3. Add component-level interaction tests and screenshot regression coverage.
-4. Revisit GitLab-style animated icons later; do not add the Vue-based
+2. Add component-level interaction tests and screenshot regression coverage.
+3. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.

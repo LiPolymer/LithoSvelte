@@ -3,7 +3,11 @@
   import Checkbox from './lib/Checkbox.svelte'
   import Combobox from './lib/Combobox.svelte'
   import GhostButton from './lib/GhostButton.svelte'
+  import Icon from './lib/Icon.svelte'
   import IconButton from './lib/IconButton.svelte'
+  import List from './lib/List.svelte'
+  import ListItem from './lib/ListItem.svelte'
+  import type { ListValue } from './lib/listContext'
   import type { ListboxOption, ListboxValue } from './lib/listbox'
   import PrimaryButton from './lib/PrimaryButton.svelte'
   import Radio from './lib/Radio.svelte'
@@ -35,6 +39,9 @@
   let defaultVisibility: RadioValue | undefined
   let compactRows = true
   let liveSync = false
+  let selectedWorkspace: ListValue | undefined = 'litho'
+  let workspaceLayout: string | number = 'list'
+  let workspaceActivity = 'Ready'
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -301,10 +308,186 @@
         </div>
       </section>
 
+      <section class="lab-section" aria-labelledby="list-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">03 / Dense collections</p>
+            <h2 id="list-lab-title">Compact list</h2>
+          </div>
+          <p>Vertical row navigation with independent actions at the edge.</p>
+        </div>
+
+        <div class="list-lab">
+          <header class="list-lab-header">
+            <div>
+              <span>Recent workspaces</span>
+              <small aria-live="polite">
+                {selectedWorkspace ?? 'Nothing'} selected · {workspaceActivity}
+              </small>
+            </div>
+
+            <Toolbar aria-label="Workspace list controls">
+              <Tooltip content="Filter workspaces">
+                <IconButton
+                  icon="filter"
+                  label="Filter workspaces"
+                  onclick={() => (workspaceActivity = 'Filter opened')}
+                />
+              </Tooltip>
+              <Tooltip content="Sort by recent activity">
+                <IconButton
+                  icon="sort-highest"
+                  label="Sort by recent activity"
+                  onclick={() => (workspaceActivity = 'Sorted by activity')}
+                />
+              </Tooltip>
+
+              <ToolbarSeparator />
+
+              <ButtonGroup
+                mode="options"
+                bind:value={workspaceLayout}
+                aria-label="Workspace layout"
+              >
+                <Tooltip content="List layout">
+                  <IconButton
+                    icon="list-bulleted"
+                    label="List layout"
+                    value="list"
+                  />
+                </Tooltip>
+                <Tooltip content="Table layout">
+                  <IconButton icon="table" label="Table layout" value="table" />
+                </Tooltip>
+              </ButtonGroup>
+
+              <ToolbarSeparator />
+
+              <Tooltip content="Create workspace">
+                <IconButton
+                  icon="plus"
+                  label="Create workspace"
+                  variant="tonal"
+                  onclick={() => (workspaceActivity = 'Create requested')}
+                />
+              </Tooltip>
+            </Toolbar>
+          </header>
+
+          <List
+            selectionMode="single"
+            bind:value={selectedWorkspace}
+            aria-label="Recent workspaces"
+          >
+            <ListItem
+              value="litho"
+              label="Litho design system"
+              description="main · 12 local changes"
+              metadata="4m"
+              onclick={() => (workspaceActivity = 'Litho opened')}
+            >
+              {#snippet leading()}
+                <Icon name="project" />
+              {/snippet}
+              {#snippet actions()}
+                <Toolbar aria-label="Litho workspace actions">
+                  <Tooltip content="Open activity">
+                    <IconButton
+                      icon="eye"
+                      label="Open Litho activity"
+                      onclick={() => (workspaceActivity = 'Activity opened')}
+                    />
+                  </Tooltip>
+                  <Tooltip content="More actions">
+                    <IconButton
+                      icon="ellipsis_v"
+                      label="More Litho actions"
+                      onclick={() => (workspaceActivity = 'Litho menu opened')}
+                    />
+                  </Tooltip>
+                </Toolbar>
+              {/snippet}
+            </ListItem>
+
+            <ListItem
+              value="aurora"
+              label="Aurora research"
+              description="feature/insights · review requested"
+              metadata="18m"
+              onclick={() => (workspaceActivity = 'Aurora opened')}
+            >
+              {#snippet leading()}
+                <Icon name="branch" />
+              {/snippet}
+              {#snippet actions()}
+                <Toolbar aria-label="Aurora workspace actions">
+                  <Tooltip content="Open activity">
+                    <IconButton
+                      icon="eye"
+                      label="Open Aurora activity"
+                      onclick={() => (workspaceActivity = 'Activity opened')}
+                    />
+                  </Tooltip>
+                  <Tooltip content="More actions">
+                    <IconButton
+                      icon="ellipsis_v"
+                      label="More Aurora actions"
+                      onclick={() => (workspaceActivity = 'Aurora menu opened')}
+                    />
+                  </Tooltip>
+                </Toolbar>
+              {/snippet}
+            </ListItem>
+
+            <ListItem
+              value="atlas"
+              label="Atlas migration"
+              description="release/2.4 · pipeline running"
+              metadata="1h"
+              onclick={() => (workspaceActivity = 'Atlas opened')}
+            >
+              {#snippet leading()}
+                <Icon name="status-running" />
+              {/snippet}
+              {#snippet actions()}
+                <Toolbar aria-label="Atlas workspace actions">
+                  <Tooltip content="Open pipeline">
+                    <IconButton
+                      icon="status"
+                      label="Open Atlas pipeline"
+                      onclick={() => (workspaceActivity = 'Pipeline opened')}
+                    />
+                  </Tooltip>
+                  <Tooltip content="More actions">
+                    <IconButton
+                      icon="ellipsis_v"
+                      label="More Atlas actions"
+                      onclick={() => (workspaceActivity = 'Atlas menu opened')}
+                    />
+                  </Tooltip>
+                </Toolbar>
+              {/snippet}
+            </ListItem>
+
+            <ListItem
+              value="legacy"
+              label="Legacy imports"
+              description="Archived workspace"
+              metadata="Archived"
+              disabled
+            >
+              {#snippet leading()}
+                <Icon name="archive" />
+              {/snippet}
+            </ListItem>
+          </List>
+        </div>
+      </section>
+
       <section class="lab-section" aria-labelledby="checkbox-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">03 / Selection</p>
+            <p class="section-index">04 / Selection</p>
             <h2 id="checkbox-lab-title">Checkbox</h2>
           </div>
           <p>Click or use the keyboard to inspect its real interaction states.</p>
@@ -344,7 +527,7 @@
       <section class="lab-section" aria-labelledby="radio-switch-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">04 / Choice semantics</p>
+            <p class="section-index">05 / Choice semantics</p>
             <h2 id="radio-switch-lab-title">Radio &amp; switch</h2>
           </div>
           <p>Exclusive choices and immediate binary settings stay native.</p>
@@ -401,7 +584,7 @@
       <section class="lab-section" aria-labelledby="text-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">05 / Input</p>
+            <p class="section-index">06 / Input</p>
             <h2 id="text-field-lab-title">Text field</h2>
           </div>
           <p>Probe content hierarchy, focus, errors and non-editable states.</p>
@@ -465,7 +648,7 @@
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">06 / Input selection</p>
+            <p class="section-index">07 / Input selection</p>
             <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
           </div>
           <p>
@@ -578,6 +761,8 @@
   .icon-button-lab small,
   .toolbar-lab span,
   .toolbar-lab small,
+  .list-lab-header span,
+  .list-lab-header small,
   .checkbox-grid article > span,
   .selection-control-grid article > span,
   .text-field-grid article > span,
@@ -774,6 +959,52 @@
     transform: scaleX(-1);
   }
 
+  .list-lab {
+    display: grid;
+    min-width: 0;
+    gap: 0.5rem;
+  }
+
+  .list-lab-header {
+    display: flex;
+    min-width: 0;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.35rem 0.4rem 0.35rem 0.55rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
+  .list-lab-header > div {
+    display: grid;
+    min-width: 0;
+    gap: 0.05rem;
+  }
+
+  .list-lab-header span,
+  .list-lab-header small {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .list-lab-header span {
+    color: var(--md-sys-color-on-surface);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .list-lab-header small {
+    font-size: 0.68rem;
+    line-height: 1.2;
+  }
+
   .text-field-grid,
   .choice-field-grid {
     display: grid;
@@ -939,6 +1170,11 @@
     }
 
     .toolbar-lab {
+      display: grid;
+      align-items: start;
+    }
+
+    .list-lab-header {
       display: grid;
       align-items: start;
     }

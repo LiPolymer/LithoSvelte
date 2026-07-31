@@ -461,6 +461,219 @@
     margin-inline: var(--lds-toolbar-separator-inset);
 }
 
+/*list*/
+.lds-list {
+    display: grid;
+    min-width: 0;
+    gap: var(--lds-list-gap);
+    padding: var(--lds-list-padding);
+    margin: 0;
+    border: 0.1rem solid var(--color-lds-list-border);
+    border-radius: var(--lds-shape-hover-soft);
+    background: var(--color-lds-list-surface);
+    list-style: none;
+}
+
+.lds-list__item {
+    position: relative;
+    display: grid;
+    min-width: 0;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    border-radius: var(--lds-shape-rest);
+    background: transparent;
+    isolation: isolate;
+    transition:
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-list__item:not(:last-child)::after {
+    position: absolute;
+    z-index: 0;
+    height: 0.1rem;
+    content: "";
+    inset-block-end: calc(0rem - var(--lds-list-gap));
+    inset-inline: var(--lds-list-item-padding-inline);
+    background: var(--color-lds-list-divider);
+    opacity: 1;
+    pointer-events: none;
+    transition: opacity var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-state);
+}
+
+.lds-list__item--has-leading:not(:last-child)::after {
+    inset-inline-start: var(--lds-list-divider-leading-inset);
+}
+
+.lds-list__item--selected:not(:last-child)::after,
+.lds-list__item:has(+ .lds-list__item--selected)::after {
+    opacity: 0;
+}
+
+.lds-list__item:not(.lds-list__item--disabled):hover,
+.lds-list__item:not(.lds-list__item--disabled):focus-within {
+    border-radius: var(--lds-shape-hover-compact);
+    background: var(--color-lds-list-hover);
+}
+
+.lds-list__item--selected {
+    background: var(--color-lds-list-selected);
+}
+
+.lds-list__item--selected:not(.lds-list__item--disabled):hover,
+.lds-list__item--selected:not(.lds-list__item--disabled):focus-within {
+    background: var(--color-lds-list-selected-hover);
+}
+
+.lds-list__item--disabled {
+    opacity: 0.38;
+}
+
+.lds-list-item__trigger {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    width: 100%;
+    min-width: 0;
+    min-height: var(--lds-list-item-min-height);
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: var(--lds-list-item-gap);
+    padding: var(--lds-list-item-padding-block)
+        var(--lds-list-item-padding-inline);
+    border: 0;
+    border-radius: inherit;
+    color: var(--md-sys-color-on-surface);
+    background: transparent;
+    font: inherit;
+    text-align: start;
+    cursor: pointer;
+    transition:
+            transform var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-spring),
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-list__item--has-leading .lds-list-item__trigger {
+    grid-template-columns: auto minmax(0, 1fr) auto;
+}
+
+.lds-list-item__trigger:not(:disabled):active {
+    border-radius: var(--lds-shape-pressed);
+    background: var(--color-lds-list-hover);
+    transform: scale(99%);
+}
+
+.lds-list-item__trigger:focus-visible {
+    outline: 0.1rem solid var(--color-lds-selection-focus-ring);
+    outline-offset: 0.05rem;
+}
+
+.lds-list-item__trigger:disabled {
+    cursor: not-allowed;
+}
+
+.lds-list-item__leading {
+    display: grid;
+    width: var(--lds-list-leading-size);
+    height: var(--lds-list-leading-size);
+    place-items: center;
+    border-radius: var(--lds-shape-rest);
+    color: var(--md-sys-color-on-surface-variant);
+    background: var(--color-lds-list-leading);
+    transition:
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-list__item:not(.lds-list__item--disabled):hover
+    .lds-list-item__leading,
+.lds-list__item:not(.lds-list__item--disabled):focus-within
+    .lds-list-item__leading {
+    border-radius: var(--lds-shape-hover-soft);
+}
+
+.lds-list-item__trigger:not(:disabled):active .lds-list-item__leading {
+    border-radius: var(--lds-shape-pressed);
+}
+
+.lds-list__item--selected .lds-list-item__leading {
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-list-leading-selected);
+}
+
+.lds-list-item__content {
+    display: grid;
+    min-width: 0;
+    gap: 0.05rem;
+}
+
+.lds-list-item__label,
+.lds-list-item__description,
+.lds-list-item__metadata {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.lds-list-item__label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    line-height: 1.25;
+}
+
+.lds-list-item__description,
+.lds-list-item__metadata {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+    line-height: 1.25;
+}
+
+.lds-list-item__metadata {
+    max-width: 8rem;
+    text-align: end;
+}
+
+.lds-list-item__actions {
+    position: relative;
+    z-index: 2;
+    padding-inline-end: var(--lds-list-padding);
+    opacity: 0.55;
+    transition: opacity var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-state);
+}
+
+.lds-list-item__actions .lds-toolbar {
+    border-color: transparent;
+    background: transparent;
+    transition:
+            border-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-list__item:hover .lds-list-item__actions,
+.lds-list__item:focus-within .lds-list-item__actions {
+    opacity: 1;
+}
+
+.lds-list__item:hover .lds-list-item__actions .lds-toolbar,
+.lds-list__item:focus-within .lds-list-item__actions .lds-toolbar {
+    border-color: var(--color-lds-toolbar-border);
+    background: var(--color-lds-toolbar-surface);
+}
+
 /*selection controls*/
 .lds-selection {
     display: inline-flex;
@@ -1197,6 +1410,12 @@
     .lds-radio__dot,
     .lds-switch__track,
     .lds-switch__thumb,
+    .lds-list__item,
+    .lds-list-item__trigger,
+    .lds-list-item__leading,
+    .lds-list-item__actions,
+    .lds-list-item__actions .lds-toolbar,
+    .lds-list__item::after,
     .lds-field__control,
     .lds-tooltip,
     .lds-tooltip__surface,
