@@ -11,6 +11,13 @@
     IconButton,
     List,
     ListItem,
+    Menu,
+    MenuCheckboxItem,
+    MenuItem,
+    MenuLabel,
+    MenuRadioGroup,
+    MenuRadioItem,
+    MenuSeparator,
     PrimaryButton,
     Radio,
     RadioGroup,
@@ -26,6 +33,7 @@
     type ListboxOption,
     type ListboxValue,
     type ListValue,
+    type MenuValue,
     type RadioValue,
   } from './lib'
 
@@ -51,6 +59,10 @@
   let workspaceActivity = 'Ready'
   let selectedWorkItems: DataTableValue[] = ['keyboard']
   let workItemActivity = 'Ready'
+  let menuActivity = 'Ready'
+  let showArchivedWorkspaces = false
+  let compactMenuMetadata = true
+  let workspaceSort: MenuValue = 'recent'
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -876,6 +888,129 @@
         </div>
       </section>
 
+      <section class="lab-section" aria-labelledby="menu-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">09 / Floating actions</p>
+            <h2 id="menu-lab-title">Menu</h2>
+          </div>
+          <p>
+            Compact command and option menus share one floating interaction
+            model.
+          </p>
+        </div>
+
+        <div class="menu-lab">
+          <article>
+            <div class="menu-lab__copy">
+              <span>Commands + persistent options</span>
+              <small>{menuActivity}</small>
+            </div>
+
+            <Menu label="Workspace actions">
+              {#snippet trigger()}
+                <TonalButton class="menu-trigger">
+                  Workspace
+                  <Icon name="chevron-down" size={14} />
+                </TonalButton>
+              {/snippet}
+
+              <MenuLabel>Workspace</MenuLabel>
+              <MenuItem
+                      label="Open workspace"
+                      shortcut="↵"
+                      onclick={() => (menuActivity = 'Workspace opened')}
+              >
+                {#snippet leading()}
+                  <Icon name="project" size={14} />
+                {/snippet}
+              </MenuItem>
+              <MenuItem
+                      label="Rename"
+                      shortcut="F2"
+                      onclick={() => (menuActivity = 'Rename requested')}
+              >
+                {#snippet leading()}
+                  <Icon name="pencil" size={14} />
+                {/snippet}
+              </MenuItem>
+              <MenuItem label="Export" shortcut="Ctrl E" disabled>
+                {#snippet leading()}
+                  <Icon name="download" size={14} />
+                {/snippet}
+              </MenuItem>
+
+              <MenuSeparator />
+              <MenuCheckboxItem
+                      label="Show archived"
+                      bind:checked={showArchivedWorkspaces}
+              />
+              <MenuCheckboxItem
+                      label="Compact metadata"
+                      bind:checked={compactMenuMetadata}
+              />
+
+              <MenuSeparator />
+              <MenuLabel>Sort by</MenuLabel>
+              <MenuRadioGroup label="Sort workspaces" bind:value={workspaceSort}>
+                <MenuRadioItem value="recent" label="Recent activity" />
+                <MenuRadioItem value="name" label="Name" />
+                <MenuRadioItem value="created" label="Created date" />
+              </MenuRadioGroup>
+
+              <MenuSeparator />
+              <MenuItem
+                      label="Archive workspace"
+                      variant="danger"
+                      onclick={() => (menuActivity = 'Archive requested')}
+              >
+                {#snippet leading()}
+                  <Icon name="archive" size={14} />
+                {/snippet}
+              </MenuItem>
+            </Menu>
+          </article>
+
+          <article>
+            <div class="menu-lab__copy">
+              <span>End-aligned contextual menu</span>
+              <small>Arrow keys, Home/End and typeahead are active.</small>
+            </div>
+
+            <Menu label="Context actions" align="end">
+              {#snippet trigger()}
+                <IconButton icon="ellipsis_v" label="Open context menu" />
+              {/snippet}
+
+              <MenuItem
+                      label="Edit"
+                      shortcut="E"
+                      onclick={() => (menuActivity = 'Edit requested')}
+              >
+                {#snippet leading()}
+                  <Icon name="pencil" size={14} />
+                {/snippet}
+              </MenuItem>
+              <MenuItem
+                      label="Download"
+                      shortcut="D"
+                      onclick={() => (menuActivity = 'Download requested')}
+              >
+                {#snippet leading()}
+                  <Icon name="download" size={14} />
+                {/snippet}
+              </MenuItem>
+              <MenuSeparator />
+              <MenuItem label="Remove" variant="danger">
+                {#snippet leading()}
+                  <Icon name="remove" size={14} />
+                {/snippet}
+              </MenuItem>
+            </Menu>
+          </article>
+        </div>
+      </section>
+
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
@@ -1002,6 +1137,48 @@
   .choice-field-grid article > span {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.75rem;
+  }
+
+  .menu-lab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .menu-lab article {
+    display: flex;
+    min-width: 0;
+    min-height: 7rem;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: var(--radius-lds-sm);
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 5%,
+        transparent
+      );
+  }
+
+  .menu-lab__copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.2rem;
+  }
+
+  .menu-lab__copy span,
+  .menu-lab__copy small {
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.75rem;
+    text-overflow: ellipsis;
+  }
+
+  .menu-lab__copy small {
+    font-size: 0.68rem;
+    white-space: nowrap;
   }
 
   .lab-kicker,
@@ -1460,7 +1637,8 @@
     }
 
     .text-field-grid,
-    .choice-field-grid {
+    .choice-field-grid,
+    .menu-lab {
       grid-template-columns: minmax(0, 1fr);
     }
   }

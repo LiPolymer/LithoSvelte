@@ -37,8 +37,11 @@
 - Dense action and collection primitives: Icon, Tooltip, Toolbar,
   ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
   supplies its multiple-selection header control.
-- FloatingLayer and Overlay are internal infrastructure for Tooltip and future
-  Popover, Menu, and Dialog components rather than consumer-facing components.
+- Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
+  MenuCheckboxItem, and MenuRadioGroup/MenuRadioItem.
+- FloatingLayer and Overlay are internal infrastructure used by Tooltip and
+  Menu, and reserved for future Popover and Dialog components rather than
+  consumer-facing components.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
 - App.svelte is the component lab and manual visual-regression surface.
@@ -84,6 +87,25 @@
   Overlay can restore the previously focused element and locks body scrolling
   while any modal layer is present. A consumer-provided `present` state may
   outlive `open` so exit motion can finish before unmounting.
+- Menu is compact-first: desktop items use the 32px compact control height and
+  coarse pointers expand them to 44px. Its surface reveals from the resolved
+  anchor edge while item content keeps its natural proportions and is exposed
+  through clipping.
+- Menu opening is staged: mount the Overlay, invalidate any zero-size hidden
+  measurement, wait for FloatingLayer to report a real position, then reveal
+  on a later frame. Keep logical `open`, measured `positioned`, and visual
+  `revealed` separate so the menu never paints at a stale coordinate.
+- Menu owns one focusable trigger, restores the trigger's original ARIA
+  attributes on teardown, and manages vertical focus with Up/Down, Home/End,
+  and typeahead. ArrowDown opens at the first enabled item; ArrowUp opens at
+  the last. Tab closes and advances relative to the trigger, while Escape,
+  outside-pointer dismissal, and command selection return focus to it.
+- Menu command items close after selection. Checkbox and radio items stay open
+  by default so several display/sort options can be changed efficiently;
+  `closeOnSelect` may override either behavior. Disabled items are skipped by
+  keyboard navigation.
+- Consecutive checked checkbox/radio menu items merge their touching corners
+  into one compact selection block while retaining the outer group corners.
 - Toolbar is one Tab stop with roving focus. Horizontal toolbars use Left/Right,
   vertical toolbars use Up/Down, and Home/End jump to boundaries. Nested
   composites that call `preventDefault()` keep ownership of their key event.
@@ -164,6 +186,10 @@
   `data-lds-overlay-surface`; pointer events elsewhere in the overlay root are
   considered outside interactions. Dialog-specific role, initial focus, and
   focus containment belong to Dialog rather than the generic Overlay layer.
+- Menu wraps exactly one focusable trigger, preferably a Litho button. Consumer
+  trigger and item handlers run first; `preventDefault()` vetoes compound open,
+  selection, or close behavior. MenuRadioItem must be nested in both Menu and
+  MenuRadioGroup.
 - Toolbar must restore consumer tabindex attributes when it is destroyed and
   skip disabled, hidden, nested-toolbar, and explicit `tabindex="-1"` items.
 - Select and Combobox share `ListboxOption` (`value`, `label`, optional
@@ -199,8 +225,8 @@
 
 ## Suggested roadmap
 
-1. Build Popover/Menu on the floating and overlay foundation, including shared
-   trigger ownership and keyboard navigation.
+1. Review the compact Menu prototype, then add nested submenus and a generic
+   non-menu Popover only where real use cases require them.
 2. Build Dialog/AlertDialog with their semantic roles, initial-focus policy,
    focus containment, and exit presence on top of Overlay.
 3. Revisit GitLab-style animated icons later; do not add the Vue-based

@@ -14,6 +14,8 @@
     HTMLAttributes<HTMLDivElement>,
     'children' | 'class' | 'style'
   > & {
+    element?: HTMLDivElement
+    positioned?: boolean
     anchor?: HTMLElement | null
     open: boolean
     children: Snippet
@@ -28,10 +30,12 @@
     portalTarget?: PortalTarget
     stacked?: boolean
     class?: string
-    style?: string
+    style?: string | null
   }
 
   let {
+    element = $bindable<HTMLDivElement>(),
+    positioned = $bindable(false),
     anchor,
     open,
     children,
@@ -50,12 +54,10 @@
     ...attributes
   }: FloatingLayerProps = $props()
 
-  let layerElement = $state<HTMLDivElement>()
   let x = $state(0)
   let y = $state(0)
   let arrowOffset = $state(0)
   let resolvedPlacement = $state<FloatingPlacement>('bottom')
-  let positioned = $state(false)
   let stackOrder = $state(0)
 
   let resolvedStyle = $derived(
@@ -73,7 +75,7 @@
 
   $effect(() => {
     const currentAnchor = anchor
-    const currentLayer = layerElement
+    const currentLayer = element
 
     placement
     align
@@ -82,6 +84,8 @@
     arrowPadding
     flip
     shift
+    open
+    positioned
 
     if (!currentLayer) {
       positioned = false
@@ -104,9 +108,16 @@
         return
       }
 
+      const floatingRect = observedLayer.getBoundingClientRect()
+
+      if (floatingRect.width === 0 || floatingRect.height === 0) {
+        positioned = false
+        return
+      }
+
       const position = computeFloatingPosition(
         observedAnchor.getBoundingClientRect(),
-        observedLayer.getBoundingClientRect(),
+        floatingRect,
         {
           width: window.innerWidth,
           height: window.innerHeight,
@@ -162,7 +173,7 @@
 
 <div
   {...attributes}
-  bind:this={layerElement}
+  bind:this={element}
   class={`lds-floating-layer ${className}`}
   style={resolvedStyle}
   data-open={open}

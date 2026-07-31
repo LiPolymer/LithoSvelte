@@ -22,6 +22,7 @@
     --lds-motion-duration-instant: 80ms;
     --lds-motion-duration-fast: 100ms;
     --lds-motion-duration-settle: 120ms;
+    --lds-motion-duration-menu-reveal: 180ms;
     --lds-motion-duration-listbox-reveal: 300ms;
     --lds-motion-duration-collapse: 120ms;
     --lds-motion-duration-reveal: 600ms;
@@ -52,7 +53,14 @@
     --lds-listbox-max-height: 16rem;
 
     --lds-tooltip-max-width: 18rem;
-    --lds-tooltip-backdrop-blur: 0.65rem;
+    --lds-tooltip-backdrop-blur: 0.9rem;
+    --lds-menu-min-width: 11rem;
+    --lds-menu-max-width: 20rem;
+    --lds-menu-max-height: 20rem;
+    --lds-menu-item-min-height: var(--lds-control-min-height-compact);
+    --lds-menu-padding: 0.2rem;
+    --lds-menu-item-padding-inline: 0.5rem;
+    --lds-menu-item-gap: 0.45rem;
     --lds-layer-floating-base: 900;
     --lds-layer-popover: var(--lds-layer-floating-base);
     --lds-layer-tooltip: calc(var(--lds-layer-floating-base) + 100);
@@ -130,6 +138,15 @@
     --color-lds-tooltip-content: var(--color-lds-secondary-content);
     --color-lds-tooltip-border: var(--color-lds-secondary-hover);
     --color-lds-tooltip-shadow: color-mix(in srgb, var(--md-sys-color-shadow) 10%, transparent);
+
+    --color-lds-menu-surface: var(--color-lds-tooltip-surface);
+    --color-lds-menu-content: var(--md-sys-color-on-surface);
+    --color-lds-menu-muted: var(--md-sys-color-on-surface-variant);
+    --color-lds-menu-border: var(--color-lds-tooltip-border);
+    --color-lds-menu-shadow: var(--color-lds-tooltip-shadow);
+    --color-lds-menu-hover: var(--color-lds-listbox-option-hover);
+    --color-lds-menu-checked: color-mix(in srgb, var(--md-sys-color-primary) 9%, transparent);
+    --color-lds-menu-danger-hover: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
 
     --color-lds-toolbar-surface: var(--color-lds-group-surface);
     --color-lds-toolbar-border: color-mix(in srgb, var(--md-sys-color-outline-variant) 45%, transparent);
