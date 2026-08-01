@@ -113,6 +113,15 @@
     --lds-badge-gap: 0.3rem;
     --lds-badge-icon-size: 0.75rem;
     --lds-badge-font-size: 0.68rem;
+    --lds-tag-min-height: 1.5rem;
+    --lds-tag-padding-block: 0.1rem;
+    --lds-tag-padding-inline-start: var(--lds-badge-padding-inline);
+    --lds-tag-padding-inline-end: 0.3rem;
+    --lds-tag-gap: var(--lds-badge-gap);
+    --lds-tag-icon-size: var(--lds-badge-icon-size);
+    --lds-tag-font-size: var(--lds-badge-font-size);
+    --lds-tag-remove-size: 1.375rem;
+    --lds-tag-remove-icon-size: 0.625rem;
     --lds-card-padding-compact: 0.75rem;
     --lds-card-padding: 1rem;
     --lds-card-gap-compact: 0.6rem;
@@ -300,6 +309,15 @@
     --lds-badge-gap: 0.22rem;
     --lds-badge-icon-size: 0.6875rem;
     --lds-badge-font-size: 0.625rem;
+    --lds-tag-min-height: 1.375rem;
+    --lds-tag-padding-block: 0.075rem;
+    --lds-tag-padding-inline-start: var(--lds-badge-padding-inline);
+    --lds-tag-padding-inline-end: 0.25rem;
+    --lds-tag-gap: var(--lds-badge-gap);
+    --lds-tag-icon-size: var(--lds-badge-icon-size);
+    --lds-tag-font-size: var(--lds-badge-font-size);
+    --lds-tag-remove-size: 1.25rem;
+    --lds-tag-remove-icon-size: 0.5625rem;
 
     --lds-card-padding-compact: 0.55rem;
     --lds-card-padding: 0.75rem;

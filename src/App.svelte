@@ -34,6 +34,7 @@
     Select,
     SplitPane,
     Switch,
+    Tag,
     Tab,
     TabPanel,
     Tabs,
@@ -83,6 +84,15 @@
   let navigationTreePreview: NavigationTreeValue | undefined = 'tree-overview'
   let navigationRailPreview: NavigationRailValue | undefined = 'rail-overview'
   let navigationRailExpanded = false
+  let projectTags: Array<{
+    label: string
+    tone: 'neutral' | 'primary' | 'secondary' | 'tertiary'
+  }> = [
+    { label: 'Svelte', tone: 'primary' },
+    { label: 'TypeScript', tone: 'secondary' },
+    { label: 'Material', tone: 'tertiary' },
+  ]
+  let reviewTagVisible = true
   let navigationTab = 'overview'
   let summaryDialogOpen = false
   let editDialogOpen = false
@@ -104,6 +114,10 @@
       ? 'auto'
       : 'smooth'
     section?.scrollIntoView({ behavior, block: 'start' })
+  }
+
+  function removeProjectTag(label: string) {
+    projectTags = projectTags.filter((tag) => tag.label !== label)
   }
 
   $: resolvedGalleryDensity =
@@ -311,7 +325,7 @@
           />
           <NavigationTreeItem
             value="badge-lab-title"
-            label="Badge"
+            label="Badge & tag"
             icon="status"
           />
           <NavigationTreeItem
@@ -1439,10 +1453,11 @@
         <div class="section-heading">
           <div>
             <p class="section-index">10 / Metadata</p>
-            <h2 id="badge-lab-title">Badge</h2>
+            <h2 id="badge-lab-title">Badge &amp; tag</h2>
           </div>
           <p>
-            Compact, non-interactive metadata with seed-aware semantic tones.
+            Status metadata and removable labels share seed-aware semantic
+            tones.
           </p>
         </div>
 
@@ -1474,6 +1489,51 @@
                 Tertiary
               </Badge>
               <Badge tone="error" variant="outline" icon="error">Error</Badge>
+            </div>
+          </Card>
+
+          <Card as="article">
+            <span>Tag / removable soft labels</span>
+            <div class="badge-row">
+              {#each projectTags as tag (tag.label)}
+                <Tag
+                  icon="tag"
+                  tone={tag.tone}
+                  removeLabel={`Remove ${tag.label}`}
+                  onremove={() => removeProjectTag(tag.label)}
+                >
+                  {tag.label}
+                </Tag>
+              {:else}
+                <small>All project tags removed.</small>
+              {/each}
+            </div>
+          </Card>
+
+          <Card as="article">
+            <span>Tag / outline &amp; disabled removal</span>
+            <div class="badge-row">
+              {#if reviewTagVisible}
+                <Tag
+                  icon="label"
+                  tone="primary"
+                  variant="outline"
+                  removeLabel="Remove Review"
+                  onremove={() => (reviewTagVisible = false)}
+                >
+                  Review
+                </Tag>
+              {/if}
+
+              <Tag
+                icon="bookmark"
+                variant="outline"
+                removeLabel="Remove protected tag"
+                onremove={() => undefined}
+                disabled
+              >
+                Protected
+              </Tag>
             </div>
           </Card>
         </div>

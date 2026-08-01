@@ -790,12 +790,16 @@
     display: grid;
 }
 
-/*badge*/
-.lds-badge {
+/*badge and tag shared tones*/
+.lds-badge,
+.lds-tag {
     --lds-badge-surface: var(--color-lds-badge-neutral);
     --lds-badge-content: var(--color-lds-badge-neutral-content);
     --lds-badge-border: var(--color-lds-badge-neutral-border);
+}
 
+/*badge*/
+.lds-badge {
     display: inline-flex;
     min-height: var(--lds-badge-min-height);
     max-width: 100%;
@@ -832,25 +836,29 @@
     background: transparent;
 }
 
-.lds-badge--primary {
+.lds-badge--primary,
+.lds-tag--primary {
     --lds-badge-surface: var(--color-lds-badge-primary);
     --lds-badge-content: var(--color-lds-badge-primary-content);
     --lds-badge-border: var(--color-lds-badge-primary-border);
 }
 
-.lds-badge--secondary {
+.lds-badge--secondary,
+.lds-tag--secondary {
     --lds-badge-surface: var(--color-lds-badge-secondary);
     --lds-badge-content: var(--color-lds-badge-secondary-content);
     --lds-badge-border: var(--color-lds-badge-secondary-border);
 }
 
-.lds-badge--tertiary {
+.lds-badge--tertiary,
+.lds-tag--tertiary {
     --lds-badge-surface: var(--color-lds-badge-tertiary);
     --lds-badge-content: var(--color-lds-badge-tertiary-content);
     --lds-badge-border: var(--color-lds-badge-tertiary-border);
 }
 
-.lds-badge--error {
+.lds-badge--error,
+.lds-tag--error {
     --lds-badge-surface: var(--color-lds-badge-error);
     --lds-badge-content: var(--color-lds-badge-error-content);
     --lds-badge-border: var(--color-lds-badge-error-border);
@@ -864,6 +872,119 @@
     min-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/*tag*/
+.lds-tag {
+    display: inline-flex;
+    box-sizing: border-box;
+    min-height: var(--lds-tag-min-height);
+    max-width: 100%;
+    align-items: stretch;
+    overflow: clip;
+    border: 0.1rem solid transparent;
+    border-radius: var(--lds-shape-rest);
+    color: var(--lds-badge-content);
+    font-size: var(--lds-tag-font-size);
+    font-weight: 500;
+    line-height: 1;
+    vertical-align: middle;
+    white-space: nowrap;
+    transition:
+            border-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-tag--soft {
+    border-color:
+        color-mix(in srgb, var(--lds-badge-border) 12%, transparent);
+    background: var(--lds-badge-surface);
+}
+
+.lds-tag--outline {
+    border-color:
+        color-mix(in srgb, var(--lds-badge-border) 45%, transparent);
+    background: transparent;
+}
+
+.lds-tag__body {
+    display: inline-flex;
+    min-width: 0;
+    flex: 1 1 auto;
+    align-items: center;
+    gap: var(--lds-tag-gap);
+    padding-block: var(--lds-tag-padding-block);
+    padding-inline: var(--lds-tag-padding-inline-start)
+        var(--lds-tag-padding-inline-end);
+}
+
+.lds-tag__icon {
+    flex: 0 0 var(--lds-tag-icon-size);
+}
+
+.lds-tag__content {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.lds-tag__remove {
+    display: grid;
+    width: var(--lds-tag-remove-size);
+    min-width: var(--lds-tag-remove-size);
+    align-self: stretch;
+    place-items: center;
+    padding: 0;
+    border: 0;
+    border-inline-start: 0.1rem solid
+        color-mix(in srgb, var(--lds-badge-border) 18%, transparent);
+    outline: 0;
+    color: currentColor;
+    background: transparent;
+    cursor: pointer;
+    transition:
+            box-shadow var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-tag__remove:not(:disabled):hover {
+    background:
+        color-mix(in srgb, var(--lds-badge-border) 10%, transparent);
+}
+
+.lds-tag__remove:not(:disabled):active {
+    background:
+        color-mix(in srgb, var(--lds-badge-border) 16%, transparent);
+}
+
+.lds-tag__remove:not(:disabled):focus-visible {
+    box-shadow: inset 0 0 0 0.1rem
+        var(--color-lds-selection-focus-ring);
+}
+
+.lds-tag__remove > .lds-icon {
+    transition: transform var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-spring);
+}
+
+.lds-tag__remove:not(:disabled):active > .lds-icon {
+    transform: scale(0.82);
+}
+
+.lds-tag[data-disabled='true'] {
+    opacity: 0.38;
+}
+
+.lds-tag__remove:disabled {
+    cursor: not-allowed;
 }
 
 /*card*/
@@ -3239,6 +3360,11 @@
         --lds-navigation-rail-item-size:
             var(--lds-control-min-height-touch);
     }
+
+    .lds-tag {
+        --lds-tag-min-height: var(--lds-control-min-height-touch);
+        --lds-tag-remove-size: var(--lds-control-min-height-touch);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -3276,6 +3402,9 @@
     .lds-menu__indicator .lds-icon,
     .lds-menu__radio-mark,
     .lds-badge,
+    .lds-tag,
+    .lds-tag__remove,
+    .lds-tag__remove > .lds-icon,
     .lds-navigation-tree__row,
     .lds-navigation-tree__group-clip,
     .lds-navigation-tree__disclosure .lds-icon,

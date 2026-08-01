@@ -47,7 +47,8 @@
 - Dense action and collection primitives: Icon, Tooltip, Toolbar,
   ToolbarSeparator, List/ListItem, and DataTable/DataTableRow. DataTableSelectAll
   supplies its multiple-selection header control.
-- Badge is the compact, non-interactive metadata and status primitive.
+- Badge is the compact, non-interactive metadata and status primitive. Tag
+  derives its semantic tones from Badge and adds a dedicated removal action.
 - Card is the non-interactive grouping surface for content hierarchy. Lab
   example tiles use Card instead of maintaining parallel surface recipes.
 - Navigation primitives: NavigationTree/NavigationTreeItem for hierarchical
@@ -198,6 +199,13 @@
   seed-derived tones success or warning: a dynamic Material seed does not
   guarantee that secondary or tertiary hues remain green or yellow. Readable
   badge text, rather than color alone, carries the status meaning.
+- Tag reuses Badge's tone and soft/outline variant semantics but has independent
+  interactive geometry. Its label/body is not clickable; only the right-hand
+  native button requests removal. The divider and fixed removal region remain
+  independent of icon press motion, and the complete control expands to the
+  coarse-pointer minimum. `onremove` reports intent while the consumer remains
+  responsible for updating its tag collection. Disabled Tag removal must not
+  react to hover or pressed states.
 - Card is intentionally static: it has no hover, pressed, selected, or whole-
   surface click behavior. `subtle`, `filled`, and `outlined` express container
   hierarchy; `compact` and `default` adjust only reusable padding and gap.
@@ -346,8 +354,13 @@
   selection, or close behavior. MenuRadioItem must be nested in both Menu and
   MenuRadioGroup.
 - Badge preserves native span attributes and remains non-interactive. Use a
-  real button or future Chip component when the label can be activated or
-  removed; do not add button roles or click behavior to Badge.
+  Tag when the label can only be removed, or a real button/future Chip when the
+  complete surface can be activated; do not add button roles or click behavior
+  to Badge.
+- Tag preserves native span attributes for its container and requires
+  `removeLabel` plus `onremove`. Its optional leading icon is decorative; the
+  visible content labels the tag and `removeLabel` independently names the
+  right-hand button for assistive technology.
 - Card preserves native attributes for its selected root element, but do not
   turn the entire Card into a button or link. Put real controls inside it, use
   `article` only for independently meaningful content, and keep the default
