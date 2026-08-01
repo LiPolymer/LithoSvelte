@@ -25,6 +25,8 @@
     --lds-motion-duration-menu-reveal: 180ms;
     --lds-motion-duration-tree-reveal: 180ms;
     --lds-motion-duration-navigation-rail-reveal: 240ms;
+    --lds-motion-duration-navigation-rail-branch-reveal:
+        var(--lds-motion-duration-tree-reveal);
     --lds-motion-duration-dialog-reveal: 240ms;
     --lds-motion-duration-listbox-reveal: 300ms;
     --lds-motion-duration-collapse: 120ms;
@@ -142,8 +144,15 @@
     --lds-navigation-rail-expanded-width: 11rem;
     --lds-navigation-rail-icon-size: 0.875rem;
     --lds-navigation-rail-toggle-icon-size: 0.75rem;
+    --lds-navigation-rail-disclosure-size: 0.625rem;
     --lds-navigation-rail-label-font-size: 0.78rem;
     --lds-navigation-rail-label-padding-end: 0.5rem;
+    --lds-navigation-rail-indent: var(--lds-navigation-tree-indent);
+    --lds-navigation-rail-group-gap: var(--lds-navigation-tree-group-gap);
+    --lds-navigation-rail-group-padding-start:
+        var(--lds-navigation-tree-group-padding-start);
+    --lds-navigation-rail-group-padding-end:
+        var(--lds-navigation-tree-group-padding-end);
     --lds-tabs-list-padding: 0.2rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
     --lds-tab-padding-block: 0;
@@ -322,6 +331,7 @@
     --lds-navigation-rail-expanded-width: 9.5rem;
     --lds-navigation-rail-icon-size: 0.8125rem;
     --lds-navigation-rail-toggle-icon-size: 0.6875rem;
+    --lds-navigation-rail-disclosure-size: 0.5625rem;
     --lds-navigation-rail-label-font-size: 0.72rem;
     --lds-navigation-rail-label-padding-end: 0.375rem;
 
@@ -511,6 +521,7 @@
     --color-lds-navigation-rail-selected-hover: var(--color-lds-navigation-selected-hover);
     --color-lds-navigation-rail-selected-content: var(--color-lds-navigation-selected-content);
     --color-lds-navigation-rail-focus-ring: var(--color-lds-navigation-focus-ring);
+    --color-lds-navigation-rail-guide: var(--color-lds-navigation-tree-guide);
     --color-lds-tabs-surface: var(--color-lds-group-surface);
     --color-lds-tabs-border: var(--color-lds-toolbar-border);
     --color-lds-tab-content: var(--md-sys-color-on-surface-variant);

@@ -214,20 +214,32 @@
   natural proportions and are exposed by clipping. Collapse uses the faster
   shared collapse timing, keeps the group mounted until its visual height is
   zero, and removes collapsed descendants from keyboard navigation immediately.
-- NavigationRail is a separate flat navigation primitive, not an icon-only
-  NavigationTree variant. It deliberately has no branches, indentation, or
-  disclosure keys. Its destination set is one roving Tab stop: Up/Down move
-  among enabled destinations, Home/End reach the boundaries, and typeahead uses
-  the accessible labels. The built-in expand/collapse control is a separate
-  normal Tab stop. Each item exposes its label with `aria-label`, marks the
-  selected destination with `aria-current="page"`, and uses Tooltip only while
-  the Rail is collapsed.
+- NavigationRail is a collapsible top-level navigation primitive rather than a
+  visual mode of NavigationTree. Its destination set is one roving Tab stop:
+  Up/Down move among visible enabled destinations, Home/End reach the
+  boundaries, and typeahead uses the accessible labels. The built-in
+  expand/collapse control is a separate normal Tab stop. Each item exposes its
+  label with `aria-label`, marks the selected destination with
+  `aria-current="page"`, and uses Tooltip only while the Rail is collapsed.
 - NavigationRail may expand from its icon-only width into a compact labeled
   sidebar through `bind:expanded`; expansion does not turn it into a hierarchy.
   Animate the Rail width horizontally while keeping the icon column fixed.
   Labels retain natural proportions and are revealed by clipping rather than
   scaling. Opening uses the dedicated Rail reveal duration/easing, collapse is
   faster, and reduced-motion disables both transitions.
+- NavigationRailItem opts into hierarchy by receiving children. A branch still
+  requires its own value: clicking its main row navigates directly to that
+  parent destination, while its separate disclosure target only changes branch
+  expansion. Branches default collapsed. Collapsing the whole Rail hides and
+  inerts every descendant without clearing logical branch state, so reopening
+  restores the working context. A collapsed branch with the selected
+  destination inside receives a proxy selected treatment until its child is
+  visible again.
+- In expanded NavigationRail hierarchy, direction-aware Right expands a branch
+  or enters its first child; Left collapses a branch, moves to its parent, or
+  collapses the Rail from a top-level item. Hidden descendants leave the roving
+  focus sequence immediately. Branch groups reuse Tree's fixed-top vertical
+  clipping motion through Rail-specific alias tokens.
 - Tree and Rail keep independent geometry tokens but share the semantic
   `--color-lds-navigation-*` state layer. Their component-specific color tokens
   are aliases so consumers can still tune either primitive independently.
@@ -346,10 +358,12 @@
   handlers run first, and `preventDefault()` vetoes compound behavior.
 - NavigationRailItem must be nested in NavigationRail and requires `label`,
   `icon`, and `value`. Keep the Rail to a small set of stable top-level
-  destinations; use NavigationTree when labels, nesting, or disclosure are
-  necessary. `showToggle={false}` allows an application-owned expansion
-  control. Consumer item and Rail handlers run first, and `preventDefault()`
-  vetoes selection or keyboard movement.
+  destinations and shallow optional hierarchy; use NavigationTree when the
+  hierarchy itself is the primary information architecture or branches do not
+  represent destinations. `showToggle={false}` allows an application-owned
+  expansion control. Consumer item, disclosure, and Rail handlers run first,
+  and `preventDefault()` vetoes selection, branch expansion, or keyboard
+  movement.
 - Tabs receives tab triggers through its named `tabs` snippet and TabPanel
   children through its default snippet. Every TabPanel value must match one
   Tab value. Consumer Tab and Tabs handlers run first, and `preventDefault()`

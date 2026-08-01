@@ -1536,15 +1536,21 @@
                 bind:expanded={navigationRailExpanded}
               >
                 <NavigationRailItem
-                  value="rail-overview"
-                  label="Overview"
-                  icon="applications"
-                />
-                <NavigationRailItem
-                  value="rail-activity"
-                  label="Activity"
-                  icon="status-running"
-                />
+                  value="rail-workspace"
+                  label="Workspace"
+                  icon="project"
+                >
+                  <NavigationRailItem
+                    value="rail-overview"
+                    label="Overview"
+                    icon="applications"
+                  />
+                  <NavigationRailItem
+                    value="rail-activity"
+                    label="Activity"
+                    icon="status-running"
+                  />
+                </NavigationRailItem>
                 <NavigationRailItem
                   value="rail-members"
                   label="Members"

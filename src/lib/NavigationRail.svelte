@@ -8,6 +8,7 @@
   import Icon from './Icon.svelte'
   import Tooltip from './Tooltip.svelte'
   import {
+    setNavigationRailLevel,
     setNavigationRailContext,
     type NavigationRailValue,
   } from './navigationRailContext'
@@ -89,10 +90,27 @@
       onvaluechange?.(nextValue)
     },
   })
+  setNavigationRailLevel(1)
+
+  function setExpanded(nextExpanded: boolean) {
+    if (expanded === nextExpanded) return
+
+    expanded = nextExpanded
+    onexpandedchange?.(expanded)
+  }
 
   function toggleExpanded() {
-    expanded = !expanded
-    onexpandedchange?.(expanded)
+    setExpanded(!expanded)
+  }
+
+  function getAllItems() {
+    return Array.from(
+      railElement.querySelectorAll<HTMLButtonElement>(
+        '.lds-navigation-rail__item',
+      ),
+    ).filter(
+      (item) => item.closest('.lds-navigation-rail') === railElement,
+    )
   }
 
   function getItems() {
@@ -117,6 +135,57 @@
       : null
   }
 
+  function getParentItem(item: HTMLButtonElement) {
+    const entry = item.closest<HTMLLIElement>(
+      '.lds-navigation-rail__entry',
+    )
+    const parentEntry = entry?.parentElement?.closest<HTMLLIElement>(
+      '.lds-navigation-rail__entry',
+    )
+
+    return (
+      parentEntry?.querySelector<HTMLButtonElement>(
+        ':scope > .lds-navigation-rail__row .lds-navigation-rail__item',
+      ) ?? undefined
+    )
+  }
+
+  function getFirstChild(item: HTMLButtonElement) {
+    const entry = item.closest<HTMLLIElement>(
+      '.lds-navigation-rail__entry',
+    )
+
+    return (
+      entry?.querySelector<HTMLButtonElement>(
+        ':scope > .lds-navigation-rail__group-clip > .lds-navigation-rail__group > .lds-navigation-rail__entry > .lds-navigation-rail__row .lds-navigation-rail__item:not(:disabled)',
+      ) ?? undefined
+    )
+  }
+
+  function resolveVisibleItem(
+    item: HTMLButtonElement | undefined,
+    visibleItems: HTMLButtonElement[],
+  ) {
+    let candidate = item
+
+    while (candidate && !visibleItems.includes(candidate)) {
+      candidate = getParentItem(candidate)
+    }
+
+    return candidate
+  }
+
+  function toggleBranch(item: HTMLButtonElement) {
+    const entry = item.closest<HTMLLIElement>(
+      '.lds-navigation-rail__entry',
+    )
+    entry
+      ?.querySelector<HTMLButtonElement>(
+        ':scope > .lds-navigation-rail__row > .lds-navigation-rail__disclosure',
+      )
+      ?.click()
+  }
+
   function setActiveItem(item: HTMLButtonElement, focus = false) {
     if (!getItems().includes(item)) return
 
@@ -131,12 +200,20 @@
       return
     }
 
-    const activeItem = activeId
-      ? items.find((item) => item.id === activeId)
-      : undefined
+    const allItems = getAllItems()
+    const activeItem = resolveVisibleItem(
+      activeId
+        ? allItems.find((item) => item.id === activeId)
+        : undefined,
+      items,
+    )
+    const selectedItem = resolveVisibleItem(
+      allItems.find((item) => item.getAttribute('aria-current') === 'page'),
+      items,
+    )
     const nextActive =
       activeItem ??
-      items.find((item) => item.getAttribute('aria-current') === 'page') ??
+      selectedItem ??
       items[0]
 
     activeId = nextActive.id
@@ -203,6 +280,45 @@
     const currentIndex = items.indexOf(item)
     if (currentIndex === -1) return
 
+    const isRtl = getComputedStyle(railElement).direction === 'rtl'
+    const expandKey = isRtl ? 'ArrowLeft' : 'ArrowRight'
+    const collapseKey = isRtl ? 'ArrowRight' : 'ArrowLeft'
+
+    if (event.key === expandKey) {
+      event.preventDefault()
+
+      if (!expanded) {
+        setExpanded(true)
+        return
+      }
+
+      const branchExpanded = item.getAttribute('aria-expanded')
+      if (branchExpanded === 'false') {
+        toggleBranch(item)
+      } else if (branchExpanded === 'true') {
+        moveToItem(getFirstChild(item))
+      }
+      return
+    }
+
+    if (event.key === collapseKey && expanded) {
+      const branchExpanded = item.getAttribute('aria-expanded')
+      if (branchExpanded === 'true') {
+        event.preventDefault()
+        toggleBranch(item)
+        return
+      }
+
+      const parent = getParentItem(item)
+      event.preventDefault()
+      if (parent) {
+        moveToItem(parent)
+      } else {
+        setExpanded(false)
+      }
+      return
+    }
+
     let nextIndex: number | undefined
 
     if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
@@ -230,7 +346,13 @@
     const observer = new MutationObserver(syncTabStop)
     observer.observe(railElement, {
       attributes: true,
-      attributeFilter: ['aria-current', 'disabled', 'hidden', 'inert'],
+      attributeFilter: [
+        'aria-current',
+        'aria-expanded',
+        'disabled',
+        'hidden',
+        'inert',
+      ],
       childList: true,
       subtree: true,
     })
