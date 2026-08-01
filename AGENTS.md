@@ -42,6 +42,8 @@
   example tiles use Card instead of maintaining parallel surface recipes.
 - Navigation primitives: NavigationTree/NavigationTreeItem for hierarchical
   destinations and Tabs/Tab/TabPanel for peer views.
+- SplitPane is the resizable layout primitive for side-by-side or stacked work
+  regions, with percentage binding and an accessible keyboard separator.
 - Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
   MenuCheckboxItem, and MenuRadioGroup/MenuRadioItem.
 - Dialog is the modal work-surface primitive with compact/default/wide sizes,
@@ -107,9 +109,6 @@
   vertically through a `0fr`/`1fr` clipping track. The changing box remains
   centered by layout throughout the transition and adds only a small centered
   scale, never a directional translation.
-- Dialog's positioning layer must never become a scroll container during
-  reveal; clip it and leave any necessary overflow scrolling to the Dialog
-  body itself.
 - Keep the Dialog body overflow clipped until the opening transform reaches
   its settled state. Enabling `overflow-y: auto` while its reveal track is
   still shorter than the content produces a transient scrollbar.
@@ -125,6 +124,17 @@
   hides the header close button, and ignores outside-pointer dismissal by
   default. Put the least destructive action first and mark it with
   `data-lds-dialog-initial-focus` when the choice carries material risk.
+- SplitPane `direction="horizontal"` lays out first/second panes side by side
+  with a vertical separator; `direction="vertical"` stacks them with a
+  horizontal separator. Its bound value is the first pane percentage and is
+  clamped by `min`/`max`.
+- SplitPane uses pointer capture for uninterrupted dragging. The split-axis
+  arrow keys move by `step`, Shift multiplies that step by five, Home/End use
+  the bounds, and double-click restores `resetValue`. Keyboard direction is
+  RTL-aware for horizontal layouts.
+- SplitPane panels own their overflow scrolling. The separator has a compact
+  visual rail with a larger hit target, expands for coarse pointers, and must
+  not react while disabled.
 - Menu is compact-first: desktop items use the 32px compact control height and
   coarse pointers expand them to 44px. Its surface reveals from the resolved
   anchor edge while item content keeps its natural proportions and is exposed
@@ -261,6 +271,11 @@
 - DialogClose wraps one focusable action inside Dialog or AlertDialog. The
   action's own click handler runs first, and `preventDefault()` vetoes the
   compound close. Disabled and `aria-disabled` actions never close the layer.
+- SplitPane requires `first` and `second` snippets plus an accessible `label`.
+  It supports `bind:value`; `onvaluechange` reports continuous pointer changes
+  while `onvaluecommit` reports pointer release, keyboard changes, and reset.
+  Consumer pointer/keyboard handlers run first and may veto compound behavior
+  with `preventDefault()`.
 - Menu wraps exactly one focusable trigger, preferably a Litho button. Consumer
   trigger and item handlers run first; `preventDefault()` vetoes compound open,
   selection, or close behavior. MenuRadioItem must be nested in both Menu and
@@ -315,7 +330,8 @@
 
 ## Suggested roadmap
 
-1. Review the compact Menu prototype, then add nested submenus and a generic
+1. Review the SplitPane prototype in real editor and navigation layouts.
+2. Review the compact Menu prototype, then add nested submenus and a generic
    non-menu Popover only where real use cases require them.
-2. Revisit GitLab-style animated icons later; do not add the Vue-based
+3. Revisit GitLab-style animated icons later; do not add the Vue-based
    `@gitlab/ui` dependency merely for them.

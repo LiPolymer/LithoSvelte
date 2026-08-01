@@ -29,6 +29,7 @@
     Radio,
     RadioGroup,
     Select,
+    SplitPane,
     Switch,
     Tab,
     TabPanel,
@@ -82,6 +83,8 @@
   let dialogWorkspaceName = 'Litho Design System'
   let alertDialogOpen = false
   let wideDialogOpen = false
+  let workspaceSplit = 34
+  let inspectorSplit = 58
 
   function navigateLab(value: NavigationTreeValue) {
     const heading = document.getElementById(String(value))
@@ -192,6 +195,11 @@
             value="card-lab-title"
             label="Card"
             icon="applications"
+          />
+          <NavigationTreeItem
+            value="split-pane-lab-title"
+            label="Split pane"
+            icon="sidebar"
           />
         </NavigationTreeItem>
 
@@ -1569,6 +1577,95 @@
           </Card>
         </div>
       </section>
+
+      <section class="lab-section" aria-labelledby="split-pane-lab-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-index">14 / Layout</p>
+            <h2 id="split-pane-lab-title">Split pane</h2>
+          </div>
+          <p>
+            Resizable work regions with pointer capture, keyboard control and
+            explicit bounds.
+          </p>
+        </div>
+
+        <div class="split-pane-lab">
+          <Card as="article" density="compact" class="split-pane-card">
+            <div class="split-pane-demo-heading">
+              <span>Horizontal / {Math.round(workspaceSplit)}%</span>
+              <small>Arrow keys · Shift ×5 · Home/End · double-click</small>
+            </div>
+
+            <SplitPane
+              bind:value={workspaceSplit}
+              label="Resize navigation and workspace"
+              min={22}
+              max={68}
+              resetValue={34}
+              class="split-pane-demo"
+            >
+              {#snippet first()}
+                <div class="split-demo-panel split-demo-navigation">
+                  <strong>Workspace</strong>
+                  <span class="split-demo-row split-demo-row--selected">
+                    Overview
+                  </span>
+                  <span class="split-demo-row">Activity</span>
+                  <span class="split-demo-row">Components</span>
+                  <span class="split-demo-row">Settings</span>
+                </div>
+              {/snippet}
+
+              {#snippet second()}
+                <div class="split-demo-panel split-demo-workspace">
+                  <div>
+                    <small>Active document</small>
+                    <strong>Design system notes</strong>
+                  </div>
+                  <p>
+                    Drag the divider, focus it and use Left/Right, or
+                    double-click to restore the default proportion.
+                  </p>
+                </div>
+              {/snippet}
+            </SplitPane>
+          </Card>
+
+          <Card as="article" density="compact" class="split-pane-card">
+            <div class="split-pane-demo-heading">
+              <span>Vertical / {Math.round(inspectorSplit)}%</span>
+              <small>Up/Down follows the visual split axis</small>
+            </div>
+
+            <SplitPane
+              bind:value={inspectorSplit}
+              label="Resize editor and inspector"
+              direction="vertical"
+              min={30}
+              max={76}
+              resetValue={58}
+              class="split-pane-demo split-pane-demo--vertical"
+            >
+              {#snippet first()}
+                <div class="split-demo-panel split-demo-editor">
+                  <small>tokens.css</small>
+                  <code>--lds-control-min-height: 2.375rem;</code>
+                  <code>--lds-shape-rest: var(--radius-lds-sm);</code>
+                </div>
+              {/snippet}
+
+              {#snippet second()}
+                <div class="split-demo-panel split-demo-inspector">
+                  <strong>Inspector</strong>
+                  <span>Role: separator</span>
+                  <span>Value: {Math.round(inspectorSplit)}%</span>
+                </div>
+              {/snippet}
+            </SplitPane>
+          </Card>
+        </div>
+      </section>
     </main>
 
   </div>
@@ -1820,6 +1917,110 @@
 
   .dialog-validation-row :global(.lds-menu-anchor > .lds-btn) {
     margin-block-start: 0.35rem;
+  }
+
+  .split-pane-lab {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.5rem;
+  }
+
+  .split-pane-lab :global(.split-pane-card) {
+    min-width: 0;
+  }
+
+  .split-pane-demo-heading {
+    display: flex;
+    min-width: 0;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .split-pane-demo-heading span,
+  .split-pane-demo-heading small {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.72rem;
+  }
+
+  .split-pane-demo-heading small {
+    overflow: hidden;
+    font-size: 0.65rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  :global(.split-pane-demo) {
+    min-height: 17rem;
+  }
+
+  :global(.split-pane-demo--vertical) {
+    height: 17rem;
+  }
+
+  .split-demo-panel {
+    box-sizing: border-box;
+    min-width: 0;
+    min-height: 100%;
+    padding: 0.7rem;
+  }
+
+  .split-demo-panel strong {
+    font-size: 0.78rem;
+    font-weight: 500;
+  }
+
+  .split-demo-panel small,
+  .split-demo-panel span,
+  .split-demo-panel p {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+  }
+
+  .split-demo-navigation,
+  .split-demo-inspector,
+  .split-demo-editor {
+    display: grid;
+    align-content: start;
+    gap: 0.25rem;
+  }
+
+  .split-demo-row {
+    padding: 0.35rem 0.45rem;
+    border-radius: var(--lds-shape-rest);
+  }
+
+  .split-demo-panel .split-demo-row--selected {
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-option-selected);
+  }
+
+  .split-demo-workspace {
+    display: grid;
+    align-content: center;
+    gap: 0.6rem;
+  }
+
+  .split-demo-workspace > div {
+    display: grid;
+    gap: 0.1rem;
+  }
+
+  .split-demo-workspace p {
+    max-width: 26rem;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  .split-demo-editor code {
+    overflow: hidden;
+    padding: 0.35rem 0.45rem;
+    border-radius: var(--lds-shape-rest);
+    color: var(--md-sys-color-on-surface);
+    background: var(--color-lds-group-surface);
+    font-size: 0.68rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   .lab-kicker,
@@ -2200,7 +2401,8 @@
     .badge-lab,
     .navigation-lab,
     .card-lab,
-    .dialog-lab {
+    .dialog-lab,
+    .split-pane-lab {
       grid-template-columns: minmax(0, 1fr);
     }
 

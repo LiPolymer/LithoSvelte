@@ -184,7 +184,8 @@
     display: grid;
     padding: var(--lds-dialog-viewport-padding);
     place-items: center;
-    overflow: hidden;
+    overflow: auto;
+    overscroll-behavior: contain;
     pointer-events: none;
     inset: 0;
 }
@@ -878,6 +879,193 @@
 .lds-card--outlined {
     --lds-card-surface: var(--color-lds-card-outlined);
     --lds-card-outline: var(--color-lds-card-outline);
+}
+
+/*split pane*/
+.lds-split-pane {
+    --lds-split-pane-position: 50%;
+    --lds-split-pane-current-separator-size:
+        var(--lds-split-pane-separator-size);
+    --lds-split-pane-current-separator-half-size:
+        var(--lds-split-pane-separator-half-size);
+
+    display: grid;
+    min-width: 0;
+    min-height: var(--lds-split-pane-min-block-size);
+    overflow: hidden;
+    border: 0.1rem solid var(--color-lds-split-pane-border);
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-split-pane-surface);
+    isolation: isolate;
+}
+
+.lds-split-pane--horizontal {
+    grid-template-columns:
+        minmax(
+            0,
+            calc(
+                var(--lds-split-pane-position)
+                - var(--lds-split-pane-current-separator-half-size)
+            )
+        )
+        var(--lds-split-pane-current-separator-size)
+        minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr);
+}
+
+.lds-split-pane--vertical {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows:
+        minmax(
+            0,
+            calc(
+                var(--lds-split-pane-position)
+                - var(--lds-split-pane-current-separator-half-size)
+            )
+        )
+        var(--lds-split-pane-current-separator-size)
+        minmax(0, 1fr);
+}
+
+.lds-split-pane__panel {
+    min-width: 0;
+    min-height: 0;
+    overflow: auto;
+    overscroll-behavior: contain;
+}
+
+.lds-split-pane__separator {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    color: var(--color-lds-split-pane-divider);
+    background: transparent;
+    touch-action: none;
+    user-select: none;
+}
+
+.lds-split-pane--horizontal > .lds-split-pane__separator {
+    cursor: col-resize;
+}
+
+.lds-split-pane--vertical > .lds-split-pane__separator {
+    cursor: row-resize;
+}
+
+.lds-split-pane__separator::before,
+.lds-split-pane__separator::after {
+    position: absolute;
+    border-radius: var(--lds-shape-rest);
+    background: currentColor;
+    content: '';
+    pointer-events: none;
+    transition:
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            opacity var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            box-shadow var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            transform var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-spring);
+}
+
+.lds-split-pane__separator::before {
+    opacity: 0.7;
+}
+
+.lds-split-pane__separator::after {
+    opacity: 0;
+    transform: scale(70%);
+}
+
+.lds-split-pane--horizontal > .lds-split-pane__separator::before {
+    width: 0.1rem;
+    inset-block: var(--lds-split-pane-divider-inset);
+    inset-inline-start: 50%;
+    transform: translateX(-50%);
+}
+
+.lds-split-pane--horizontal > .lds-split-pane__separator::after {
+    width: var(--lds-split-pane-grip-thickness);
+    height: var(--lds-split-pane-grip-length);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%) scale(70%);
+}
+
+.lds-split-pane--vertical > .lds-split-pane__separator::before {
+    height: 0.1rem;
+    inset-block-start: 50%;
+    inset-inline: var(--lds-split-pane-divider-inset);
+    transform: translateY(-50%);
+}
+
+.lds-split-pane--vertical > .lds-split-pane__separator::after {
+    width: var(--lds-split-pane-grip-length);
+    height: var(--lds-split-pane-grip-thickness);
+    inset-block-start: 50%;
+    inset-inline-start: 50%;
+    transform: translate(-50%, -50%) scale(70%);
+}
+
+.lds-split-pane__separator:not([aria-disabled='true']):hover,
+.lds-split-pane__separator:not([aria-disabled='true']):focus-visible {
+    color: var(--color-lds-split-pane-divider-hover);
+}
+
+.lds-split-pane__separator:not([aria-disabled='true']):hover::after,
+.lds-split-pane__separator:not([aria-disabled='true']):focus-visible::after {
+    border-radius: var(--lds-shape-hover-soft);
+    opacity: 1;
+}
+
+.lds-split-pane--horizontal
+    > .lds-split-pane__separator:not([aria-disabled='true']):hover::after,
+.lds-split-pane--horizontal
+    > .lds-split-pane__separator:not([aria-disabled='true']):focus-visible::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.lds-split-pane--vertical
+    > .lds-split-pane__separator:not([aria-disabled='true']):hover::after,
+.lds-split-pane--vertical
+    > .lds-split-pane__separator:not([aria-disabled='true']):focus-visible::after {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.lds-split-pane__separator:not([aria-disabled='true']):focus-visible::after {
+    box-shadow: 0 0 0 0.2rem var(--color-lds-split-pane-focus-ring);
+}
+
+.lds-split-pane[data-dragging='true']
+    > .lds-split-pane__separator,
+.lds-split-pane__separator:not([aria-disabled='true']):active {
+    color: var(--color-lds-split-pane-divider-active);
+}
+
+.lds-split-pane[data-dragging='true']
+    > .lds-split-pane__separator::after,
+.lds-split-pane__separator:not([aria-disabled='true']):active::after {
+    border-radius: var(--lds-shape-pressed);
+    opacity: 1;
+}
+
+.lds-split-pane[data-dragging='true'] > .lds-split-pane__panel {
+    pointer-events: none;
+    user-select: none;
+}
+
+.lds-split-pane[data-disabled='true']
+    > .lds-split-pane__separator {
+    opacity: 0.38;
+    cursor: not-allowed;
 }
 
 /*navigation tree*/
@@ -2579,6 +2767,13 @@
 }
 
 @media (pointer: coarse) {
+    .lds-split-pane {
+        --lds-split-pane-current-separator-size:
+            var(--lds-split-pane-separator-size-touch);
+        --lds-split-pane-current-separator-half-size:
+            var(--lds-split-pane-separator-half-size-touch);
+    }
+
     .lds-btn,
     .lds-selection,
     .lds-menu__item,
@@ -2635,7 +2830,9 @@
     .lds-tab::after,
     .lds-dialog__backdrop,
     .lds-dialog,
-    .lds-dialog__reveal {
+    .lds-dialog__reveal,
+    .lds-split-pane__separator::before,
+    .lds-split-pane__separator::after {
         transition: none;
     }
 }

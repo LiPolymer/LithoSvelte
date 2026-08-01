@@ -27,6 +27,7 @@ export { default as PrimaryButton } from './PrimaryButton.svelte'
 export { default as Radio } from './Radio.svelte'
 export { default as RadioGroup } from './RadioGroup.svelte'
 export { default as Select } from './Select.svelte'
+export { default as SplitPane } from './SplitPane.svelte'
 export { default as Switch } from './Switch.svelte'
 export { default as Tab } from './Tab.svelte'
 export { default as TabPanel } from './TabPanel.svelte'
@@ -86,6 +87,12 @@ export type {
   RadioGroupProps,
 } from './RadioGroup.svelte'
 export type { SelectProps } from './Select.svelte'
+export type {
+  SplitPaneChangeDetails,
+  SplitPaneChangeReason,
+  SplitPaneDirection,
+  SplitPaneProps,
+} from './SplitPane.svelte'
 export type { SwitchProps } from './Switch.svelte'
 export type { TabProps } from './Tab.svelte'
 export type { TabPanelProps } from './TabPanel.svelte'

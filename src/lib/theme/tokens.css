@@ -82,6 +82,14 @@
     --lds-card-gap-compact: 0.6rem;
     --lds-card-gap: 1rem;
     --lds-card-outline-width: 0.1rem;
+    --lds-split-pane-min-block-size: 12rem;
+    --lds-split-pane-separator-size: 0.75rem;
+    --lds-split-pane-separator-half-size: 0.375rem;
+    --lds-split-pane-separator-size-touch: 1rem;
+    --lds-split-pane-separator-half-size-touch: 0.5rem;
+    --lds-split-pane-divider-inset: 0.45rem;
+    --lds-split-pane-grip-length: 1.5rem;
+    --lds-split-pane-grip-thickness: 0.25rem;
     --lds-navigation-tree-padding: 0.2rem;
     --lds-navigation-tree-item-min-height: 1.875rem;
     --lds-navigation-tree-item-padding-inline: 0.4rem;
@@ -210,6 +218,13 @@
     --color-lds-card-outlined: transparent;
     --color-lds-card-outline: color-mix(in srgb, var(--md-sys-color-outline-variant) 55%, transparent);
     --color-lds-card-content: var(--md-sys-color-on-surface);
+
+    --color-lds-split-pane-surface: color-mix(in srgb, var(--md-sys-color-secondary) 3%, transparent);
+    --color-lds-split-pane-border: var(--color-lds-toolbar-border);
+    --color-lds-split-pane-divider: var(--color-lds-group-divider);
+    --color-lds-split-pane-divider-hover: color-mix(in srgb, var(--md-sys-color-primary) 38%, transparent);
+    --color-lds-split-pane-divider-active: var(--md-sys-color-primary);
+    --color-lds-split-pane-focus-ring: var(--color-lds-selection-focus-ring);
 
     --color-lds-navigation-tree-surface: var(--color-lds-list-surface);
     --color-lds-navigation-tree-border: var(--color-lds-list-border);
