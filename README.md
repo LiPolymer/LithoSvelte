@@ -1,47 +1,108 @@
-# Svelte + TS + Vite
+# Litho
 
-This template should help get you started developing with Svelte and TypeScript in Vite.
+Litho is a compact Svelte 5 design system for productivity interfaces. It uses
+Material Color Utilities for the dynamic color foundation and Tailwind CSS 4
+for its shared design tokens.
 
-## Recommended IDE Setup
+The repository contains two separate build targets:
 
-[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
+- `dist/` is the installable component package.
+- `site-dist/` is the Control Gallery application.
 
-## Need an official Svelte framework?
+## Use it from another local project
 
-Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
+Litho is still private and pre-release, so the simplest development workflow is
+a local file dependency.
 
-## Technical considerations
+First build the package in this repository:
 
-**Why use this over SvelteKit?**
+```sh
+pnpm run package
+```
 
-- It brings its own routing solution which might not be preferable for some users.
-- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+Then install it from the consuming project (adjust the path as needed):
 
-This template contains as little as possible to get started with Vite + TypeScript + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
+```sh
+pnpm add ../Litho
+pnpm add -D tailwindcss @tailwindcss/vite
+```
 
-Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
-
-**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
-
-Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
-
-**Why include `.vscode/extensions.json`?**
-
-Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
-
-**Why enable `allowJs` in the TS template?**
-
-While `allowJs: false` would indeed prevent the use of `.js` files in the project, it does not prevent the use of JavaScript syntax in `.svelte` files. In addition, it would force `checkJs: false`, bringing the worst of both worlds: not being able to guarantee the entire codebase is TypeScript, and also having worse typechecking for the existing JavaScript. In addition, there are valid use cases in which a mixed codebase may be relevant.
-
-**Why is HMR not preserving my local component state?**
-
-HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
-
-If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
+The consumer needs Svelte 5 and Tailwind CSS 4. Configure the Tailwind Vite
+plugin in its `vite.config.ts`:
 
 ```ts
-// store.ts
-// An extremely simple external store
-import { writable } from 'svelte/store'
-export default writable(0)
+import { svelte } from '@sveltejs/vite-plugin-svelte'
+import tailwindcss from '@tailwindcss/vite'
+import { defineConfig } from 'vite'
+
+export default defineConfig({
+  plugins: [svelte(), tailwindcss()],
+})
 ```
+
+Import Tailwind and Litho's stable stylesheet entry once in the application's
+global CSS:
+
+```css
+@import "tailwindcss";
+@import "litho/styles.css";
+```
+
+Litho intentionally does not ship or select an application font. Add the
+product's own font imports and `font-family` after these imports.
+
+Install the dynamic Material theme before mounting the application:
+
+```ts
+import { installTheme } from 'litho'
+import './app.css'
+
+const disposeTheme = installTheme()
+
+if (import.meta.hot) {
+  import.meta.hot.dispose(disposeTheme)
+}
+```
+
+The controller reads the saved seed color and theme mode before applying the
+runtime tokens. It also writes changes made through `updateTheme` or
+`ThemeSeedPicker` back to the theme cookie. `materialTokens.css` remains the
+first-paint and IDE fallback.
+
+Components and their public TypeScript types come from the root entry:
+
+```svelte
+<script lang="ts">
+  import { PrimaryButton, Tag, TextField } from 'litho'
+
+  let query = $state('')
+</script>
+
+<TextField label="Search" bind:value={query} />
+<PrimaryButton>Run</PrimaryButton>
+<Tag
+  icon="information-o"
+  removeLabel="Remove Local tag"
+  onremove={() => {}}
+>
+  Local
+</Tag>
+```
+
+For active library development, run `pnpm run package:watch` in Litho and keep
+the consumer's Vite dev server running. Re-run the install if the package
+manager copied the local dependency instead of linking it.
+
+## Repository commands
+
+```sh
+pnpm run dev            # Control Gallery dev server
+pnpm run check          # Svelte and TypeScript diagnostics
+pnpm run package        # Build the installable library into dist/
+pnpm run package:watch  # Rebuild dist/ while developing locally
+pnpm run build:gallery  # Build only the Gallery into site-dist/
+pnpm run build          # Build both package and Gallery
+```
+
+Before publishing to a registry, choose the final package name, version, and
+license, then remove `private: true` from `package.json`.

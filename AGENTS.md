@@ -35,6 +35,11 @@
   `src/lib/styles.css` is the stable stylesheet entry. Keep implementation
   contexts and low-level overlay machinery out of the public barrel until
   their APIs are intentionally promoted.
+- `@sveltejs/package` builds the installable library from `src/lib` into
+  `dist`; Vite builds the Control Gallery independently into `site-dist`.
+  Package consumers import components from `litho` and global tokens/styles
+  from `litho/styles.css`. Keep CSS in `sideEffects` and keep Svelte 5 and
+  Tailwind CSS 4 as peer dependencies.
 - `src/lib/internal/overlay` owns portal transport, anchored floating
   positioning, and the shared overlay stack. It must remain appearance- and
   component-semantics-neutral.
