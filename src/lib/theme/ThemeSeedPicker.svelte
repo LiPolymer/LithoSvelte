@@ -1,7 +1,9 @@
 <script lang="ts">
   import ButtonGroup from '../ButtonGroup.svelte'
   import GhostButton from '../GhostButton.svelte'
+  import IconButton from '../IconButton.svelte'
   import TextField from '../TextField.svelte'
+  import Tooltip from '../Tooltip.svelte'
   import { themeConfig, type ThemeMode } from './config'
   import { getThemeConfig, updateTheme } from './index'
 
@@ -12,10 +14,10 @@
   let mode = initialConfig.mode
   let invalid = false
 
-  const modes: Array<{ value: ThemeMode; label: string }> = [
-    { value: 'system', label: 'System' },
-    { value: 'light', label: 'Light' },
-    { value: 'dark', label: 'Dark' },
+  const modes: Array<{ value: ThemeMode; label: string; icon: string }> = [
+    { value: 'system', label: 'System', icon: 'monitor' },
+    { value: 'light', label: 'Light', icon: 'sun' },
+    { value: 'dark', label: 'Dark', icon: 'moon' },
   ]
 
   function normalizeHex(value: string): `#${string}` | undefined {
@@ -88,26 +90,28 @@
         }
       }}
     />
-  </div>
 
-  <fieldset>
-    <legend>Appearance</legend>
-    <ButtonGroup
-      class="theme-mode-group"
-      mode="options"
-      value={mode}
-      aria-label="Theme appearance"
-    >
-      {#each modes as option}
-        <GhostButton
-          value={option.value}
-          onclick={() => applyMode(option.value)}
-        >
-          {option.label}
-        </GhostButton>
-      {/each}
-    </ButtonGroup>
-  </fieldset>
+    <div class="appearance-control">
+      <span class="control-label">Appearance</span>
+      <ButtonGroup
+        class="theme-mode-group"
+        mode="options"
+        value={mode}
+        aria-label="Appearance"
+      >
+        {#each modes as option}
+          <Tooltip content={option.label}>
+            <IconButton
+              icon={option.icon}
+              label={`Use ${option.label.toLowerCase()} appearance`}
+              value={option.value}
+              onclick={() => applyMode(option.value)}
+            />
+          </Tooltip>
+        {/each}
+      </ButtonGroup>
+    </div>
+  </div>
 
   <div class="palette" aria-label="Generated color preview">
     <span class="primary" title="Primary"></span>
@@ -145,14 +149,12 @@
   }
 
   .eyebrow,
-  h2,
-  legend {
+  h2 {
     margin: 0;
   }
 
   .eyebrow,
-  .control-label,
-  legend {
+  .control-label {
     color: var(--md-sys-color-on-surface-variant);
     font-size: var(--lds-theme-picker-meta-font-size);
   }
@@ -171,14 +173,21 @@
 
   .seed-control {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-columns: auto minmax(0, 1fr) auto;
     gap: var(--lds-theme-picker-control-gap);
     margin-block: var(--lds-theme-picker-control-margin-block);
-    align-items: start;
+    align-items: stretch;
   }
 
   .color-control {
     display: grid;
+    gap: var(--lds-field-gap);
+  }
+
+  .appearance-control {
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    align-content: stretch;
     gap: var(--lds-field-gap);
   }
 
@@ -241,17 +250,6 @@
     outline-offset: 0.15rem;
   }
 
-  fieldset {
-    min-width: 0;
-    margin: 0;
-    padding: 0;
-    border: 0;
-  }
-
-  legend {
-    margin-bottom: var(--lds-theme-picker-legend-margin);
-  }
-
   :global(.picker-reset) {
     min-height: var(--lds-control-min-height-compact);
     padding-inline: var(--lds-theme-picker-reset-padding-inline);
@@ -263,11 +261,7 @@
   }
 
   :global(.theme-mode-group) {
-    width: 100%;
-  }
-
-  :global(.theme-mode-group > .lds-btn) {
-    flex: 1;
+    align-self: center;
   }
 
   .palette {
@@ -303,6 +297,17 @@
     .color-input {
       width: var(--lds-control-min-height-touch);
       height: var(--lds-control-min-height-touch);
+    }
+  }
+
+  @media (max-width: 20rem) {
+    .seed-control {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    .appearance-control {
+      grid-column: 1 / -1;
+      justify-self: end;
     }
   }
 

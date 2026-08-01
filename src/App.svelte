@@ -2409,7 +2409,7 @@
 
   .lab-shell[data-gallery-density='compact'] .lab-header {
     gap: 0.5rem;
-    padding: 0.25rem 0.35rem;
+    padding: 0.35rem;
   }
 
   .lab-shell[data-gallery-density='compact'] .gallery-brand {

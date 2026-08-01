@@ -41,6 +41,7 @@
     --lds-control-min-height: 2.375rem;
     --lds-control-min-height-touch: 2.75rem;
     --lds-control-font-size: 0.875rem;
+    --lds-control-padding-block: 0;
     --lds-control-padding-inline: 0.75rem;
     --lds-control-gap: 0.4em;
     --lds-icon-button-icon-size: 1rem;
@@ -119,6 +120,7 @@
     --lds-split-pane-grip-thickness: 0.25rem;
     --lds-navigation-tree-padding: 0.2rem;
     --lds-navigation-tree-item-min-height: 1.875rem;
+    --lds-navigation-tree-item-padding-block: 0;
     --lds-navigation-tree-item-padding-inline: 0.4rem;
     --lds-navigation-tree-item-gap: 0.35rem;
     --lds-navigation-tree-indent: 0.75rem;
@@ -130,6 +132,7 @@
     --lds-navigation-tree-group-padding-end: 0.15rem;
     --lds-tabs-list-padding: 0.2rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
+    --lds-tab-padding-block: 0;
     --lds-tab-padding-inline: 0.55rem;
     --lds-tab-gap: 0.35rem;
     --lds-tab-icon-size: 0.875rem;
@@ -186,7 +189,6 @@
     --lds-theme-picker-control-margin-block: 0.75rem;
     --lds-theme-picker-meta-font-size: 0.75rem;
     --lds-theme-picker-title-font-size: 1rem;
-    --lds-theme-picker-legend-margin: 0.35rem;
     --lds-theme-picker-reset-padding-inline: 0.55rem;
     --lds-theme-picker-reset-font-size: 0.75rem;
     --lds-theme-picker-palette-height: 0.4rem;
@@ -202,7 +204,8 @@
     --lds-control-min-height-compact: 1.75rem;
     --lds-control-min-height: 2rem;
     --lds-control-font-size: 0.8125rem;
-    --lds-control-padding-inline: 0.55rem;
+    --lds-control-padding-block: 0.5rem;
+    --lds-control-padding-inline: 0.5rem;
     --lds-control-gap: 0.32em;
     --lds-icon-button-icon-size: 0.875rem;
     --lds-icon-button-icon-size-compact: 0.75rem;
@@ -213,22 +216,22 @@
     --lds-switch-thumb-size: 0.6875em;
     --lds-switch-track-inset: 0.125em;
 
-    --lds-field-padding-inline: 0.5rem;
-    --lds-field-padding-block: 0.3rem;
+    --lds-field-padding-inline: 0.45rem;
+    --lds-field-padding-block: 0.45rem;
     --lds-field-gap: 0.18rem;
     --lds-field-meta-font-size: 0.6875rem;
     --lds-field-toggle-size: 1.25rem;
     --lds-field-icon-size: 0.75rem;
     --lds-listbox-max-height: 14rem;
     --lds-listbox-padding: 0.15rem;
-    --lds-listbox-option-padding-block: 0.25rem;
+    --lds-listbox-option-padding-block: 0.4rem;
     --lds-listbox-option-padding-inline: 0.4rem;
     --lds-listbox-empty-padding: 0.4rem;
 
     --lds-tooltip-max-width: 16rem;
     --lds-tooltip-font-size: 0.6875rem;
-    --lds-tooltip-padding-block: 0.25rem;
-    --lds-tooltip-padding-inline: 0.4rem;
+    --lds-tooltip-padding-block: 0.3rem;
+    --lds-tooltip-padding-inline: 0.3rem;
 
     --lds-menu-min-width: 10rem;
     --lds-menu-max-width: 18rem;
@@ -236,7 +239,7 @@
     --lds-menu-item-min-height: var(--lds-control-min-height-compact);
     --lds-menu-padding: 0.15rem;
     --lds-menu-item-padding-inline: 0.4rem;
-    --lds-menu-item-padding-block: 0.22rem;
+    --lds-menu-item-padding-block: 0.4rem;
     --lds-menu-item-gap: 0.35rem;
     --lds-menu-accessory-size: 0.875rem;
     --lds-menu-icon-size: 0.75rem;
@@ -250,18 +253,18 @@
     --lds-dialog-width: 28rem;
     --lds-dialog-width-wide: 40rem;
     --lds-dialog-viewport-padding: 0.75rem;
-    --lds-dialog-padding-inline: 0.75rem;
-    --lds-dialog-header-padding-block: 0.45rem;
-    --lds-dialog-padding-block: 0.65rem;
+    --lds-dialog-padding-inline: 0.55rem;
+    --lds-dialog-header-padding-block: 0.55rem;
+    --lds-dialog-padding-block: 0.55rem;
     --lds-dialog-section-gap: 0.55rem;
     --lds-dialog-actions-gap: 0.3rem;
-    --lds-dialog-actions-padding-block: 0.5rem;
+    --lds-dialog-actions-padding-block: 0.55rem;
     --lds-dialog-title-font-size: 0.9375rem;
     --lds-dialog-description-font-size: 0.6875rem;
 
     --lds-badge-min-height: 1.125rem;
-    --lds-badge-padding-inline: 0.3rem;
-    --lds-badge-padding-block: 0.075rem;
+    --lds-badge-padding-inline: 0.2rem;
+    --lds-badge-padding-block: 0.2rem;
     --lds-badge-gap: 0.22rem;
     --lds-badge-icon-size: 0.6875rem;
     --lds-badge-font-size: 0.625rem;
@@ -280,7 +283,8 @@
 
     --lds-navigation-tree-padding: 0.15rem;
     --lds-navigation-tree-item-min-height: 1.625rem;
-    --lds-navigation-tree-item-padding-inline: 0.3rem;
+    --lds-navigation-tree-item-padding-block: 0.375rem;
+    --lds-navigation-tree-item-padding-inline: 0.375rem;
     --lds-navigation-tree-item-gap: 0.25rem;
     --lds-navigation-tree-indent: 0.6rem;
     --lds-navigation-tree-icon-size: 0.8125rem;
@@ -292,7 +296,8 @@
 
     --lds-tabs-list-padding: 0.15rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
-    --lds-tab-padding-inline: 0.4rem;
+    --lds-tab-padding-block: 0.4375rem;
+    --lds-tab-padding-inline: 0.4375rem;
     --lds-tab-gap: 0.25rem;
     --lds-tab-icon-size: 0.8125rem;
     --lds-tabs-gap: 0.35rem;
@@ -306,8 +311,8 @@
     --lds-list-padding: 0.15rem;
     --lds-list-gap: 0.05rem;
     --lds-list-item-min-height: 2.5rem;
-    --lds-list-item-padding-inline: 0.45rem;
-    --lds-list-item-padding-block: 0.25rem;
+    --lds-list-item-padding-inline: 0.35rem;
+    --lds-list-item-padding-block: 0.35rem;
     --lds-list-item-gap: 0.4rem;
     --lds-list-leading-size: 1.5rem;
     --lds-list-actions-edge-margin: 0.3rem;
@@ -322,8 +327,8 @@
 
     --lds-data-table-min-width: 42rem;
     --lds-data-table-row-min-height: var(--lds-control-min-height);
-    --lds-data-table-cell-padding-inline: 0.45rem;
-    --lds-data-table-cell-padding-block: 0.28rem;
+    --lds-data-table-cell-padding-inline: 0.4rem;
+    --lds-data-table-cell-padding-block: 0.4rem;
     --lds-data-table-selection-column-width: 2.125rem;
     --lds-data-table-actions-edge-margin: 0.125rem;
     --lds-data-table-font-size: 0.6875rem;
@@ -344,7 +349,6 @@
     --lds-theme-picker-control-margin-block: 0.55rem;
     --lds-theme-picker-meta-font-size: 0.6875rem;
     --lds-theme-picker-title-font-size: 0.9rem;
-    --lds-theme-picker-legend-margin: 0.25rem;
     --lds-theme-picker-reset-padding-inline: 0.4rem;
     --lds-theme-picker-reset-font-size: 0.6875rem;
     --lds-theme-picker-palette-height: 0.3rem;

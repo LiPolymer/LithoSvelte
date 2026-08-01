@@ -10,6 +10,7 @@
     justify-content: center;
     gap: var(--lds-control-gap);
     border-radius: var(--lds-shape-rest);
+    padding-block: var(--lds-control-padding-block);
     padding-inline: var(--lds-control-padding-inline);
     border: 0 solid transparent;
     font-size: var(--lds-control-font-size);
@@ -1113,6 +1114,7 @@
     min-height: var(--lds-navigation-tree-item-min-height);
     align-items: center;
     gap: var(--lds-navigation-tree-item-gap);
+    padding-block: var(--lds-navigation-tree-item-padding-block);
     padding-inline: var(--lds-navigation-tree-item-padding-inline);
     border-radius: var(--lds-shape-rest);
     transition:
@@ -1270,6 +1272,7 @@
     align-items: center;
     justify-content: center;
     gap: var(--lds-tab-gap);
+    padding-block: var(--lds-tab-padding-block);
     padding-inline: var(--lds-tab-padding-inline);
     border: 0;
     border-radius: var(--lds-shape-rest);
