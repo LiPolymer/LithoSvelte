@@ -104,5 +104,16 @@ pnpm run build:gallery  # Build only the Gallery into site-dist/
 pnpm run build          # Build both package and Gallery
 ```
 
+## GitHub Pages
+
+`.github/workflows/deploy-pages.yml` checks and builds the Control Gallery on
+each push to `master`, then deploys `site-dist/` with GitHub's Pages actions.
+The workflow reads the configured Pages base path before building, so project
+sites, account root sites, and custom domains share the same Vite config.
+
+In the GitHub repository, open **Settings → Pages** and select **GitHub
+Actions** as the publishing source. The workflow can also be started manually
+from the Actions tab.
+
 Before publishing to a registry, choose the final package name, version, and
 license, then remove `private: true` from `package.json`.

@@ -40,6 +40,10 @@
   Package consumers import components from `litho` and global tokens/styles
   from `litho/styles.css`. Keep CSS in `sideEffects` and keep Svelte 5 and
   Tailwind CSS 4 as peer dependencies.
+- GitHub Pages deploys only the Control Gallery from `site-dist`. The Pages
+  workflow passes `actions/configure-pages`' resolved `base_path` through
+  `GITHUB_PAGES_BASE_PATH`; Vite defaults to `/` for local development and
+  other builds. Do not hardcode a repository name into asset URLs.
 - `src/lib/internal/overlay` owns portal transport, anchored floating
   positioning, and the shared overlay stack. It must remain appearance- and
   component-semantics-neutral.
