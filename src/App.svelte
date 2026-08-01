@@ -83,10 +83,13 @@
   let dialogWorkspaceName = 'Litho Design System'
   let alertDialogOpen = false
   let wideDialogOpen = false
+  let galleryDensity: string | number = 'comfortable'
+  let gallerySplit = 22
   let workspaceSplit = 34
   let inspectorSplit = 58
 
   function navigateLab(value: NavigationTreeValue) {
+    activeLabSection = value
     const heading = document.getElementById(String(value))
     const section = heading?.closest('section')
     const behavior = matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -133,22 +136,98 @@
 </script>
 
 <svelte:head>
-  <title>Litho · Component Lab</title>
+  <title>Litho · Control Gallery</title>
 </svelte:head>
 
-<div class="lab-shell">
+<div class="lab-shell" data-gallery-density={galleryDensity}>
   <header class="lab-header">
-    <p class="lab-kicker">Design system / Component lab</p>
-    <h1>Litho.</h1>
-    <p class="lab-intro">
-      Low-contrast controls, readable content and expressive shape motion.
-    </p>
+    <div class="gallery-brand">
+      <span class="gallery-brand__mark" aria-hidden="true">
+        <Icon name="applications" size={18} />
+      </span>
+      <span class="gallery-brand__copy">
+        <strong>Litho</strong>
+        <small>Control Gallery</small>
+      </span>
+    </div>
+
+    <div class="gallery-header-status" aria-label="Gallery status">
+      <Badge icon="applications" tone="primary">14 groups</Badge>
+      <Badge icon="appearance" variant="outline">Live tokens</Badge>
+    </div>
+
+    <div class="gallery-header-tools">
+      <Toolbar aria-label="Gallery quick jumps" class="gallery-quick-jumps">
+        <Tooltip content="Jump to actions">
+          <IconButton
+            icon="applications"
+            label="Jump to actions"
+            onclick={() => navigateLab('button-lab-title')}
+          />
+        </Tooltip>
+        <Tooltip content="Jump to inputs">
+          <IconButton
+            icon="pencil"
+            label="Jump to inputs"
+            onclick={() => navigateLab('checkbox-lab-title')}
+          />
+        </Tooltip>
+        <Tooltip content="Jump to layout">
+          <IconButton
+            icon="sidebar"
+            label="Jump to layout"
+            onclick={() => navigateLab('split-pane-lab-title')}
+          />
+        </Tooltip>
+      </Toolbar>
+
+      <div class="gallery-density-control">
+        <span>Density</span>
+        <ButtonGroup
+          mode="options"
+          bind:value={galleryDensity}
+          aria-label="Gallery density"
+        >
+          <Tooltip content="Compact gallery">
+            <IconButton
+              icon="list-bulleted"
+              label="Compact gallery"
+              value="compact"
+            />
+          </Tooltip>
+          <Tooltip content="Comfortable gallery">
+            <IconButton
+              icon="dot-grid"
+              label="Comfortable gallery"
+              value="comfortable"
+            />
+          </Tooltip>
+        </ButtonGroup>
+      </div>
+    </div>
   </header>
 
-  <div class="lab-layout">
-    <aside class="lab-sidebar" aria-label="Lab navigation and controls">
+  <SplitPane
+    bind:value={gallerySplit}
+    label="Resize gallery catalog and canvas"
+    min={18}
+    max={34}
+    step={1}
+    resetValue={22}
+    class="lab-layout"
+  >
+    {#snippet first()}
+      <aside class="lab-sidebar" aria-label="Gallery catalog and theme controls">
+        <div class="gallery-sidebar-heading">
+          <div>
+            <strong>Component catalog</strong>
+            <small>Interactive specimen index</small>
+          </div>
+          <Badge icon="list-bulleted" variant="outline">14</Badge>
+        </div>
+
       <NavigationTree
-        label="Component lab sections"
+        label="Control Gallery sections"
         bind:value={activeLabSection}
         onvaluechange={navigateLab}
       >
@@ -235,15 +314,50 @@
         </NavigationTreeItem>
       </NavigationTree>
 
-      <div class="theme-dock" aria-label="Theme controls">
+      <div
+        id="gallery-theme-controls"
+        class="theme-dock"
+        aria-label="Theme controls"
+      >
+        <div class="theme-dock__heading">
+          <div>
+            <strong>Theme workbench</strong>
+            <small>Runtime Material color probe</small>
+          </div>
+          <Badge icon="appearance" tone="secondary">Live</Badge>
+        </div>
         <ThemeSeedPicker />
         <p>
           Change the seed or appearance mode to probe every component state.
         </p>
       </div>
-    </aside>
+      </aside>
+    {/snippet}
 
-    <main class="lab-content">
+    {#snippet second()}
+    <main class="lab-content" aria-labelledby="gallery-title">
+      <Card
+        as="section"
+        variant="filled"
+        density="compact"
+        class="gallery-overview"
+      >
+        <div class="gallery-overview__copy">
+          <p class="lab-kicker">Interactive component inventory</p>
+          <h1 id="gallery-title">Control Gallery</h1>
+          <p class="lab-intro">
+            A production-density workbench for inspecting Litho controls,
+            compound behavior and theme states in one place.
+          </p>
+        </div>
+
+        <div class="gallery-overview__metadata" aria-label="Gallery features">
+          <Badge icon="keyboard" tone="primary">Keyboard first</Badge>
+          <Badge icon="appearance" tone="secondary">Dynamic color</Badge>
+          <Badge icon="status" tone="tertiary">Live state</Badge>
+        </div>
+      </Card>
+
       <section class="lab-section" aria-labelledby="button-lab-title">
         <div class="section-heading">
           <div>
@@ -1013,7 +1127,7 @@
       <section class="lab-section" aria-labelledby="menu-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">09 / Floating actions</p>
+            <p class="section-index">08 / Floating actions</p>
             <h2 id="menu-lab-title">Menu</h2>
           </div>
           <p>
@@ -1136,7 +1250,7 @@
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">08 / Input selection</p>
+            <p class="section-index">09 / Input selection</p>
             <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
           </div>
           <p>
@@ -1667,22 +1781,131 @@
         </div>
       </section>
     </main>
-
-  </div>
+    {/snippet}
+  </SplitPane>
 </div>
 
 <style>
   .lab-shell {
-    width: min(92rem, 100%);
-    min-height: 100dvh;
-    margin-inline: auto;
-    padding: clamp(1.25rem, 4vw, 4rem);
+    box-sizing: border-box;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: 100%;
+    height: 100dvh;
+    gap: 0.5rem;
+    padding: 0.55rem;
+    overflow: hidden;
     color: var(--md-sys-color-on-surface);
   }
 
   .lab-header {
-    max-width: 54rem;
-    margin-bottom: clamp(3rem, 8vw, 7rem);
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    min-width: 0;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.35rem 0.45rem;
+    border: 0.1rem solid var(--color-lds-toolbar-border);
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-toolbar-surface);
+  }
+
+  .gallery-brand,
+  .gallery-header-status,
+  .gallery-header-tools,
+  .gallery-density-control {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+  }
+
+  .gallery-brand {
+    gap: 0.55rem;
+  }
+
+  .gallery-brand__mark {
+    display: grid;
+    width: 2rem;
+    height: 2rem;
+    flex: 0 0 auto;
+    place-items: center;
+    border-radius: var(--lds-shape-hover-soft);
+    color: var(--color-lds-primary-content);
+    background: var(--color-lds-primary);
+    box-shadow: 0 0 0 0.2rem var(--color-lds-primary-border-light);
+  }
+
+  .gallery-brand__copy {
+    display: grid;
+    line-height: 1.1;
+  }
+
+  .gallery-brand__copy strong {
+    font-family: var(--heading);
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .gallery-brand__copy small,
+  .gallery-sidebar-heading small,
+  .theme-dock__heading small {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.65rem;
+  }
+
+  .gallery-header-status {
+    justify-self: center;
+    gap: 0.35rem;
+  }
+
+  .gallery-header-tools {
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+
+  .gallery-density-control {
+    gap: 0.35rem;
+  }
+
+  .gallery-density-control > span {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.68rem;
+  }
+
+  :global(.gallery-quick-jumps) {
+    flex: 0 0 auto;
+  }
+
+  :global(.gallery-overview) {
+    display: flex;
+    min-width: 0;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .gallery-overview__copy {
+    display: grid;
+    min-width: 0;
+    gap: 0.35rem;
+  }
+
+  .gallery-overview__copy h1 {
+    margin: 0;
+    font-family: var(--heading);
+    font-size: clamp(1.8rem, 4vw, 3.2rem);
+    font-weight: 500;
+    line-height: 1;
+    letter-spacing: -0.045em;
+  }
+
+  .gallery-overview__metadata {
+    display: flex;
+    flex: 0 0 auto;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem;
   }
 
   .lab-kicker,
@@ -2030,84 +2253,125 @@
     text-transform: uppercase;
   }
 
-  h1,
   h2,
   p {
     margin: 0;
   }
 
-  h1 {
-    margin-block: 0.1em;
-    font-family: var(--heading);
-    font-size: clamp(4.5rem, 12vw, 9rem);
-    font-weight: 500;
-    line-height: 0.95;
-    letter-spacing: -0.055em;
-  }
-
   .lab-intro {
     max-width: 34rem;
     color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.78rem;
   }
 
-  .lab-layout {
-    display: grid;
-    grid-template-columns: minmax(14rem, 18rem) minmax(0, 1fr);
-    gap: clamp(1.25rem, 3vw, 3rem);
-    align-items: start;
+  :global(.lab-layout) {
+    height: 100%;
+    min-height: 0;
+    border-radius: var(--lds-shape-rest);
   }
 
-  .lab-sidebar {
-    position: sticky;
-    top: 1rem;
-    display: grid;
-    max-height: calc(100dvh - 2rem);
-    gap: 1rem;
-    padding: 0.15rem;
-    margin: -0.15rem;
-    overflow-y: auto;
+  :global(.lab-layout > .lds-split-pane__panel) {
     scrollbar-gutter: stable;
   }
 
-  .lab-content {
+  .lab-sidebar {
+    box-sizing: border-box;
+    display: grid;
+    min-height: 100%;
+    align-content: start;
+    gap: 0.75rem;
+    padding: 0.65rem;
+    background:
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 2.5%,
+        var(--md-sys-color-surface)
+      );
+  }
+
+  .gallery-sidebar-heading,
+  .theme-dock__heading {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .gallery-sidebar-heading > div,
+  .theme-dock__heading > div {
     display: grid;
     min-width: 0;
-    gap: 1rem;
+    gap: 0.05rem;
+  }
+
+  .gallery-sidebar-heading strong,
+  .theme-dock__heading strong {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .lab-content {
+    box-sizing: border-box;
+    display: grid;
+    min-width: 0;
+    min-height: 100%;
+    align-content: start;
+    gap: 0.65rem;
+    padding: clamp(0.75rem, 1.8vw, 1.4rem);
+    background: var(--md-sys-color-surface);
   }
 
   .lab-section {
     min-width: 0;
-    scroll-margin-block-start: 1rem;
-    padding: clamp(1rem, 2.5vw, 2rem);
-    border: 0.15rem solid var(--color-lds-primary-border-light);
+    scroll-margin-block-start: 0.65rem;
+    padding: clamp(0.9rem, 1.7vw, 1.25rem);
+    border: 0.1rem solid var(--color-lds-toolbar-border);
     border-radius: var(--radius-lds-md);
     background:
       color-mix(
         in srgb,
-        var(--md-sys-color-primary) 2%,
+        var(--md-sys-color-secondary) 2%,
         var(--md-sys-color-surface)
       );
+    transition: padding var(--lds-motion-duration-fast)
+      var(--lds-motion-easing-state);
   }
 
   .section-heading {
     display: flex;
     justify-content: space-between;
     align-items: end;
-    gap: 2rem;
-    margin-bottom: 2rem;
+    gap: 1.5rem;
+    margin-bottom: 1.15rem;
   }
 
   .section-heading h2 {
     margin-top: 0.15em;
     font-family: var(--heading);
-    font-size: clamp(1.75rem, 4vw, 3rem);
+    font-size: clamp(1.35rem, 2.5vw, 1.9rem);
     font-weight: 500;
     line-height: 1;
+    letter-spacing: -0.025em;
   }
 
   .section-heading > p {
-    max-width: 20rem;
+    max-width: 22rem;
     text-align: right;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .lab-content {
+    gap: 0.45rem;
+    padding: 0.65rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .lab-section {
+    padding: 0.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .section-heading {
+    gap: 1rem;
+    margin-bottom: 0.75rem;
   }
 
   .state-table-scroll {
@@ -2321,8 +2585,10 @@
 
   .theme-dock {
     display: grid;
-    gap: 0.75rem;
+    gap: 0.55rem;
     width: auto;
+    padding-top: 0.75rem;
+    border-top: 0.1rem solid var(--color-lds-group-divider);
   }
 
   .theme-dock :global(.theme-seed-picker) {
@@ -2332,19 +2598,61 @@
   .theme-dock > p {
     max-width: 18rem;
     padding-inline: 0.25rem;
+    font-size: 0.68rem;
+    line-height: 1.4;
   }
 
   @media (max-width: 62rem) {
-    .lab-layout {
+    .lab-shell {
+      height: auto;
+      min-height: 100dvh;
+      overflow: visible;
+    }
+
+    :global(.lab-layout.lds-split-pane--horizontal) {
+      display: grid;
+      height: auto;
+      min-height: 0;
       grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      overflow: visible;
+      border: 0;
+      background: transparent;
+    }
+
+    :global(.lab-layout > .lds-split-pane__first) {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    :global(.lab-layout > .lds-split-pane__separator) {
+      display: none;
+    }
+
+    :global(.lab-layout > .lds-split-pane__second) {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    :global(.lab-layout > .lds-split-pane__panel) {
+      overflow: visible;
     }
 
     .lab-sidebar {
-      position: static;
-      grid-row: 1;
       grid-template-columns: minmax(0, 1fr) minmax(18rem, 0.75fr);
-      max-height: none;
-      overflow: visible;
+      min-height: 0;
+      border: 0.1rem solid var(--color-lds-toolbar-border);
+      border-radius: var(--lds-shape-rest);
+    }
+
+    .gallery-sidebar-heading {
+      grid-column: 1 / -1;
+    }
+
+    .lab-content {
+      min-height: 0;
+      padding-inline: 0;
+      padding-bottom: 0;
     }
 
     .theme-dock > p {
@@ -2353,8 +2661,36 @@
   }
 
   @media (max-width: 42rem) {
+    .lab-shell {
+      gap: 0.35rem;
+      padding: 0.35rem;
+    }
+
     .lab-header {
-      margin-bottom: 2.5rem;
+      grid-template-columns: auto minmax(0, 1fr);
+      gap: 0.5rem;
+    }
+
+    .gallery-header-status {
+      display: none;
+    }
+
+    .gallery-header-tools {
+      justify-self: end;
+    }
+
+    .gallery-density-control > span {
+      display: none;
+    }
+
+    :global(.gallery-overview) {
+      display: grid;
+      align-items: start;
+      gap: 0.85rem;
+    }
+
+    .gallery-overview__metadata {
+      justify-content: flex-start;
     }
 
     .section-heading {
@@ -2408,6 +2744,16 @@
 
     .lab-sidebar {
       grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (max-width: 30rem) {
+    :global(.gallery-quick-jumps) {
+      display: none;
+    }
+
+    .gallery-overview__metadata {
+      display: none;
     }
   }
 </style>

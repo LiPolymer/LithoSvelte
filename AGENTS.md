@@ -55,7 +55,11 @@
   consumer-facing components.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
   color probe.
-- App.svelte is the component lab and manual visual-regression surface.
+- App.svelte is the Control Gallery and manual interaction-regression surface.
+  Its desktop shell uses Litho controls for the app bar, catalog, theme
+  workbench, density switch, and a resizable SplitPane canvas. At narrow
+  widths the shell becomes normal document flow rather than preserving a
+  cramped desktop split.
 
 ## Intentional interaction decisions
 
@@ -330,7 +334,8 @@
 
 ## Suggested roadmap
 
-1. Review the SplitPane prototype in real editor and navigation layouts.
+1. Review the Control Gallery shell at desktop and narrow widths, including
+   independent panel scrolling, density switching, and catalog navigation.
 2. Review the compact Menu prototype, then add nested submenus and a generic
    non-menu Popover only where real use cases require them.
 3. Revisit GitLab-style animated icons later; do not add the Vue-based
