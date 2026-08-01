@@ -76,8 +76,12 @@
 
 ## Intentional interaction decisions
 
-- Standard desktop controls use a 38px minimum height. Compact IconButton uses
-  32px; all controls expand to at least 44px for coarse pointers.
+- Standard desktop controls use a 2.375rem minimum height (nominally 38px at a
+  16px root). Compact IconButton uses 2rem, and coarse pointers expand controls
+  to at least 2.75rem. Keep cross-component geometry in `rem` so it follows
+  user/root scaling; use `em` for indicators and spacing that should follow a
+  control's own type size. CSS pixels are reference pixels and remain suitable
+  for exceptional fixed logical measurements, but are not the density basis.
 - Contextual compact density reduces both component dimensions and the spacing
   around their internal content. Explicit component variants such as compact
   IconButton and Card remain meaningful and use the smaller compact baseline
@@ -99,6 +103,8 @@
 - ButtonGroup pressed shape must win over its zero-radius and first/last-radius
   layout rules, including when a compact button is wrapped by Tooltip.
 - Disabled controls must not react to hover or active states.
+- Disabled selection controls put the not-allowed cursor on the complete label
+  hit area, not only on the visual indicator or text.
 - Checkbox, Radio, and Switch share selection-control color, focus, density,
   and reduced-motion tokens while preserving their native inputs. Radio is an
   exclusive choice inside RadioGroup; Switch represents an immediate binary
@@ -107,8 +113,13 @@
   mixed-state mark; use it for partial group selection rather than simulating
   the state with a decorative icon.
 - Radio uses a diamond indicator with Checkbox's rest/hover/pressed corner
-  sequence. Switch applies its hover-soft and pressed-tight shape changes to
-  both the track and its thumb.
+  sequence. Its unrotated square sits inside a Checkbox-sized frame so the
+  rotated diamond has the same visual footprint instead of growing by sqrt(2).
+  Switch applies its hover-soft and pressed-tight shape changes to both the
+  track and its thumb.
+- RadioGroup error styling reaches the diamond, selected fill, hover ring, and
+  keyboard focus ring. Keep the error treatment semantic but low-intensity;
+  the visible legend/support text still carries the actual error message.
 - Tooltip uses Tonal colors and backdrop blur. Pointer hover is delayed,
   keyboard focus opens immediately, and Escape dismisses it. Its fixed-position
   surface flips at viewport edges while its arrow continues to track the
@@ -238,7 +249,8 @@
   stop each. Selected-row divider suppression and quiet Tonal-like corner
   treatment mirror Compact List.
 - Readonly TextField remains focusable/selectable but has no special focus
-  border, glow, or radius.
+  border, glow, or radius. A readonly field may still be invalid, in which case
+  its error color and message take precedence over the neutral readonly surface.
 - `commitOnEnter` on TextField must ignore IME composition, briefly show the
   pressed state, then blur.
 - Error TextField hover uses `--color-lds-field-error-highlighted`.
@@ -344,6 +356,9 @@
   motion constants in component markup.
 - Check desktop, coarse-pointer, disabled, readonly, error, keyboard, and
   reduced-motion states when changing a control.
+- `data-demo-state` is a Control Gallery-only visual probe for keeping
+  hover/focus/pressed states visible side by side. It must not become part of a
+  component's semantic state API or alter real event behavior.
 - Validate changes with:
 
   ```powershell

@@ -82,8 +82,10 @@
     onchange={handleChange}
   />
 
-  <span class="lds-radio__circle" aria-hidden="true">
-    <span class="lds-radio__dot"></span>
+  <span class="lds-radio__frame" aria-hidden="true">
+    <span class="lds-radio__circle">
+      <span class="lds-radio__dot"></span>
+    </span>
   </span>
 
   <span class="lds-radio__label">

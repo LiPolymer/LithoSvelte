@@ -186,7 +186,13 @@
 
     <div class="gallery-header-status" aria-label="Gallery status">
       <Badge icon="applications" tone="primary">14 groups</Badge>
-      <Badge icon="appearance" variant="outline">Live tokens</Badge>
+      <Badge
+        icon="scale"
+        variant="outline"
+        title="Regular / compact control height"
+      >
+        {galleryDensity === 'compact' ? '2 / 1.75rem' : '2.375 / 2rem'}
+      </Badge>
     </div>
 
     <div class="gallery-header-tools">
@@ -1033,6 +1039,22 @@
               Notifications
             </Checkbox>
           </Card>
+
+          <Card as="article">
+            <span>Interactive / mixed</span>
+            <Checkbox indeterminate>
+              Partially selected
+            </Checkbox>
+          </Card>
+
+          <Card as="article" class="forced-state">
+            <span>Hover · focus · pressed</span>
+            <div class="selection-state-probe">
+              <Checkbox data-demo-state="hover">Hover</Checkbox>
+              <Checkbox data-demo-state="focus" checked>Focus</Checkbox>
+              <Checkbox data-demo-state="pressed">Pressed</Checkbox>
+            </div>
+          </Card>
         </div>
       </section>
 
@@ -1089,6 +1111,24 @@
               <Switch disabled>External notifications</Switch>
               <Switch checked disabled>Audit logging</Switch>
             </div>
+          </Card>
+
+          <Card as="article" class="forced-state">
+            <span>Switch / hover · focus · pressed</span>
+            <div class="selection-state-probe">
+              <Switch data-demo-state="hover">Hover</Switch>
+              <Switch data-demo-state="focus" checked>Focus</Switch>
+              <Switch data-demo-state="pressed">Pressed</Switch>
+            </div>
+          </Card>
+
+          <Card as="article" class="forced-state">
+            <span>Radio / hover · focus · pressed</span>
+            <RadioGroup legend="State sequence" orientation="horizontal">
+              <Radio value="hover" data-demo-state="hover">Hover</Radio>
+              <Radio value="focus" data-demo-state="focus">Focus</Radio>
+              <Radio value="pressed" data-demo-state="pressed">Pressed</Radio>
+            </RadioGroup>
           </Card>
         </div>
       </section>
@@ -1152,6 +1192,34 @@
               value="Unavailable"
               helperText="This field cannot be edited."
               disabled
+            />
+          </Card>
+
+          <Card as="article" class="forced-state">
+            <span>Hover</span>
+            <TextField
+              label="Repository path"
+              value="litho/design-system"
+              data-demo-state="hover"
+            />
+          </Card>
+
+          <Card as="article" class="forced-state">
+            <span>Focus</span>
+            <TextField
+              label="Branch"
+              value="main"
+              data-demo-state="focus"
+            />
+          </Card>
+
+          <Card as="article">
+            <span>Readonly / error</span>
+            <TextField
+              label="Generated slug"
+              value="invalid slug"
+              error="The generated value cannot be published."
+              readonly
             />
           </Card>
         </div>
@@ -2718,6 +2786,14 @@
   .switch-stack {
     display: grid;
     gap: 0.15rem;
+  }
+
+  .selection-state-probe {
+    display: flex;
+    align-self: end;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.1rem 0.7rem;
   }
 
   .button-group-grid :global(.lds-card .lds-button-group) {

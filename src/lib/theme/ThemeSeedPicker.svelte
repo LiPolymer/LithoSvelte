@@ -193,6 +193,7 @@
   .control-label {
     padding-inline: 0.1rem;
     font-weight: 500;
+    line-height: 1.3;
   }
 
   .color-input {

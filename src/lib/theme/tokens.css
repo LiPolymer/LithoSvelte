@@ -41,12 +41,17 @@
     --lds-control-min-height: 2.375rem;
     --lds-control-min-height-touch: 2.75rem;
     --lds-control-font-size: 0.875rem;
+    --lds-control-line-box: 1.09375rem;
     --lds-control-padding-block: 0;
     --lds-control-padding-inline: 0.75rem;
     --lds-control-gap: 0.4em;
     --lds-icon-button-icon-size: 1rem;
     --lds-icon-button-icon-size-compact: 0.875rem;
     --lds-selection-gap: 0.55em;
+    --lds-selection-indicator-size: 1.15em;
+    --lds-checkbox-mark-size: 0.8em;
+    --lds-radio-indicator-size: 0.8125em;
+    --lds-radio-mark-size: 0.48em;
 
     --lds-switch-track-width: 2.25em;
     --lds-switch-track-height: 1.25em;
@@ -204,8 +209,11 @@
     --lds-control-min-height-compact: 1.75rem;
     --lds-control-min-height: 2rem;
     --lds-control-font-size: 0.8125rem;
-    --lds-control-padding-block: 0.5rem;
-    --lds-control-padding-inline: 0.5rem;
+    --lds-control-line-box: 1.015625rem;
+    --lds-control-padding-block: calc(
+        (var(--lds-control-min-height) - var(--lds-control-line-box)) / 2
+    );
+    --lds-control-padding-inline: var(--lds-control-padding-block);
     --lds-control-gap: 0.32em;
     --lds-icon-button-icon-size: 0.875rem;
     --lds-icon-button-icon-size-compact: 0.75rem;
@@ -216,8 +224,14 @@
     --lds-switch-thumb-size: 0.6875em;
     --lds-switch-track-inset: 0.125em;
 
-    --lds-field-padding-inline: 0.45rem;
-    --lds-field-padding-block: 0.45rem;
+    --lds-field-padding-inline: calc(
+        (
+            var(--lds-control-min-height)
+            - var(--lds-control-line-box)
+            - 0.2rem
+        ) / 2
+    );
+    --lds-field-padding-block: var(--lds-field-padding-inline);
     --lds-field-gap: 0.18rem;
     --lds-field-meta-font-size: 0.6875rem;
     --lds-field-toggle-size: 1.25rem;
@@ -374,6 +388,12 @@
     --color-lds-selection-mark: var(--md-sys-color-primary);
     --color-lds-selection-hover-ring: var(--color-lds-primary-border-light);
     --color-lds-selection-focus-ring: color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+    --color-lds-selection-error-border: color-mix(in srgb, var(--md-sys-color-error) 55%, var(--md-sys-color-outline));
+    --color-lds-selection-error-border-hover: var(--md-sys-color-error);
+    --color-lds-selection-error-fill: color-mix(in srgb, var(--md-sys-color-error) 12%, transparent);
+    --color-lds-selection-error-mark: var(--md-sys-color-error);
+    --color-lds-selection-error-hover-ring: color-mix(in srgb, var(--md-sys-color-error) 8%, transparent);
+    --color-lds-selection-error-focus-ring: color-mix(in srgb, var(--md-sys-color-error) 45%, transparent);
     --color-lds-checkbox-fill: var(--color-lds-selection-fill);
     --color-lds-radio-fill: var(--color-lds-selection-fill);
     --color-lds-switch-track: color-mix(in srgb, var(--md-sys-color-secondary) 5%, transparent);
