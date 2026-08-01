@@ -19,9 +19,9 @@
   let invalid = false
 
   const modes: Array<{ value: ThemeMode; label: string; icon: string }> = [
-    { value: 'system', label: 'System', icon: 'monitor' },
-    { value: 'light', label: 'Light', icon: 'sun' },
-    { value: 'dark', label: 'Dark', icon: 'moon' },
+    { value: 'system', label: '跟随系统', icon: 'monitor' },
+    { value: 'light', label: '浅色', icon: 'sun' },
+    { value: 'dark', label: '深色', icon: 'moon' },
   ]
 
   function applySeed(value: string): void {
@@ -54,30 +54,30 @@
 <section class="theme-seed-picker" aria-labelledby="theme-seed-title">
   <header>
     <div>
-      <p class="eyebrow">Material theme</p>
-      <h2 id="theme-seed-title">Seed color</h2>
+      <p class="eyebrow">Material 主题</p>
+      <h2 id="theme-seed-title">种子颜色</h2>
     </div>
 
-    <GhostButton class="picker-reset" onclick={reset}>Reset</GhostButton>
+    <GhostButton class="picker-reset" onclick={reset}>重置</GhostButton>
   </header>
 
   <div class="seed-control">
     <label class="color-control">
-      <span class="control-label">Color</span>
+      <span class="control-label">颜色</span>
       <input
         class="color-input"
         type="color"
         value={seed}
-        aria-label="Choose Material seed color"
+        aria-label="选择 Material 种子颜色"
         oninput={(event) => applySeed(event.currentTarget.value)}
       />
     </label>
 
     <TextField
       class="seed-hex-field"
-      label="Hex"
+      label="十六进制"
       bind:value={seedInput}
-      error={invalid ? 'Enter a six-digit hex color.' : undefined}
+      error={invalid ? '请输入六位十六进制颜色。' : undefined}
       maxlength={7}
       spellcheck={false}
       commitOnEnter
@@ -91,18 +91,18 @@
     />
 
     <div class="appearance-control">
-      <span class="control-label">Appearance</span>
+      <span class="control-label">外观</span>
       <ButtonGroup
         class="theme-mode-group"
         mode="options"
         value={mode}
-        aria-label="Appearance"
+        aria-label="外观"
       >
         {#each modes as option}
           <Tooltip content={option.label}>
             <IconButton
               icon={option.icon}
-              label={`Use ${option.label.toLowerCase()} appearance`}
+              label={`使用${option.label}外观`}
               value={option.value}
               onclick={() => applyMode(option.value)}
             />
@@ -112,11 +112,11 @@
     </div>
   </div>
 
-  <div class="palette" aria-label="Generated color preview">
-    <span class="primary" title="Primary"></span>
-    <span class="secondary" title="Secondary"></span>
-    <span class="tertiary" title="Tertiary"></span>
-    <span class="surface" title="Surface"></span>
+  <div class="palette" aria-label="生成的颜色预览">
+    <span class="primary" title="主要色"></span>
+    <span class="secondary" title="次要色"></span>
+    <span class="tertiary" title="第三色"></span>
+    <span class="surface" title="表面色"></span>
   </div>
 </section>
 

@@ -57,26 +57,26 @@
   let expressiveMotion = false
   let notifications = true
   let displayName = ''
-  let email = 'hello@litho.design'
+  let email = 'fish@lipoly.ink'
   let viewMode: string | number = 'list'
-  let lastAction = 'Nothing yet'
+  let lastAction = '尚无操作'
   let boldActive = true
   let italicActive = false
   let accessLevel: ListboxValue | undefined = 'maintainer'
   let invalidAccessLevel: ListboxValue | undefined
-  let reviewer: ListboxValue | undefined = 'mira'
+  let reviewer: ListboxValue | undefined = 'lipo'
   let missingReviewer: ListboxValue | undefined
-  let owner: ListboxValue | undefined = 'sora'
+  let owner: ListboxValue | undefined = 'lipo'
   let themeMode: RadioValue | undefined = 'system'
   let defaultVisibility: RadioValue | undefined
   let compactRows = true
   let liveSync = false
   let selectedWorkspace: ListValue | undefined = 'litho'
   let workspaceLayout: string | number = 'list'
-  let workspaceActivity = 'Ready'
+  let workspaceActivity = '就绪'
   let selectedWorkItems: DataTableValue[] = ['keyboard']
-  let workItemActivity = 'Ready'
-  let menuActivity = 'Ready'
+  let workItemActivity = '就绪'
+  let menuActivity = '就绪'
   let showArchivedWorkspaces = false
   let compactMenuMetadata = true
   let workspaceSort: MenuValue = 'recent'
@@ -96,7 +96,7 @@
   let navigationTab = 'overview'
   let summaryDialogOpen = false
   let editDialogOpen = false
-  let dialogWorkspaceName = 'Litho Design System'
+  let dialogWorkspaceName = 'Litho.'
   let alertDialogOpen = false
   let wideDialogOpen = false
   let galleryDensity: string | number = 'comfortable'
@@ -118,6 +118,30 @@
 
   function removeProjectTag(label: string) {
     projectTags = projectTags.filter((tag) => tag.label !== label)
+  }
+
+  function workspaceLabel(value: ListValue | undefined): string {
+    const labels: Record<string, string> = {
+      litho: 'Litho 设计系统',
+      aurora: 'Aurora 研究',
+      atlas: 'Atlas 迁移',
+      legacy: '旧版导入',
+    }
+
+    return value === undefined ? '未选择' : labels[String(value)] ?? String(value)
+  }
+
+  function navigationRailLabel(value: NavigationRailValue | undefined): string {
+    const labels: Record<string, string> = {
+      'rail-workspace': '工作区',
+      'rail-overview': '概览',
+      'rail-activity': '动态',
+      'rail-members': '成员',
+      'rail-settings': '设置',
+      'rail-integrations': '集成',
+    }
+
+    return value === undefined ? '未选择' : labels[String(value)] ?? String(value)
   }
 
   $: resolvedGalleryDensity =
@@ -147,44 +171,49 @@
   })
 
   const accessOptions: readonly ListboxOption[] = [
-    { value: 'guest', label: 'Guest' },
-    { value: 'reporter', label: 'Reporter' },
-    { value: 'developer', label: 'Developer' },
-    { value: 'maintainer', label: 'Maintainer' },
-    { value: 'owner', label: 'Owner', disabled: true },
+    { value: 'guest', label: '访客' },
+    { value: 'reporter', label: '报告者' },
+    { value: 'developer', label: '开发者' },
+    { value: 'maintainer', label: '维护者' },
+    { value: 'owner', label: '所有者', disabled: true },
   ]
 
   const peopleOptions: readonly ListboxOption[] = [
     {
-      value: 'mira',
-      label: 'Mira Chen',
-      keywords: ['design', 'taipei'],
+      value: 'lipo',
+      label: 'LiPolymer',
+      keywords: ['设计', 'design', '中国', 'china'],
     },
     {
-      value: 'sora',
-      label: 'Sora Kim',
-      keywords: ['frontend', 'seoul'],
+      value: '1107',
+      label: '1107',
+      keywords: ['前端', 'frontend', '英国', 'uk'],
     },
     {
-      value: 'niko',
-      label: 'Niko Petrova',
-      keywords: ['research', 'helsinki'],
+      value: 'tsxc',
+      label: '星澜曦光',
+      keywords: ['硬件', 'hardware', '中国', 'china'],
     },
     {
-      value: 'sam',
-      label: 'Sam Rivera',
-      keywords: ['platform', 'remote'],
+      value: 'haraguchi',
+      label: '正来',
+      keywords: ['前端', 'frontend', '中国', 'china'],
+    },
+    {
+      value: 'dbi',
+      label: '徒壁先生',
+      keywords: ['研究', 'research', '中国', 'china'],
     },
     {
       value: 'archived',
-      label: 'Archived account',
+      label: '已归档账户',
       disabled: true,
     },
   ]
 </script>
 
 <svelte:head>
-  <title>Litho · Control Gallery</title>
+  <title>Litho · Controls Gallery</title>
 </svelte:head>
 
 <div
@@ -195,68 +224,84 @@
   <header class="lab-header">
     <div class="gallery-brand">
       <span class="gallery-brand__mark" aria-hidden="true">
-        <Icon name="applications" size={18} />
+        <svg
+          class="gallery-brand__logo"
+          viewBox="0 0 500 500"
+          fill="none"
+          focusable="false"
+        >
+          <path
+            class="gallery-brand__logo-back"
+            fill-rule="evenodd"
+            d="M427 69H159a5 5 0 0 0-5 5v268a5 5 0 0 0 5 5h268a5 5 0 0 0 5-5V74a5 5 0 0 0-5-5Zm-54 55H213a5 5 0 0 0-5 5v160a5 5 0 0 0 5 5h160a5 5 0 0 0 5-5V129a5 5 0 0 0-5-5Z"
+          />
+          <path
+            class="gallery-brand__logo-front"
+            fill-rule="evenodd"
+            d="M341 153H73a5 5 0 0 0-5 5v268a5 5 0 0 0 5 5h268a5 5 0 0 0 5-5V158a5 5 0 0 0-5-5Zm-54 55H127a5 5 0 0 0-5 5v160a5 5 0 0 0 5 5h160a5 5 0 0 0 5-5V213a5 5 0 0 0-5-5Z"
+          />
+        </svg>
       </span>
       <span class="gallery-brand__copy">
         <strong>Litho</strong>
-        <small>Control Gallery</small>
+        <small>Controls Gallery</small>
       </span>
     </div>
 
-    <div class="gallery-header-status" aria-label="Gallery status">
-      <Badge icon="applications" tone="primary">14 groups</Badge>
+    <div class="gallery-header-status" aria-label="Gallery状态">
+      <Badge icon="applications" tone="primary">14 组控件</Badge>
       <Badge
         icon="scale"
         variant="outline"
-        title="Regular / compact control height"
+        title="常规 / 紧凑控件高度"
       >
         {galleryDensity === 'compact' ? '2 / 1.75rem' : '2.375 / 2rem'}
       </Badge>
     </div>
 
     <div class="gallery-header-tools">
-      <Toolbar aria-label="Gallery quick jumps" class="gallery-quick-jumps">
-        <Tooltip content="Jump to actions">
+      <Toolbar aria-label="Gallery快速跳转" class="gallery-quick-jumps">
+        <Tooltip content="跳转到操作控件">
           <IconButton
             icon="applications"
-            label="Jump to actions"
+            label="跳转到操作控件"
             onclick={() => navigateLab('button-lab-title')}
           />
         </Tooltip>
-        <Tooltip content="Jump to inputs">
+        <Tooltip content="跳转到输入控件">
           <IconButton
             icon="pencil"
-            label="Jump to inputs"
+            label="跳转到输入控件"
             onclick={() => navigateLab('checkbox-lab-title')}
           />
         </Tooltip>
-        <Tooltip content="Jump to layout">
+        <Tooltip content="跳转到布局控件">
           <IconButton
             icon="sidebar"
-            label="Jump to layout"
+            label="跳转到布局控件"
             onclick={() => navigateLab('split-pane-lab-title')}
           />
         </Tooltip>
       </Toolbar>
 
       <div class="gallery-density-control">
-        <span>Density</span>
+        <span>密度</span>
         <ButtonGroup
           mode="options"
           bind:value={galleryDensity}
-          aria-label="Gallery density"
+          aria-label="Gallery密度"
         >
-          <Tooltip content="Compact gallery">
+          <Tooltip content="紧凑Gallery">
             <IconButton
               icon="list-bulleted"
-              label="Compact gallery"
+              label="紧凑Gallery"
               value="compact"
             />
           </Tooltip>
-          <Tooltip content="Comfortable gallery">
+          <Tooltip content="舒适Gallery">
             <IconButton
               icon="dot-grid"
-              label="Comfortable gallery"
+              label="舒适Gallery"
               value="comfortable"
             />
           </Tooltip>
@@ -267,7 +312,7 @@
 
   <SplitPane
     bind:value={gallerySplit}
-    label="Resize gallery catalog and canvas"
+    label="调整控件目录与画布宽度"
     min={18}
     max={34}
     step={1}
@@ -275,98 +320,98 @@
     class="lab-layout"
   >
     {#snippet first()}
-      <aside class="lab-sidebar" aria-label="Gallery catalog and theme controls">
+      <aside class="lab-sidebar" aria-label="控件目录与主题控制">
         <div class="gallery-sidebar-heading">
           <div>
-            <strong>Component catalog</strong>
-            <small>Interactive specimen index</small>
+            <strong>组件目录</strong>
+            <small>交互式样例索引</small>
           </div>
           <Badge icon="list-bulleted" variant="outline">14</Badge>
         </div>
 
       <NavigationTree
-        label="Control Gallery sections"
+        label="Controls Gallery分区"
         bind:value={activeLabSection}
         onvaluechange={navigateLab}
       >
-        <NavigationTreeItem label="Actions" icon="applications" expanded>
+        <NavigationTreeItem label="操作" icon="applications" expanded>
           <NavigationTreeItem
             value="button-lab-title"
-            label="Buttons"
+            label="按钮"
             icon="play"
           />
           <NavigationTreeItem
             value="toolbar-lab-title"
-            label="Toolbar"
+            label="工具栏"
             icon="settings"
           />
           <NavigationTreeItem
             value="menu-lab-title"
-            label="Menu"
+            label="菜单"
             icon="ellipsis_v"
           />
           <NavigationTreeItem
             value="dialog-lab-title"
-            label="Dialog"
+            label="对话框"
             icon="details-block"
           />
         </NavigationTreeItem>
 
-        <NavigationTreeItem label="Collections" icon="list-bulleted" expanded>
+        <NavigationTreeItem label="集合" icon="list-bulleted" expanded>
           <NavigationTreeItem
             value="list-lab-title"
-            label="Compact list"
+            label="紧凑列表"
             icon="list-bulleted"
           />
           <NavigationTreeItem
             value="data-table-lab-title"
-            label="Data table"
+            label="数据表格"
             icon="table"
           />
           <NavigationTreeItem
             value="badge-lab-title"
-            label="Badge & tag"
+            label="徽标与标签"
             icon="status"
           />
           <NavigationTreeItem
             value="card-lab-title"
-            label="Card"
+            label="卡片"
             icon="applications"
           />
           <NavigationTreeItem
             value="split-pane-lab-title"
-            label="Split pane"
+            label="分割面板"
             icon="sidebar"
           />
         </NavigationTreeItem>
 
-        <NavigationTreeItem label="Inputs" icon="pencil" expanded>
+        <NavigationTreeItem label="输入" icon="pencil" expanded>
           <NavigationTreeItem
             value="checkbox-lab-title"
-            label="Checkbox"
+            label="复选框"
             icon="check"
           />
           <NavigationTreeItem
             value="radio-switch-lab-title"
-            label="Radio & switch"
+            label="单选框与开关"
             icon="status"
           />
           <NavigationTreeItem
             value="text-field-lab-title"
-            label="Text field"
+            label="文本框"
             icon="pencil"
           />
           <NavigationTreeItem
             value="choice-field-lab-title"
-            label="Select & combobox"
+            label="选择框与组合框"
             icon="chevron-down"
           />
         </NavigationTreeItem>
 
-        <NavigationTreeItem label="Navigation" icon="link" expanded>
+        <NavigationTreeItem label="导航" icon="link" expanded>
           <NavigationTreeItem
             value="navigation-lab-title"
-            label="Tree, rail & tabs"
+            label="树、导航栏与标签页"
             icon="project"
           />
         </NavigationTreeItem>
@@ -375,18 +420,17 @@
       <div
         id="gallery-theme-controls"
         class="theme-dock"
-        aria-label="Theme controls"
+        aria-label="主题控制"
       >
         <div class="theme-dock__heading">
           <div>
-            <strong>Theme workbench</strong>
-            <small>Runtime Material color probe</small>
+            <small>Material 运行时配色预览</small>
           </div>
-          <Badge icon="appearance" tone="secondary">Live</Badge>
+          <Badge icon="appearance" tone="secondary">实时</Badge>
         </div>
         <ThemeSeedPicker />
         <p>
-          Change the seed or appearance mode to probe every component state.
+          在此调整种子颜色或外观模式。
         </p>
       </div>
       </aside>
@@ -401,84 +445,79 @@
         class="gallery-overview"
       >
         <div class="gallery-overview__copy">
-          <p class="lab-kicker">Interactive component inventory</p>
-          <h1 id="gallery-title">Control Gallery</h1>
-          <p class="lab-intro">
-            A production-density workbench for inspecting Litho controls,
-            compound behavior and theme states in one place.
-          </p>
+          <p class="lab-kicker">Litho.</p>
+          <h1 id="gallery-title">Controls Gallery</h1>
         </div>
 
-        <div class="gallery-overview__metadata" aria-label="Gallery features">
-          <Badge icon="keyboard" tone="primary">Keyboard first</Badge>
-          <Badge icon="appearance" tone="secondary">Dynamic color</Badge>
-          <Badge icon="status" tone="tertiary">Live state</Badge>
+        <div class="gallery-overview__metadata" aria-label="Gallery特性">
+          <Badge icon="keyboard" tone="primary">键盘优先</Badge>
+          <Badge icon="appearance" tone="secondary">动态配色</Badge>
         </div>
       </Card>
 
       <section class="lab-section" aria-labelledby="button-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">01 / Actions</p>
-            <h2 id="button-lab-title">Buttons</h2>
+            <p class="section-index">01 / 操作</p>
+            <h2 id="button-lab-title">按钮</h2>
           </div>
-          <p>Compare interaction states across the three emphasis levels.</p>
+          <p>比较三种强调层级下的完整交互状态。</p>
         </div>
 
         <div class="state-table-scroll">
           <table class="state-table">
             <thead>
               <tr>
-                <th scope="col">Variant</th>
-                <th scope="col">Rest</th>
-                <th scope="col">Hover</th>
-                <th scope="col">Focus</th>
-                <th scope="col">Pressed</th>
-                <th scope="col">Disabled</th>
+                <th scope="col">变种</th>
+                <th scope="col">静止</th>
+                <th scope="col">悬停</th>
+                <th scope="col">聚焦</th>
+                <th scope="col">按下</th>
+                <th scope="col">禁用</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <th scope="row">Primary</th>
-                <td><PrimaryButton>Primary</PrimaryButton></td>
+                <th scope="row">主要</th>
+                <td><PrimaryButton>主要</PrimaryButton></td>
                 <td class="forced-state">
-                  <PrimaryButton data-demo-state="hover">Primary</PrimaryButton>
+                  <PrimaryButton data-demo-state="hover">主要</PrimaryButton>
                 </td>
                 <td class="forced-state">
-                  <PrimaryButton data-demo-state="focus">Primary</PrimaryButton>
+                  <PrimaryButton data-demo-state="focus">主要</PrimaryButton>
                 </td>
                 <td class="forced-state">
-                  <PrimaryButton data-demo-state="pressed">Primary</PrimaryButton>
+                  <PrimaryButton data-demo-state="pressed">主要</PrimaryButton>
                 </td>
-                <td><PrimaryButton disabled>Primary</PrimaryButton></td>
+                <td><PrimaryButton disabled>主要</PrimaryButton></td>
               </tr>
               <tr>
-                <th scope="row">Tonal</th>
-                <td><TonalButton>Tonal</TonalButton></td>
+                <th scope="row">色调</th>
+                <td><TonalButton>色调</TonalButton></td>
                 <td class="forced-state">
-                  <TonalButton data-demo-state="hover">Tonal</TonalButton>
+                  <TonalButton data-demo-state="hover">色调</TonalButton>
                 </td>
                 <td class="forced-state">
-                  <TonalButton data-demo-state="focus">Tonal</TonalButton>
+                  <TonalButton data-demo-state="focus">色调</TonalButton>
                 </td>
                 <td class="forced-state">
-                  <TonalButton data-demo-state="pressed">Tonal</TonalButton>
+                  <TonalButton data-demo-state="pressed">色调</TonalButton>
                 </td>
-                <td><TonalButton disabled>Tonal</TonalButton></td>
+                <td><TonalButton disabled>色调</TonalButton></td>
               </tr>
               <tr>
-                <th scope="row">Ghost</th>
-                <td><GhostButton>Ghost</GhostButton></td>
+                <th scope="row">幽灵</th>
+                <td><GhostButton>幽灵</GhostButton></td>
                 <td class="forced-state">
-                  <GhostButton data-demo-state="hover">Ghost</GhostButton>
+                  <GhostButton data-demo-state="hover">幽灵</GhostButton>
                 </td>
                 <td class="forced-state">
-                  <GhostButton data-demo-state="focus">Ghost</GhostButton>
+                  <GhostButton data-demo-state="focus">幽灵</GhostButton>
                 </td>
                 <td class="forced-state">
-                  <GhostButton data-demo-state="pressed">Ghost</GhostButton>
+                  <GhostButton data-demo-state="pressed">幽灵</GhostButton>
                 </td>
-                <td><GhostButton disabled>Ghost</GhostButton></td>
+                <td><GhostButton disabled>幽灵</GhostButton></td>
               </tr>
             </tbody>
           </table>
@@ -486,81 +525,87 @@
 
         <div class="button-group-grid">
           <Card as="article">
-            <span>Actions / related commands</span>
-            <ButtonGroup aria-label="File actions">
+            <span>操作 / 相关命令</span>
+            <ButtonGroup aria-label="文件操作">
               <PrimaryButton
                 expressive={false}
-                onclick={() => (lastAction = 'Download')}
+                onclick={() => (lastAction = '下载')}
               >
-                Download
+                下载
               </PrimaryButton>
-              <TonalButton onclick={() => (lastAction = 'Browse')}>
-                Browse
+              <TonalButton onclick={() => (lastAction = '浏览')}>
+                浏览
               </TonalButton>
-              <GhostButton onclick={() => (lastAction = 'Delete')}>
-                Delete
+              <GhostButton onclick={() => (lastAction = '删除')}>
+                删除
               </GhostButton>
             </ButtonGroup>
-            <small>Last action: {lastAction}</small>
+            <small>最近操作：{lastAction}</small>
           </Card>
 
           <Card as="article">
-            <span>Options / one active view</span>
+            <span>选项 / 单一活动视图</span>
             <ButtonGroup
               mode="options"
               bind:value={viewMode}
-              aria-label="View mode"
+              aria-label="视图模式"
             >
-              <GhostButton value="list">List</GhostButton>
-              <GhostButton value="board">Board</GhostButton>
-              <GhostButton value="timeline">Timeline</GhostButton>
+              <GhostButton value="list">列表</GhostButton>
+              <GhostButton value="board">看板</GhostButton>
+              <GhostButton value="timeline">时间线</GhostButton>
             </ButtonGroup>
-            <small>Current view: {viewMode}</small>
+            <small>
+              当前视图：{viewMode === 'list'
+                ? '列表'
+                : viewMode === 'board'
+                  ? '看板'
+                  : '时间线'}
+            </small>
           </Card>
         </div>
 
         <Card class="icon-button-lab">
           <div>
-            <span>Icon buttons / compact actions</span>
-            <small>GitLab glyphs with Litho density and interaction states.</small>
+            <span>图标按钮 / 紧凑操作</span>
+            <small>采用 GitLab 图标，并应用 Litho 的密度与交互状态。</small>
           </div>
 
           <div class="icon-button-rows">
             <div
               class="icon-button-row"
               role="group"
-              aria-label="Icon button variants"
+              aria-label="图标按钮变种"
             >
-              <Tooltip content="Edit">
-                <IconButton icon="pencil" label="Edit" />
+              <Tooltip content="编辑">
+                <IconButton icon="pencil" label="编辑" />
               </Tooltip>
-              <Tooltip content="Download" placement="bottom">
+              <Tooltip content="下载" placement="bottom">
                 <IconButton
                   icon="download"
-                  label="Download"
+                  label="下载"
                   variant="tonal"
                 />
               </Tooltip>
-              <Tooltip content="Create">
-                <IconButton icon="plus" label="Create" variant="primary" />
+              <Tooltip content="新建">
+                <IconButton icon="plus" label="新建" variant="primary" />
               </Tooltip>
-              <Tooltip content="Remove unavailable">
-                <IconButton icon="remove" label="Remove" disabled />
+              <Tooltip content="移除不可用">
+                <IconButton icon="remove" label="移除" disabled />
               </Tooltip>
-              <Tooltip content="Settings">
-                <IconButton icon="settings" label="Settings" size="default" />
+              <Tooltip content="设置">
+                <IconButton icon="settings" label="设置" size="default" />
               </Tooltip>
             </div>
 
-            <ButtonGroup aria-label="Formatting actions">
-              <Tooltip content="Bold">
-                <IconButton icon="bold" label="Bold" />
+            <ButtonGroup aria-label="格式操作">
+              <Tooltip content="粗体">
+                <IconButton icon="bold" label="粗体" />
               </Tooltip>
-              <Tooltip content="Italic">
-                <IconButton icon="italic" label="Italic" />
+              <Tooltip content="斜体">
+                <IconButton icon="italic" label="斜体" />
               </Tooltip>
-              <Tooltip content="Insert link">
-                <IconButton icon="link" label="Insert link" />
+              <Tooltip content="插入链接">
+                <IconButton icon="link" label="插入链接" />
               </Tooltip>
             </ButtonGroup>
           </div>
@@ -570,60 +615,60 @@
       <section class="lab-section" aria-labelledby="toolbar-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">02 / Composite actions</p>
-            <h2 id="toolbar-lab-title">Toolbar</h2>
+            <p class="section-index">02 / 复合操作</p>
+            <h2 id="toolbar-lab-title">工具栏</h2>
           </div>
-          <p>One Tab stop, then arrow keys for efficient command navigation.</p>
+          <p>仅保留一个 Tab 停靠点，再用方向键高效浏览命令。</p>
         </div>
 
         <Card class="toolbar-lab">
           <div>
-            <span>Document formatting</span>
-            <small>Home and End jump to the toolbar boundaries.</small>
+            <span>文档格式</span>
+            <small>Home 与 End 可跳转到工具栏两端。</small>
           </div>
 
-          <Toolbar aria-label="Document formatting">
-            <Tooltip content="Undo">
-              <IconButton icon="redo" label="Undo" class="toolbar-undo" />
+          <Toolbar aria-label="文档格式">
+            <Tooltip content="撤销">
+              <IconButton icon="redo" label="撤销" class="toolbar-undo" />
             </Tooltip>
-            <Tooltip content="Redo unavailable">
-              <IconButton icon="redo" label="Redo" disabled />
+            <Tooltip content="重做不可用">
+              <IconButton icon="redo" label="重做" disabled />
             </Tooltip>
 
             <ToolbarSeparator />
 
-            <ButtonGroup aria-label="Text formatting">
-              <Tooltip content="Bold">
+            <ButtonGroup aria-label="文本格式">
+              <Tooltip content="粗体">
                 <IconButton
                   icon="bold"
-                  label="Bold"
+                  label="粗体"
                   aria-pressed={boldActive}
                   onclick={() => (boldActive = !boldActive)}
                 />
               </Tooltip>
-              <Tooltip content="Italic">
+              <Tooltip content="斜体">
                 <IconButton
                   icon="italic"
-                  label="Italic"
+                  label="斜体"
                   aria-pressed={italicActive}
                   onclick={() => (italicActive = !italicActive)}
                 />
               </Tooltip>
-              <Tooltip content="Underline">
-                <IconButton icon="underline" label="Underline" />
+              <Tooltip content="下划线">
+                <IconButton icon="underline" label="下划线" />
               </Tooltip>
             </ButtonGroup>
 
             <ToolbarSeparator />
 
-            <Tooltip content="Insert link">
-              <IconButton icon="link" label="Insert link" />
+            <Tooltip content="插入链接">
+              <IconButton icon="link" label="插入链接" />
             </Tooltip>
-            <Tooltip content="Add comment">
-              <IconButton icon="comment" label="Add comment" />
+            <Tooltip content="添加评论">
+              <IconButton icon="comment" label="添加评论" />
             </Tooltip>
-            <Tooltip content="More actions">
-              <IconButton icon="ellipsis_h" label="More actions" />
+            <Tooltip content="更多操作">
+              <IconButton icon="ellipsis_h" label="更多操作" />
             </Tooltip>
           </Toolbar>
         </Card>
@@ -632,34 +677,34 @@
       <section class="lab-section" aria-labelledby="list-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">03 / Dense collections</p>
-            <h2 id="list-lab-title">Compact list</h2>
+            <p class="section-index">03 / 高密度集合</p>
+            <h2 id="list-lab-title">紧凑列表</h2>
           </div>
-          <p>Vertical row navigation with independent actions at the edge.</p>
+          <p>支持纵向行导航，并在行末保留独立操作。</p>
         </div>
 
         <div class="list-lab">
           <header class="list-lab-header">
             <div>
-              <span>Recent workspaces</span>
+              <span>最近工作区</span>
               <small aria-live="polite">
-                {selectedWorkspace ?? 'Nothing'} selected · {workspaceActivity}
+                已选择 {workspaceLabel(selectedWorkspace)} · {workspaceActivity}
               </small>
             </div>
 
-            <Toolbar aria-label="Workspace list controls">
-              <Tooltip content="Filter workspaces">
+            <Toolbar aria-label="工作区列表控制">
+              <Tooltip content="筛选工作区">
                 <IconButton
                   icon="filter"
-                  label="Filter workspaces"
-                  onclick={() => (workspaceActivity = 'Filter opened')}
+                  label="筛选工作区"
+                  onclick={() => (workspaceActivity = '已打开筛选器')}
                 />
               </Tooltip>
-              <Tooltip content="Sort by recent activity">
+              <Tooltip content="按最近活动排序">
                 <IconButton
                   icon="sort-highest"
-                  label="Sort by recent activity"
-                  onclick={() => (workspaceActivity = 'Sorted by activity')}
+                  label="按最近活动排序"
+                  onclick={() => (workspaceActivity = '已按活动排序')}
                 />
               </Tooltip>
 
@@ -668,28 +713,28 @@
               <ButtonGroup
                 mode="options"
                 bind:value={workspaceLayout}
-                aria-label="Workspace layout"
+                aria-label="工作区布局"
               >
-                <Tooltip content="List layout">
+                <Tooltip content="列表布局">
                   <IconButton
                     icon="list-bulleted"
-                    label="List layout"
+                    label="列表布局"
                     value="list"
                   />
                 </Tooltip>
-                <Tooltip content="Table layout">
-                  <IconButton icon="table" label="Table layout" value="table" />
+                <Tooltip content="表格布局">
+                  <IconButton icon="table" label="表格布局" value="table" />
                 </Tooltip>
               </ButtonGroup>
 
               <ToolbarSeparator />
 
-              <Tooltip content="Create workspace">
+              <Tooltip content="新建工作区">
                 <IconButton
                   icon="plus"
-                  label="Create workspace"
+                  label="新建工作区"
                   variant="tonal"
-                  onclick={() => (workspaceActivity = 'Create requested')}
+                  onclick={() => (workspaceActivity = '已请求新建')}
                 />
               </Tooltip>
             </Toolbar>
@@ -698,32 +743,32 @@
           <List
             selectionMode="single"
             bind:value={selectedWorkspace}
-            aria-label="Recent workspaces"
+            aria-label="最近工作区"
           >
             <ListItem
               value="litho"
-              label="Litho design system"
-              description="main · 12 local changes"
-              metadata="4m"
-              onclick={() => (workspaceActivity = 'Litho opened')}
+              label="Litho 设计系统"
+              description="main · 12 项本地更改"
+              metadata="4 分钟"
+              onclick={() => (workspaceActivity = '已打开 Litho')}
             >
               {#snippet leading()}
                 <Icon name="project" />
               {/snippet}
               {#snippet actions()}
-                <Toolbar aria-label="Litho workspace actions">
-                  <Tooltip content="Open activity">
+                <Toolbar aria-label="Litho 工作区操作">
+                  <Tooltip content="打开动态">
                     <IconButton
                       icon="eye"
-                      label="Open Litho activity"
-                      onclick={() => (workspaceActivity = 'Activity opened')}
+                      label="打开 Litho 动态"
+                      onclick={() => (workspaceActivity = '已打开动态')}
                     />
                   </Tooltip>
-                  <Tooltip content="More actions">
+                  <Tooltip content="更多操作">
                     <IconButton
                       icon="ellipsis_v"
-                      label="More Litho actions"
-                      onclick={() => (workspaceActivity = 'Litho menu opened')}
+                      label="更多 Litho 操作"
+                      onclick={() => (workspaceActivity = '已打开 Litho 菜单')}
                     />
                   </Tooltip>
                 </Toolbar>
@@ -732,28 +777,28 @@
 
             <ListItem
               value="aurora"
-              label="Aurora research"
-              description="feature/insights · review requested"
-              metadata="18m"
-              onclick={() => (workspaceActivity = 'Aurora opened')}
+              label="Aurora 研究"
+              description="feature/insights · 已请求评审"
+              metadata="18 分钟"
+              onclick={() => (workspaceActivity = '已打开 Aurora')}
             >
               {#snippet leading()}
                 <Icon name="branch" />
               {/snippet}
               {#snippet actions()}
-                <Toolbar aria-label="Aurora workspace actions">
-                  <Tooltip content="Open activity">
+                <Toolbar aria-label="Aurora 工作区操作">
+                  <Tooltip content="打开动态">
                     <IconButton
                       icon="eye"
-                      label="Open Aurora activity"
-                      onclick={() => (workspaceActivity = 'Activity opened')}
+                      label="打开 Aurora 动态"
+                      onclick={() => (workspaceActivity = '已打开动态')}
                     />
                   </Tooltip>
-                  <Tooltip content="More actions">
+                  <Tooltip content="更多操作">
                     <IconButton
                       icon="ellipsis_v"
-                      label="More Aurora actions"
-                      onclick={() => (workspaceActivity = 'Aurora menu opened')}
+                      label="更多 Aurora 操作"
+                      onclick={() => (workspaceActivity = '已打开 Aurora 菜单')}
                     />
                   </Tooltip>
                 </Toolbar>
@@ -762,28 +807,28 @@
 
             <ListItem
               value="atlas"
-              label="Atlas migration"
-              description="release/2.4 · pipeline running"
-              metadata="1h"
-              onclick={() => (workspaceActivity = 'Atlas opened')}
+              label="Atlas 迁移"
+              description="release/2.4 · 流水线运行中"
+              metadata="1 小时"
+              onclick={() => (workspaceActivity = '已打开 Atlas')}
             >
               {#snippet leading()}
                 <Icon name="status-running" />
               {/snippet}
               {#snippet actions()}
-                <Toolbar aria-label="Atlas workspace actions">
-                  <Tooltip content="Open pipeline">
+                <Toolbar aria-label="Atlas 工作区操作">
+                  <Tooltip content="打开流水线">
                     <IconButton
                       icon="status"
-                      label="Open Atlas pipeline"
-                      onclick={() => (workspaceActivity = 'Pipeline opened')}
+                      label="打开 Atlas 流水线"
+                      onclick={() => (workspaceActivity = '已打开流水线')}
                     />
                   </Tooltip>
-                  <Tooltip content="More actions">
+                  <Tooltip content="更多操作">
                     <IconButton
                       icon="ellipsis_v"
-                      label="More Atlas actions"
-                      onclick={() => (workspaceActivity = 'Atlas menu opened')}
+                      label="更多 Atlas 操作"
+                      onclick={() => (workspaceActivity = '已打开 Atlas 菜单')}
                     />
                   </Tooltip>
                 </Toolbar>
@@ -792,9 +837,9 @@
 
             <ListItem
               value="legacy"
-              label="Legacy imports"
-              description="Archived workspace"
-              metadata="Archived"
+              label="旧版导入"
+              description="已归档工作区"
+              metadata="已归档"
               disabled
             >
               {#snippet leading()}
@@ -808,45 +853,45 @@
       <section class="lab-section" aria-labelledby="data-table-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">04 / Structured data</p>
-            <h2 id="data-table-lab-title">Data table</h2>
+            <p class="section-index">04 / 结构化数据</p>
+            <h2 id="data-table-lab-title">数据表格</h2>
           </div>
-          <p>Native table semantics with dense selection and row-level tools.</p>
+          <p>保留原生表格语义，并提供高密度选择与行级工具。</p>
         </div>
 
         <div class="data-table-lab">
           <header class="data-table-lab-header">
             <div>
-              <span>Open work items</span>
+              <span>进行中的工作项</span>
               <small aria-live="polite">
-                {selectedWorkItems.length} selected · {workItemActivity}
+                已选择 {selectedWorkItems.length} 项 · {workItemActivity}
               </small>
             </div>
 
-            <Toolbar aria-label="Work item table controls">
-              <Tooltip content="Filter work items">
+            <Toolbar aria-label="工作项表格控制">
+              <Tooltip content="筛选工作项">
                 <IconButton
                   icon="filter"
-                  label="Filter work items"
-                  onclick={() => (workItemActivity = 'Filter opened')}
+                  label="筛选工作项"
+                  onclick={() => (workItemActivity = '已打开筛选器')}
                 />
               </Tooltip>
-              <Tooltip content="Choose columns">
+              <Tooltip content="选择列">
                 <IconButton
                   icon="applications"
-                  label="Choose columns"
-                  onclick={() => (workItemActivity = 'Columns opened')}
+                  label="选择列"
+                  onclick={() => (workItemActivity = '已打开列选择器')}
                 />
               </Tooltip>
 
               <ToolbarSeparator />
 
-              <Tooltip content="Export work items">
+              <Tooltip content="导出工作项">
                 <IconButton
                   icon="download"
-                  label="Export work items"
+                  label="导出工作项"
                   variant="tonal"
-                  onclick={() => (workItemActivity = 'Export requested')}
+                  onclick={() => (workItemActivity = '已请求导出')}
                 />
               </Tooltip>
             </Toolbar>
@@ -855,21 +900,21 @@
           <DataTable
             selectionMode="multiple"
             bind:selected={selectedWorkItems}
-            aria-label="Open work items"
+            aria-label="进行中的工作项"
             onselectionchange={(selection) =>
-              (workItemActivity = `${selection.length} rows selected`)}
+              (workItemActivity = `已选择 ${selection.length} 行`)}
           >
             <thead>
               <tr>
-                <DataTableSelectAll />
-                <th scope="col">Work item</th>
-                <th scope="col">Status</th>
-                <th scope="col">Assignee</th>
+                <DataTableSelectAll label="选择所有行" />
+                <th scope="col">工作项</th>
+                <th scope="col">状态</th>
+                <th scope="col">负责人</th>
                 <th scope="col" class="lds-data-table__cell--numeric">
-                  Updated
+                  更新时间
                 </th>
                 <th scope="col">
-                  <span class="sr-only">Actions</span>
+                  <span class="sr-only">操作</span>
                 </th>
               </tr>
             </thead>
@@ -877,37 +922,37 @@
             <tbody>
               <DataTableRow
                 value="tokens"
-                selectionLabel="Select token taxonomy audit"
+                selectionLabel="选择令牌分类审查"
               >
                 <td>
                   <div class="lds-data-table__cell-stack">
                     <span class="lds-data-table__primary">
-                      Token taxonomy audit
+                      令牌分类审查
                     </span>
                     <span class="lds-data-table__secondary">
-                      #42 · Design system
+                      #42 · 设计系统
                     </span>
                   </div>
                 </td>
                 <td>
-                  <Badge tone="tertiary" icon="review-list">In review</Badge>
+                  <Badge tone="tertiary" icon="review-list">评审中</Badge>
                 </td>
-                <td>Mira Chen</td>
-                <td class="lds-data-table__cell--numeric">4m</td>
+                <td>陈米拉</td>
+                <td class="lds-data-table__cell--numeric">4 分钟</td>
                 <td class="lds-data-table__actions-cell">
-                  <Toolbar aria-label="Token taxonomy audit actions">
-                    <Tooltip content="Edit work item">
+                  <Toolbar aria-label="令牌分类审查操作">
+                    <Tooltip content="编辑工作项">
                       <IconButton
                         icon="pencil"
-                        label="Edit token taxonomy audit"
-                        onclick={() => (workItemActivity = 'Editor opened')}
+                        label="编辑令牌分类审查"
+                        onclick={() => (workItemActivity = '已打开编辑器')}
                       />
                     </Tooltip>
-                    <Tooltip content="More actions">
+                    <Tooltip content="更多操作">
                       <IconButton
                         icon="ellipsis_v"
-                        label="More token taxonomy audit actions"
-                        onclick={() => (workItemActivity = 'Row menu opened')}
+                        label="更多令牌分类审查操作"
+                        onclick={() => (workItemActivity = '已打开行菜单')}
                       />
                     </Tooltip>
                   </Toolbar>
@@ -916,39 +961,39 @@
 
               <DataTableRow
                 value="keyboard"
-                selectionLabel="Select data table keyboard navigation"
+                selectionLabel="选择数据表格键盘导航"
               >
                 <td>
                   <div class="lds-data-table__cell-stack">
                     <span class="lds-data-table__primary">
-                      Data table keyboard navigation
+                      数据表格键盘导航
                     </span>
                     <span class="lds-data-table__secondary">
-                      #38 · Accessibility
+                      #38 · 无障碍
                     </span>
                   </div>
                 </td>
                 <td>
                   <Badge tone="primary" icon="status-running">
-                    In progress
+                    进行中
                   </Badge>
                 </td>
-                <td>Sora Kim</td>
-                <td class="lds-data-table__cell--numeric">18m</td>
+                <td>金索拉</td>
+                <td class="lds-data-table__cell--numeric">18 分钟</td>
                 <td class="lds-data-table__actions-cell">
-                  <Toolbar aria-label="Keyboard navigation actions">
-                    <Tooltip content="Open work item">
+                  <Toolbar aria-label="键盘导航操作">
+                    <Tooltip content="打开工作项">
                       <IconButton
                         icon="eye"
-                        label="Open keyboard navigation work item"
-                        onclick={() => (workItemActivity = 'Work item opened')}
+                        label="打开键盘导航工作项"
+                        onclick={() => (workItemActivity = '已打开工作项')}
                       />
                     </Tooltip>
-                    <Tooltip content="More actions">
+                    <Tooltip content="更多操作">
                       <IconButton
                         icon="ellipsis_v"
-                        label="More keyboard navigation actions"
-                        onclick={() => (workItemActivity = 'Row menu opened')}
+                        label="更多键盘导航操作"
+                        onclick={() => (workItemActivity = '已打开行菜单')}
                       />
                     </Tooltip>
                   </Toolbar>
@@ -957,37 +1002,37 @@
 
               <DataTableRow
                 value="tooltip"
-                selectionLabel="Select tooltip collision handling"
+                selectionLabel="选择工具提示碰撞处理"
               >
                 <td>
                   <div class="lds-data-table__cell-stack">
                     <span class="lds-data-table__primary">
-                      Tooltip collision handling
+                      工具提示碰撞处理
                     </span>
                     <span class="lds-data-table__secondary">
-                      #31 · Interaction
+                      #31 · 交互
                     </span>
                   </div>
                 </td>
                 <td>
-                  <Badge variant="outline" icon="check-circle">Ready</Badge>
+                  <Badge variant="outline" icon="check-circle">就绪</Badge>
                 </td>
-                <td>Sam Rivera</td>
-                <td class="lds-data-table__cell--numeric">1h</td>
+                <td>萨姆·里维拉</td>
+                <td class="lds-data-table__cell--numeric">1 小时</td>
                 <td class="lds-data-table__actions-cell">
-                  <Toolbar aria-label="Tooltip collision actions">
-                    <Tooltip content="Start work">
+                  <Toolbar aria-label="工具提示碰撞处理操作">
+                    <Tooltip content="开始工作">
                       <IconButton
                         icon="play"
-                        label="Start tooltip collision work"
-                        onclick={() => (workItemActivity = 'Work started')}
+                        label="开始工具提示碰撞处理"
+                        onclick={() => (workItemActivity = '工作已开始')}
                       />
                     </Tooltip>
-                    <Tooltip content="More actions">
+                    <Tooltip content="更多操作">
                       <IconButton
                         icon="ellipsis_v"
-                        label="More tooltip collision actions"
-                        onclick={() => (workItemActivity = 'Row menu opened')}
+                        label="更多工具提示碰撞处理操作"
+                        onclick={() => (workItemActivity = '已打开行菜单')}
                       />
                     </Tooltip>
                   </Toolbar>
@@ -996,24 +1041,24 @@
 
               <DataTableRow
                 value="legacy"
-                selectionLabel="Select legacy importer cleanup"
+                selectionLabel="选择旧版导入器清理"
                 disabled
               >
                 <td>
                   <div class="lds-data-table__cell-stack">
                     <span class="lds-data-table__primary">
-                      Legacy importer cleanup
+                      旧版导入器清理
                     </span>
                     <span class="lds-data-table__secondary">
-                      #12 · Archived
+                      #12 · 已归档
                     </span>
                   </div>
                 </td>
                 <td>
-                  <Badge tone="error" icon="entity-blocked">Blocked</Badge>
+                  <Badge tone="error" icon="entity-blocked">受阻</Badge>
                 </td>
-                <td>Niko Petrova</td>
-                <td class="lds-data-table__cell--numeric">2d</td>
+                <td>尼科·彼得罗娃</td>
+                <td class="lds-data-table__cell--numeric">2 天</td>
                 <td class="lds-data-table__actions-cell"></td>
               </DataTableRow>
             </tbody>
@@ -1024,54 +1069,54 @@
       <section class="lab-section" aria-labelledby="checkbox-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">05 / Selection</p>
-            <h2 id="checkbox-lab-title">Checkbox</h2>
+            <p class="section-index">05 / 选择</p>
+            <h2 id="checkbox-lab-title">复选框</h2>
           </div>
-          <p>Click or use the keyboard to inspect its real interaction states.</p>
+          <p>通过点击或键盘操作检查真实交互状态。</p>
         </div>
 
         <div class="checkbox-grid">
           <Card as="article">
-            <span>Interactive / unchecked</span>
+            <span>可交互 / 未选中</span>
             <Checkbox bind:checked={expressiveMotion}>
-              Expressive motion
+              表现型动效
             </Checkbox>
           </Card>
 
           <Card as="article">
-            <span>Interactive / checked</span>
+            <span>可交互 / 已选中</span>
             <Checkbox bind:checked={notifications}>
-              Notifications
+              通知
             </Checkbox>
           </Card>
 
           <Card as="article">
-            <span>Disabled / unchecked</span>
+            <span>禁用 / 未选中</span>
             <Checkbox disabled>
-              Expressive motion
+              表现型动效
             </Checkbox>
           </Card>
 
           <Card as="article">
-            <span>Disabled / checked</span>
+            <span>禁用 / 已选中</span>
             <Checkbox checked disabled>
-              Notifications
+              通知
             </Checkbox>
           </Card>
 
           <Card as="article">
-            <span>Interactive / mixed</span>
+            <span>可交互 / 混合状态</span>
             <Checkbox indeterminate>
-              Partially selected
+              部分选中
             </Checkbox>
           </Card>
 
           <Card as="article" class="forced-state">
-            <span>Hover · focus · pressed</span>
+            <span>悬停 · 聚焦 · 按下</span>
             <div class="selection-state-probe">
-              <Checkbox data-demo-state="hover">Hover</Checkbox>
-              <Checkbox data-demo-state="focus" checked>Focus</Checkbox>
-              <Checkbox data-demo-state="pressed">Pressed</Checkbox>
+              <Checkbox data-demo-state="hover">悬停</Checkbox>
+              <Checkbox data-demo-state="focus" checked>聚焦</Checkbox>
+              <Checkbox data-demo-state="pressed">按下</Checkbox>
             </div>
           </Card>
         </div>
@@ -1080,73 +1125,73 @@
       <section class="lab-section" aria-labelledby="radio-switch-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">06 / Choice semantics</p>
-            <h2 id="radio-switch-lab-title">Radio &amp; switch</h2>
+            <p class="section-index">06 / 选择语义</p>
+            <h2 id="radio-switch-lab-title">单选框与开关</h2>
           </div>
-          <p>Exclusive choices and immediate binary settings stay native.</p>
+          <p>互斥选择与即时二元设置均保留原生语义。</p>
         </div>
 
         <div class="selection-control-grid">
           <Card as="article">
-            <span>Radio group / horizontal</span>
+            <span>单选组 / 水平</span>
             <RadioGroup
-              legend="Theme mode"
+              legend="主题模式"
               orientation="horizontal"
-              helperText="Follows the active workspace by default."
+              helperText="默认跟随当前工作区。"
               bind:value={themeMode}
             >
-              <Radio value="system">System</Radio>
-              <Radio value="light">Light</Radio>
-              <Radio value="dark">Dark</Radio>
-              <Radio value="contrast" disabled>Contrast</Radio>
+              <Radio value="system">跟随系统</Radio>
+              <Radio value="light">浅色</Radio>
+              <Radio value="dark">深色</Radio>
+              <Radio value="contrast" disabled>高对比度</Radio>
             </RadioGroup>
           </Card>
 
           <Card as="article">
-            <span>Radio group / error</span>
+            <span>单选组 / 错误</span>
             <RadioGroup
-              legend="Default visibility"
-              error="Choose a visibility level."
+              legend="默认可见性"
+              error="请选择可见性级别。"
               required
               bind:value={defaultVisibility}
             >
-              <Radio value="private">Private</Radio>
-              <Radio value="internal">Internal</Radio>
-              <Radio value="public">Public</Radio>
+              <Radio value="private">私有</Radio>
+              <Radio value="internal">内部</Radio>
+              <Radio value="public">公开</Radio>
             </RadioGroup>
           </Card>
 
           <Card as="article">
-            <span>Switch / interactive</span>
+            <span>开关 / 可交互</span>
             <div class="switch-stack">
-              <Switch bind:checked={compactRows}>Compact rows</Switch>
-              <Switch bind:checked={liveSync}>Live synchronization</Switch>
+              <Switch bind:checked={compactRows}>紧凑行</Switch>
+              <Switch bind:checked={liveSync}>实时同步</Switch>
             </div>
           </Card>
 
           <Card as="article">
-            <span>Switch / disabled</span>
+            <span>开关 / 禁用</span>
             <div class="switch-stack">
-              <Switch disabled>External notifications</Switch>
-              <Switch checked disabled>Audit logging</Switch>
+              <Switch disabled>外部通知</Switch>
+              <Switch checked disabled>审计日志</Switch>
             </div>
           </Card>
 
           <Card as="article" class="forced-state">
-            <span>Switch / hover · focus · pressed</span>
+            <span>开关 / 悬停 · 聚焦 · 按下</span>
             <div class="selection-state-probe">
-              <Switch data-demo-state="hover">Hover</Switch>
-              <Switch data-demo-state="focus" checked>Focus</Switch>
-              <Switch data-demo-state="pressed">Pressed</Switch>
+              <Switch data-demo-state="hover">悬停</Switch>
+              <Switch data-demo-state="focus" checked>聚焦</Switch>
+              <Switch data-demo-state="pressed">按下</Switch>
             </div>
           </Card>
 
           <Card as="article" class="forced-state">
-            <span>Radio / hover · focus · pressed</span>
-            <RadioGroup legend="State sequence" orientation="horizontal">
-              <Radio value="hover" data-demo-state="hover">Hover</Radio>
-              <Radio value="focus" data-demo-state="focus">Focus</Radio>
-              <Radio value="pressed" data-demo-state="pressed">Pressed</Radio>
+            <span>单选框 / 悬停 · 聚焦 · 按下</span>
+            <RadioGroup legend="状态序列" orientation="horizontal">
+              <Radio value="hover" data-demo-state="hover">悬停</Radio>
+              <Radio value="focus" data-demo-state="focus">聚焦</Radio>
+              <Radio value="pressed" data-demo-state="pressed">按下</Radio>
             </RadioGroup>
           </Card>
         </div>
@@ -1155,89 +1200,89 @@
       <section class="lab-section" aria-labelledby="text-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">07 / Input</p>
-            <h2 id="text-field-lab-title">Text field</h2>
+            <p class="section-index">07 / 输入</p>
+            <h2 id="text-field-lab-title">文本框</h2>
           </div>
-          <p>Probe content hierarchy, focus, errors and non-editable states.</p>
+          <p>检查内容层级、焦点、错误及不可编辑状态。</p>
         </div>
 
         <div class="text-field-grid">
           <Card as="article">
-            <span>Default / empty</span>
+            <span>默认 / 空值</span>
             <TextField
-              label="Display name"
-              placeholder="Lithium Fish"
-              helperText="Press Enter to commit and release focus."
+              label="显示名称"
+              placeholder="LiPolymer"
+              helperText="按 Enter 提交并释放焦点。"
               commitOnEnter
               bind:value={displayName}
             />
           </Card>
 
           <Card as="article">
-            <span>Default / filled</span>
+            <span>默认 / 已填写</span>
             <TextField
-              label="Email"
+              label="电子邮箱"
               type="email"
-              helperText="Used for account notifications."
+              helperText="用于接收账户通知。"
               bind:value={email}
             />
           </Card>
 
           <Card as="article">
-            <span>Error</span>
+            <span>错误</span>
             <TextField
-              label="Email"
+              label="电子邮箱"
               type="email"
               value="not-an-email"
-              error="Enter a valid email address."
+              error="请输入有效的电子邮箱地址。"
               required
             />
           </Card>
 
           <Card as="article">
-            <span>Readonly</span>
+            <span>只读</span>
             <TextField
-              label="Theme source"
-              value="Material seed color"
-              helperText="Generated by the active theme."
+              label="主题来源"
+              value="Material 种子颜色"
+              helperText="由当前主题生成。"
               readonly
             />
           </Card>
 
           <Card as="article">
-            <span>Disabled</span>
+            <span>禁用</span>
             <TextField
-              label="Workspace"
-              value="Unavailable"
-              helperText="This field cannot be edited."
+              label="工作区"
+              value="不可用"
+              helperText="此字段无法编辑。"
               disabled
             />
           </Card>
 
           <Card as="article" class="forced-state">
-            <span>Hover</span>
+            <span>悬停</span>
             <TextField
-              label="Repository path"
+              label="仓库路径"
               value="litho/design-system"
               data-demo-state="hover"
             />
           </Card>
 
           <Card as="article" class="forced-state">
-            <span>Focus</span>
+            <span>聚焦</span>
             <TextField
-              label="Branch"
+              label="分支"
               value="main"
               data-demo-state="focus"
             />
           </Card>
 
           <Card as="article">
-            <span>Readonly / error</span>
+            <span>只读 / 错误</span>
             <TextField
-              label="Generated slug"
-              value="invalid slug"
-              error="The generated value cannot be published."
+              label="生成的标识符"
+              value="无效标识符"
+              error="生成的值无法发布。"
               readonly
             />
           </Card>
@@ -1247,50 +1292,49 @@
       <section class="lab-section" aria-labelledby="menu-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">08 / Floating actions</p>
-            <h2 id="menu-lab-title">Menu</h2>
+            <p class="section-index">08 / 浮动操作</p>
+            <h2 id="menu-lab-title">菜单</h2>
           </div>
           <p>
-            Compact command and option menus share one floating interaction
-            model.
+            紧凑命令菜单与选项菜单共享同一套浮动交互模型。
           </p>
         </div>
 
         <div class="menu-lab">
           <Card as="article" class="menu-card">
             <div class="menu-lab__copy">
-              <span>Commands + persistent options</span>
+              <span>命令 + 持久选项</span>
               <small>{menuActivity}</small>
             </div>
 
-            <Menu label="Workspace actions">
+            <Menu label="工作区操作">
               {#snippet trigger()}
                 <TonalButton class="menu-trigger">
-                  Workspace
+                  工作区
                   <Icon name="chevron-down" size={14} />
                 </TonalButton>
               {/snippet}
 
-              <MenuLabel>Workspace</MenuLabel>
+              <MenuLabel>工作区</MenuLabel>
               <MenuItem
-                      label="Open workspace"
+                      label="打开工作区"
                       shortcut="↵"
-                      onclick={() => (menuActivity = 'Workspace opened')}
+                      onclick={() => (menuActivity = '已打开工作区')}
               >
                 {#snippet leading()}
                   <Icon name="project" size={14} />
                 {/snippet}
               </MenuItem>
               <MenuItem
-                      label="Rename"
+                      label="重命名"
                       shortcut="F2"
-                      onclick={() => (menuActivity = 'Rename requested')}
+                      onclick={() => (menuActivity = '已请求重命名')}
               >
                 {#snippet leading()}
                   <Icon name="pencil" size={14} />
                 {/snippet}
               </MenuItem>
-              <MenuItem label="Export" shortcut="Ctrl E" disabled>
+              <MenuItem label="导出" shortcut="Ctrl E" disabled>
                 {#snippet leading()}
                   <Icon name="download" size={14} />
                 {/snippet}
@@ -1298,27 +1342,27 @@
 
               <MenuSeparator />
               <MenuCheckboxItem
-                      label="Show archived"
+                      label="显示已归档项"
                       bind:checked={showArchivedWorkspaces}
               />
               <MenuCheckboxItem
-                      label="Compact metadata"
+                      label="紧凑元数据"
                       bind:checked={compactMenuMetadata}
               />
 
               <MenuSeparator />
-              <MenuLabel>Sort by</MenuLabel>
-              <MenuRadioGroup label="Sort workspaces" bind:value={workspaceSort}>
-                <MenuRadioItem value="recent" label="Recent activity" />
-                <MenuRadioItem value="name" label="Name" />
-                <MenuRadioItem value="created" label="Created date" />
+              <MenuLabel>排序方式</MenuLabel>
+              <MenuRadioGroup label="工作区排序" bind:value={workspaceSort}>
+                <MenuRadioItem value="recent" label="最近活动" />
+                <MenuRadioItem value="name" label="名称" />
+                <MenuRadioItem value="created" label="创建日期" />
               </MenuRadioGroup>
 
               <MenuSeparator />
               <MenuItem
-                      label="Archive workspace"
+                      label="归档工作区"
                       variant="danger"
-                      onclick={() => (menuActivity = 'Archive requested')}
+                      onclick={() => (menuActivity = '已请求归档')}
               >
                 {#snippet leading()}
                   <Icon name="archive" size={14} />
@@ -1329,35 +1373,35 @@
 
           <Card as="article" class="menu-card">
             <div class="menu-lab__copy">
-              <span>End-aligned contextual menu</span>
-              <small>Arrow keys, Home/End and typeahead are active.</small>
+              <span>末端对齐的上下文菜单</span>
+              <small>支持方向键、Home/End 与输入搜索。</small>
             </div>
 
-            <Menu label="Context actions" align="end">
+            <Menu label="上下文操作" align="end">
               {#snippet trigger()}
-                <IconButton icon="ellipsis_v" label="Open context menu" />
+                <IconButton icon="ellipsis_v" label="打开上下文菜单" />
               {/snippet}
 
               <MenuItem
-                      label="Edit"
+                      label="编辑"
                       shortcut="E"
-                      onclick={() => (menuActivity = 'Edit requested')}
+                      onclick={() => (menuActivity = '已请求编辑')}
               >
                 {#snippet leading()}
                   <Icon name="pencil" size={14} />
                 {/snippet}
               </MenuItem>
               <MenuItem
-                      label="Download"
+                      label="下载"
                       shortcut="D"
-                      onclick={() => (menuActivity = 'Download requested')}
+                      onclick={() => (menuActivity = '已请求下载')}
               >
                 {#snippet leading()}
                   <Icon name="download" size={14} />
                 {/snippet}
               </MenuItem>
               <MenuSeparator />
-              <MenuItem label="Remove" variant="danger">
+              <MenuItem label="移除" variant="danger">
                 {#snippet leading()}
                   <Icon name="remove" size={14} />
                 {/snippet}
@@ -1370,78 +1414,91 @@
       <section class="lab-section" aria-labelledby="choice-field-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">09 / Input selection</p>
-            <h2 id="choice-field-lab-title">Select &amp; combobox</h2>
+            <p class="section-index">09 / 输入选择</p>
+            <h2 id="choice-field-lab-title">选择框与组合框</h2>
           </div>
           <p>
-            One connected reveal surface for direct choice and filtered
-            keyboard search.
+            直接选择与键盘筛选搜索共享同一套连接式展开面板。
           </p>
         </div>
 
         <div class="choice-field-grid">
           <Card as="article">
-            <span>Select / filled</span>
+            <span>选择框 / 已填写</span>
             <Select
-              label="Access level"
+              label="访问级别"
               options={accessOptions}
-              helperText="Owner is unavailable under the current policy."
+              placeholder="请选择访问级别"
+              requiredMessage="请选择一个选项。"
+              helperText="当前策略下无法选择所有者。"
               bind:value={accessLevel}
             />
           </Card>
 
           <Card as="article">
-            <span>Select / error</span>
+            <span>选择框 / 错误</span>
             <Select
-              label="Default access"
+              label="默认访问级别"
               options={accessOptions}
-              placeholder="Choose a level"
-              error="Choose a default access level."
+              placeholder="选择一个级别"
+              error="请选择默认访问级别。"
+              requiredMessage="请选择一个选项。"
               required
               bind:value={invalidAccessLevel}
             />
           </Card>
 
           <Card as="article">
-            <span>Select / disabled</span>
+            <span>选择框 / 禁用</span>
             <Select
-              label="Workflow"
+              label="工作流"
               options={accessOptions}
               value="developer"
-              helperText="Managed by your organization."
+              placeholder="请选择工作流"
+              requiredMessage="请选择一个选项。"
+              helperText="由你的组织管理。"
               disabled
             />
           </Card>
 
           <Card as="article">
-            <span>Combobox / searchable</span>
+            <span>组合框 / 可搜索</span>
             <Combobox
-              label="Reviewer"
+              label="评审者"
               options={peopleOptions}
-              placeholder="Search by name, team or location"
-              helperText="Arrow keys navigate; Enter selects."
+              placeholder="按姓名、团队或地点搜索"
+              helperText="使用方向键导航，按 Enter 选择。"
+              emptyText="没有匹配结果"
+              toggleLabel="展开或收起选项"
+              requiredMessage="请选择一个选项。"
               bind:value={reviewer}
             />
           </Card>
 
           <Card as="article">
-            <span>Combobox / error</span>
+            <span>组合框 / 错误</span>
             <Combobox
-              label="Required reviewer"
+              label="必选评审者"
               options={peopleOptions}
-              placeholder="Search people"
-              error="Assign at least one reviewer."
+              placeholder="搜索人员"
+              error="请至少分配一名评审者。"
+              emptyText="没有匹配结果"
+              toggleLabel="展开或收起选项"
+              requiredMessage="请选择一个选项。"
               required
               bind:value={missingReviewer}
             />
           </Card>
 
           <Card as="article">
-            <span>Combobox / readonly</span>
+            <span>组合框 / 只读</span>
             <Combobox
-              label="Owner"
+              label="所有者"
               options={peopleOptions}
-              helperText="Inherited from the parent workspace."
+              helperText="继承自上级工作区。"
+              emptyText="没有匹配结果"
+              toggleLabel="展开或收起选项"
+              requiredMessage="请选择一个选项。"
               readonly
               bind:value={owner}
             />
@@ -1452,87 +1509,86 @@
       <section class="lab-section" aria-labelledby="badge-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">10 / Metadata</p>
-            <h2 id="badge-lab-title">Badge &amp; tag</h2>
+            <p class="section-index">10 / 元数据</p>
+            <h2 id="badge-lab-title">徽标与标签</h2>
           </div>
           <p>
-            Status metadata and removable labels share seed-aware semantic
-            tones.
+            状态元数据与可移除标签共享能够感知种子颜色的语义色调。
           </p>
         </div>
 
         <div class="badge-lab">
           <Card as="article">
-            <span>Soft / semantic icon</span>
+            <span>柔和 / 语义图标</span>
             <div class="badge-row">
-              <Badge icon="status-neutral">Neutral</Badge>
-              <Badge tone="primary" icon="status-running">Primary</Badge>
+              <Badge icon="status-neutral">中性</Badge>
+              <Badge tone="primary" icon="status-running">主要</Badge>
               <Badge tone="secondary" icon="status-scheduled">
-                Secondary
+                次要
               </Badge>
-              <Badge tone="tertiary" icon="review-list">Tertiary</Badge>
-              <Badge tone="error" icon="status-failed">Error</Badge>
+              <Badge tone="tertiary" icon="review-list">第三色</Badge>
+              <Badge tone="error" icon="status-failed">错误</Badge>
             </div>
           </Card>
 
           <Card as="article">
-            <span>Outline / semantic icon</span>
+            <span>轮廓 / 语义图标</span>
             <div class="badge-row">
-              <Badge variant="outline" icon="status-neutral">Neutral</Badge>
+              <Badge variant="outline" icon="status-neutral">中性</Badge>
               <Badge tone="primary" variant="outline" icon="progress">
-                Primary
+                主要
               </Badge>
               <Badge tone="secondary" variant="outline" icon="clock">
-                Secondary
+                次要
               </Badge>
               <Badge tone="tertiary" variant="outline" icon="review-checkmark">
-                Tertiary
+                第三色
               </Badge>
-              <Badge tone="error" variant="outline" icon="error">Error</Badge>
+              <Badge tone="error" variant="outline" icon="error">错误</Badge>
             </div>
           </Card>
 
           <Card as="article">
-            <span>Tag / removable soft labels</span>
+            <span>标签 / 可移除的柔和标签</span>
             <div class="badge-row">
               {#each projectTags as tag (tag.label)}
                 <Tag
                   icon="tag"
                   tone={tag.tone}
-                  removeLabel={`Remove ${tag.label}`}
+                  removeLabel={`移除 ${tag.label}`}
                   onremove={() => removeProjectTag(tag.label)}
                 >
                   {tag.label}
                 </Tag>
               {:else}
-                <small>All project tags removed.</small>
+                <small>所有项目标签均已移除。</small>
               {/each}
             </div>
           </Card>
 
           <Card as="article">
-            <span>Tag / outline &amp; disabled removal</span>
+            <span>标签 / 轮廓与禁用移除</span>
             <div class="badge-row">
               {#if reviewTagVisible}
                 <Tag
                   icon="label"
                   tone="primary"
                   variant="outline"
-                  removeLabel="Remove Review"
+                  removeLabel="移除评审标签"
                   onremove={() => (reviewTagVisible = false)}
                 >
-                  Review
+                  评审
                 </Tag>
               {/if}
 
               <Tag
                 icon="bookmark"
                 variant="outline"
-                removeLabel="Remove protected tag"
+                removeLabel="移除受保护标签"
                 onremove={() => undefined}
                 disabled
               >
-                Protected
+                受保护
               </Tag>
             </div>
           </Card>
@@ -1542,44 +1598,43 @@
       <section class="lab-section" aria-labelledby="navigation-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">11 / Navigation</p>
-            <h2 id="navigation-lab-title">Tree, rail & tabs</h2>
+            <p class="section-index">11 / 导航</p>
+            <h2 id="navigation-lab-title">树、导航栏与标签页</h2>
           </div>
           <p>
-            Hierarchical destinations and peer views with distinct keyboard
-            models.
+            层级目的地与同级视图分别采用适合自身的键盘模型。
           </p>
         </div>
 
         <div class="navigation-lab">
           <Card as="article">
-            <span>Navigation tree / nested destinations</span>
+            <span>导航树 / 嵌套目的地</span>
             <NavigationTree
-              label="Workspace navigation preview"
+              label="工作区导航预览"
               bind:value={navigationTreePreview}
             >
-              <NavigationTreeItem label="Workspace" icon="project" expanded>
+              <NavigationTreeItem label="工作区" icon="project" expanded>
                 <NavigationTreeItem
                   value="tree-overview"
-                  label="Overview"
+                  label="概览"
                   icon="applications"
                 />
                 <NavigationTreeItem
                   value="tree-activity"
-                  label="Activity"
+                  label="动态"
                   icon="status-running"
                 />
               </NavigationTreeItem>
 
-              <NavigationTreeItem label="Manage" icon="settings" expanded>
+              <NavigationTreeItem label="管理" icon="settings" expanded>
                 <NavigationTreeItem
                   value="tree-members"
-                  label="Members"
+                  label="成员"
                   icon="users"
                 />
                 <NavigationTreeItem
                   value="tree-integrations"
-                  label="Integrations"
+                  label="集成"
                   icon="link"
                   disabled
                 />
@@ -1588,86 +1643,88 @@
           </Card>
 
           <Card as="article">
-            <span>Navigation rail / high-frequency destinations</span>
+            <span>导航栏 / 高频目的地</span>
             <div class="navigation-rail-demo">
               <NavigationRail
-                label="Workspace quick navigation"
+                label="工作区快速导航"
                 bind:value={navigationRailPreview}
                 bind:expanded={navigationRailExpanded}
+                expandLabel="展开导航栏"
+                collapseLabel="收起导航栏"
               >
                 <NavigationRailItem
                   value="rail-workspace"
-                  label="Workspace"
+                  label="工作区"
                   icon="project"
                 >
                   <NavigationRailItem
                     value="rail-overview"
-                    label="Overview"
+                    label="概览"
                     icon="applications"
                   />
                   <NavigationRailItem
                     value="rail-activity"
-                    label="Activity"
+                    label="动态"
                     icon="status-running"
                   />
                 </NavigationRailItem>
                 <NavigationRailItem
                   value="rail-members"
-                  label="Members"
+                  label="成员"
                   icon="users"
                 />
                 <NavigationRailItem
                   value="rail-settings"
-                  label="Settings"
+                  label="设置"
                   icon="settings"
                 />
                 <NavigationRailItem
                   value="rail-integrations"
-                  label="Integrations unavailable"
+                  label="集成不可用"
                   icon="link"
                   disabled
                 />
               </NavigationRail>
 
               <div class="navigation-rail-copy">
-                <strong>Current destination</strong>
-                <span>{navigationRailPreview}</span>
+                <strong>当前目的地</strong>
+                <span>{navigationRailLabel(navigationRailPreview)}</span>
                 <small>
                   {navigationRailExpanded
-                    ? 'Expanded compact sidebar'
-                    : 'Collapsed icon-only rail'}
+                    ? '已展开的紧凑侧栏'
+                    : '已收起的纯图标导航栏'}
                 </small>
               </div>
             </div>
           </Card>
 
           <Card as="article">
-            <span>Tabs / automatic activation</span>
-            <Tabs label="Workspace views" bind:value={navigationTab}>
+            <span>标签页 / 自动激活</span>
+            <Tabs label="工作区视图" bind:value={navigationTab}>
               {#snippet tabs()}
-                <Tab value="overview" icon="project">Overview</Tab>
-                <Tab value="activity" icon="status-running">Activity</Tab>
-                <Tab value="notes" icon="comment">Notes</Tab>
+                <Tab value="overview" icon="project">概览</Tab>
+                <Tab value="activity" icon="status-running">动态</Tab>
+                <Tab value="notes" icon="comment">备注</Tab>
               {/snippet}
 
               <TabPanel value="overview">
                 <div class="navigation-panel-copy">
-                  <strong>Overview</strong>
-                  <span>Stable project context without leaving the page.</span>
+                  <strong>概览</strong>
+                  <span>无需离开页面即可查看稳定的项目上下文。</span>
                 </div>
               </TabPanel>
 
               <TabPanel value="activity">
                 <div class="navigation-panel-copy">
-                  <strong>Activity</strong>
-                  <span>Recent changes, optimized for quick scanning.</span>
+                  <strong>动态</strong>
+                  <span>为快速浏览而优化的最近更改。</span>
                 </div>
               </TabPanel>
 
               <TabPanel value="notes">
                 <div class="navigation-panel-copy">
-                  <strong>Notes</strong>
-                  <span>Supporting information for the current workspace.</span>
+                  <strong>备注</strong>
+                  <span>当前工作区的补充信息。</span>
                 </div>
               </TabPanel>
             </Tabs>
@@ -1678,37 +1735,36 @@
       <section class="lab-section" aria-labelledby="card-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">12 / Containers</p>
-            <h2 id="card-lab-title">Card</h2>
+            <p class="section-index">12 / 容器</p>
+            <h2 id="card-lab-title">卡片</h2>
           </div>
           <p>
-            Non-interactive grouping surfaces with explicit hierarchy and
-            density.
+            具有明确层级与密度的非交互分组表面。
           </p>
         </div>
 
         <div class="card-lab">
           <Card as="article">
-            <span>Subtle / default density</span>
+            <span>轻微 / 默认密度</span>
             <div class="card-demo-copy">
-              <h3>Quiet grouping</h3>
-              <p>Blends into its parent while preserving content rhythm.</p>
+              <h3>安静分组</h3>
+              <p>融入父容器，同时保持内容节奏。</p>
             </div>
           </Card>
 
           <Card as="article" variant="filled" density="compact">
-            <span>Filled / compact density</span>
+            <span>填充 / 紧凑密度</span>
             <div class="card-demo-copy">
-              <h3>Dense summary</h3>
-              <p>Uses a firmer surface when nearby groups need separation.</p>
+              <h3>高密度摘要</h3>
+              <p>当相邻分组需要区分时，使用更明确的表面。</p>
             </div>
           </Card>
 
           <Card as="article" variant="outlined">
-            <span>Outlined / default density</span>
+            <span>轮廓 / 默认密度</span>
             <div class="card-demo-copy">
-              <h3>Explicit boundary</h3>
-              <p>Keeps the fill quiet and lets the container edge speak.</p>
+              <h3>明确边界</h3>
+              <p>保持填充安静，让容器边缘承担区分作用。</p>
             </div>
           </Card>
         </div>
@@ -1717,77 +1773,77 @@
       <section class="lab-section" aria-labelledby="dialog-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">13 / Overlays</p>
-            <h2 id="dialog-lab-title">Dialog</h2>
+            <p class="section-index">13 / 浮层</p>
+            <h2 id="dialog-lab-title">对话框</h2>
           </div>
           <p>
-            Modal work surfaces with contained focus, explicit hierarchy and
-            reversible presence motion.
+            具备焦点约束、明确层级及可逆出现动效的模态工作表面。
           </p>
         </div>
 
         <div class="dialog-lab">
           <Card as="article" class="dialog-card">
-            <span>Compact / surface focus</span>
+            <span>紧凑 / 表面聚焦</span>
             <div class="dialog-demo-copy">
-              <h3>Review summary</h3>
-              <p>A short, low-interruption confirmation surface.</p>
+              <h3>评审摘要</h3>
+              <p>简短且低干扰的确认表面。</p>
             </div>
 
             <Dialog
               bind:open={summaryDialogOpen}
               size="compact"
               initialFocus="surface"
+              closeLabel="关闭对话框"
             >
               {#snippet trigger()}
-                <TonalButton>Open summary</TonalButton>
+                <TonalButton>打开摘要</TonalButton>
               {/snippet}
 
-              {#snippet title()}Ready to publish{/snippet}
+              {#snippet title()}准备发布{/snippet}
 
               {#snippet description()}
-                Check the final state before sharing this workspace.
+                分享此工作区前，请检查最终状态。
               {/snippet}
 
               <div class="dialog-preview">
                 <Icon name="status_success" size={16} />
                 <div>
-                  <strong>All checks passed</strong>
-                  <span>8 components and 24 tokens will be published.</span>
+                  <strong>所有检查均已通过</strong>
+                  <span>将发布 8 个组件和 24 个令牌。</span>
                 </div>
               </div>
 
               {#snippet actions()}
                 <DialogClose>
-                  <GhostButton>Not now</GhostButton>
+                  <GhostButton>暂不</GhostButton>
                 </DialogClose>
                 <DialogClose>
-                  <PrimaryButton expressive={false}>Publish</PrimaryButton>
+                  <PrimaryButton expressive={false}>发布</PrimaryButton>
                 </DialogClose>
               {/snippet}
             </Dialog>
           </Card>
 
           <Card as="article" class="dialog-card">
-            <span>Default / explicit initial focus</span>
+            <span>默认 / 显式初始焦点</span>
             <div class="dialog-demo-copy">
-              <h3>Edit workspace</h3>
-              <p>A compact form keeps the task in its current context.</p>
+              <h3>编辑工作区</h3>
+              <p>紧凑表单让任务留在当前上下文中。</p>
             </div>
 
-            <Dialog bind:open={editDialogOpen}>
+            <Dialog bind:open={editDialogOpen} closeLabel="关闭对话框">
               {#snippet trigger()}
-                <TonalButton>Edit details</TonalButton>
+                <TonalButton>编辑详情</TonalButton>
               {/snippet}
 
-              {#snippet title()}Workspace details{/snippet}
+              {#snippet title()}工作区详情{/snippet}
 
               {#snippet description()}
-                Update the label used across navigation and recent activity.
+                更新导航与最近活动中使用的名称。
               {/snippet}
 
               <TextField
-                label="Workspace name"
+                label="工作区名称"
                 bind:value={dialogWorkspaceName}
                 data-lds-dialog-initial-focus=""
                 commitOnEnter
@@ -1795,47 +1851,47 @@
 
               {#snippet actions()}
                 <DialogClose>
-                  <GhostButton>Cancel</GhostButton>
+                  <GhostButton>取消</GhostButton>
                 </DialogClose>
                 <DialogClose>
-                  <PrimaryButton expressive={false}>Save changes</PrimaryButton>
+                  <PrimaryButton expressive={false}>保存更改</PrimaryButton>
                 </DialogClose>
               {/snippet}
             </Dialog>
           </Card>
 
           <Card as="article" class="dialog-card">
-            <span>Alert / least-destructive focus</span>
+            <span>警告 / 最低破坏性焦点</span>
             <div class="dialog-demo-copy">
-              <h3>Discard changes</h3>
-              <p>Requires an explicit decision and ignores backdrop clicks.</p>
+              <h3>放弃更改</h3>
+              <p>要求明确作出决定，并忽略背景点击。</p>
             </div>
 
             <AlertDialog bind:open={alertDialogOpen} size="compact">
               {#snippet trigger()}
-                <TonalButton>Open alert</TonalButton>
+                <TonalButton>打开警告</TonalButton>
               {/snippet}
 
-              {#snippet title()}Discard unsaved changes?{/snippet}
+              {#snippet title()}放弃未保存的更改？{/snippet}
 
               {#snippet description()}
-                The current workspace name will return to its saved value.
+                当前工作区名称将恢复为已保存的值。
               {/snippet}
 
               <div class="dialog-alert-copy">
                 <Icon name="warning" size={16} />
-                <p>This action cannot be undone after leaving the editor.</p>
+                <p>离开编辑器后，此操作无法撤销。</p>
               </div>
 
               {#snippet actions()}
                 <DialogClose>
                   <GhostButton data-lds-dialog-initial-focus="">
-                    Keep editing
+                    继续编辑
                   </GhostButton>
                 </DialogClose>
                 <DialogClose>
                   <PrimaryButton expressive={false}>
-                    Discard changes
+                    放弃更改
                   </PrimaryButton>
                 </DialogClose>
               {/snippet}
@@ -1843,41 +1899,42 @@
           </Card>
 
           <Card as="article" class="dialog-card">
-            <span>Wide / overflow + nested overlay</span>
+            <span>宽幅 / 溢出 + 嵌套浮层</span>
             <div class="dialog-demo-copy">
-              <h3>Review workspace</h3>
-              <p>Exercises body scrolling and a Menu above the modal layer.</p>
+              <h3>评审工作区</h3>
+              <p>验证正文滚动及位于模态层上方的菜单。</p>
             </div>
 
             <Dialog
               bind:open={wideDialogOpen}
               size="wide"
+              closeLabel="关闭对话框"
               style="--lds-dialog-max-height: min(26rem, calc(100dvh - 2rem))"
             >
               {#snippet trigger()}
-                <TonalButton>Open wide dialog</TonalButton>
+                <TonalButton>打开宽幅对话框</TonalButton>
               {/snippet}
 
-              {#snippet title()}Workspace review{/snippet}
+              {#snippet title()}工作区评审{/snippet}
 
               {#snippet description()}
-                Verify scrolling, focus containment and nested overlay order.
+                验证滚动、焦点约束和嵌套浮层顺序。
               {/snippet}
 
               <div class="dialog-validation-list">
                 <div class="dialog-validation-row">
-                  <strong>Display options</strong>
-                  <span>The nested Menu should retain focus above Dialog.</span>
-                  <Menu label="Dialog display options">
+                  <strong>显示选项</strong>
+                  <span>嵌套菜单应在对话框上方保持焦点。</span>
+                  <Menu label="对话框显示选项">
                     {#snippet trigger()}
-                      <TonalButton>Open nested menu</TonalButton>
+                      <TonalButton>打开嵌套菜单</TonalButton>
                     {/snippet}
-                    <MenuItem label="Compact metadata">
+                    <MenuItem label="紧凑元数据">
                       {#snippet leading()}
                         <Icon name="list-bulleted" size={14} />
                       {/snippet}
                     </MenuItem>
-                    <MenuItem label="Show activity">
+                    <MenuItem label="显示动态">
                       {#snippet leading()}
                         <Icon name="history" size={14} />
                       {/snippet}
@@ -1885,26 +1942,26 @@
                   </Menu>
                 </div>
                 <div class="dialog-validation-row">
-                  <strong>Keyboard containment</strong>
-                  <span>Tab and Shift+Tab remain inside the active dialog.</span>
+                  <strong>键盘焦点约束</strong>
+                  <span>Tab 与 Shift+Tab 始终停留在活动对话框内。</span>
                 </div>
                 <div class="dialog-validation-row">
-                  <strong>Overflow ownership</strong>
-                  <span>Only this body scrolls after reveal has settled.</span>
+                  <strong>溢出归属</strong>
+                  <span>展开稳定后，仅此正文区域滚动。</span>
                 </div>
                 <div class="dialog-validation-row">
-                  <strong>Escape order</strong>
-                  <span>Escape closes the nested Menu before the Dialog.</span>
+                  <strong>Escape 顺序</strong>
+                  <span>Escape 会先关闭嵌套菜单，再关闭对话框。</span>
                 </div>
                 <div class="dialog-validation-row">
-                  <strong>Focus restoration</strong>
-                  <span>Closing returns focus to the wide-dialog trigger.</span>
+                  <strong>焦点恢复</strong>
+                  <span>关闭后，焦点返回宽幅对话框触发按钮。</span>
                 </div>
               </div>
 
               {#snippet actions()}
                 <DialogClose>
-                  <PrimaryButton expressive={false}>Done</PrimaryButton>
+                  <PrimaryButton expressive={false}>完成</PrimaryButton>
                 </DialogClose>
               {/snippet}
             </Dialog>
@@ -1915,25 +1972,24 @@
       <section class="lab-section" aria-labelledby="split-pane-lab-title">
         <div class="section-heading">
           <div>
-            <p class="section-index">14 / Layout</p>
-            <h2 id="split-pane-lab-title">Split pane</h2>
+            <p class="section-index">14 / 布局</p>
+            <h2 id="split-pane-lab-title">分割面板</h2>
           </div>
           <p>
-            Resizable work regions with pointer capture, keyboard control and
-            explicit bounds.
+            支持指针捕获、键盘控制和明确边界的可调整工作区域。
           </p>
         </div>
 
         <div class="split-pane-lab">
           <Card as="article" density="compact" class="split-pane-card">
             <div class="split-pane-demo-heading">
-              <span>Horizontal / {Math.round(workspaceSplit)}%</span>
-              <small>Arrow keys · Shift ×5 · Home/End · double-click</small>
+              <span>水平 / {Math.round(workspaceSplit)}%</span>
+              <small>方向键 · Shift ×5 · Home/End · 双击</small>
             </div>
 
             <SplitPane
               bind:value={workspaceSplit}
-              label="Resize navigation and workspace"
+              label="调整导航与工作区宽度"
               min={22}
               max={68}
               resetValue={34}
@@ -1941,25 +1997,24 @@
             >
               {#snippet first()}
                 <div class="split-demo-panel split-demo-navigation">
-                  <strong>Workspace</strong>
+                  <strong>工作区</strong>
                   <span class="split-demo-row split-demo-row--selected">
-                    Overview
+                    概览
                   </span>
-                  <span class="split-demo-row">Activity</span>
-                  <span class="split-demo-row">Components</span>
-                  <span class="split-demo-row">Settings</span>
+                  <span class="split-demo-row">动态</span>
+                  <span class="split-demo-row">组件</span>
+                  <span class="split-demo-row">设置</span>
                 </div>
               {/snippet}
 
               {#snippet second()}
                 <div class="split-demo-panel split-demo-workspace">
                   <div>
-                    <small>Active document</small>
-                    <strong>Design system notes</strong>
+                    <small>活动文档</small>
+                    <strong>设计系统笔记</strong>
                   </div>
                   <p>
-                    Drag the divider, focus it and use Left/Right, or
-                    double-click to restore the default proportion.
+                    拖动分隔条，聚焦后使用左/右方向键，或双击恢复默认比例。
                   </p>
                 </div>
               {/snippet}
@@ -1968,13 +2023,13 @@
 
           <Card as="article" density="compact" class="split-pane-card">
             <div class="split-pane-demo-heading">
-              <span>Vertical / {Math.round(inspectorSplit)}%</span>
-              <small>Up/Down follows the visual split axis</small>
+              <span>垂直 / {Math.round(inspectorSplit)}%</span>
+              <small>上/下方向键跟随可视分割轴</small>
             </div>
 
             <SplitPane
               bind:value={inspectorSplit}
-              label="Resize editor and inspector"
+              label="调整编辑器与检查器高度"
               direction="vertical"
               min={30}
               max={76}
@@ -1991,9 +2046,9 @@
 
               {#snippet second()}
                 <div class="split-demo-panel split-demo-inspector">
-                  <strong>Inspector</strong>
-                  <span>Role: separator</span>
-                  <span>Value: {Math.round(inspectorSplit)}%</span>
+                  <strong>检查器</strong>
+                  <span>角色：separator</span>
+                  <span>数值：{Math.round(inspectorSplit)}%</span>
                 </div>
               {/snippet}
             </SplitPane>
@@ -2044,15 +2099,23 @@
   }
 
   .gallery-brand__mark {
-    display: grid;
     width: 2rem;
     height: 2rem;
     flex: 0 0 auto;
-    place-items: center;
-    border-radius: var(--lds-shape-hover-soft);
-    color: var(--color-lds-primary-content);
-    background: var(--color-lds-primary);
-    box-shadow: 0 0 0 0.2rem var(--color-lds-primary-border-light);
+  }
+
+  .gallery-brand__logo {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-brand__logo-back {
+    fill: var(--md-sys-color-secondary);
+  }
+
+  .gallery-brand__logo-front {
+    fill: var(--md-sys-color-primary);
   }
 
   .gallery-brand__copy {
@@ -2639,13 +2702,6 @@
   .lab-shell[data-gallery-density='compact'] .gallery-brand__mark {
     width: 1.75rem;
     height: 1.75rem;
-  }
-
-  .lab-shell[data-gallery-density='compact']
-    .gallery-brand__mark
-    :global(.lds-icon) {
-    width: 0.875rem;
-    height: 0.875rem;
   }
 
   .lab-shell[data-gallery-density='compact'] .gallery-header-tools {
