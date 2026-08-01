@@ -1,3 +1,7 @@
+<script lang="ts" module>
+  let pointerWarmUntil = 0
+</script>
+
 <script lang="ts">
   import { tick, type Snippet } from 'svelte'
   import FloatingLayer from './internal/overlay/FloatingLayer.svelte'
@@ -10,6 +14,7 @@
     children: Snippet
     placement?: TooltipPlacement
     delay?: number
+    skipDelay?: number
     disabled?: boolean
     id?: string
     class?: string
@@ -30,6 +35,7 @@
     children,
     placement = 'top',
     delay = 500,
+    skipDelay = 300,
     disabled = false,
     id,
     class: className = '',
@@ -37,15 +43,22 @@
 
   const componentId = $props.id()
   let tooltipId = $derived(id ?? `${componentId}-tooltip`)
+  let hasContent = $derived(content.trim().length > 0)
 
   let triggerElement = $state<HTMLElement | null>(null)
+  let describedElement: HTMLElement | null = null
+  let describedId: string | undefined
+  let descriptionOwned = false
   let showTimer: ReturnType<typeof setTimeout> | undefined
-  let focusResetTimer: ReturnType<typeof setTimeout> | undefined
+  let revealFrame: number | undefined
   let showRevision = 0
   let pointerInside = false
   let focusInside = false
-  let focusFromPointer = false
-  let visible = $state(false)
+  let suppressPointerFocus = false
+  let openedBy: 'pointer' | 'focus' | undefined
+  let open = $state(false)
+  let positioned = $state(false)
+  let revealed = $state(false)
 
   function clearShowTimer() {
     if (showTimer !== undefined) {
@@ -54,30 +67,43 @@
     }
   }
 
-  function removeDescription(target = triggerElement) {
-    if (!target) return
+  function clearRevealFrame() {
+    if (revealFrame !== undefined) {
+      cancelAnimationFrame(revealFrame)
+      revealFrame = undefined
+    }
+  }
+
+  function removeDescription() {
+    if (!describedElement || !describedId) return
 
     const descriptionIds = new Set(
-      (target.getAttribute('aria-describedby') ?? '')
+      (describedElement.getAttribute('aria-describedby') ?? '')
         .split(/\s+/)
         .filter(Boolean),
     )
 
-    descriptionIds.delete(tooltipId)
+    if (descriptionOwned) {
+      descriptionIds.delete(describedId)
+    }
 
     if (descriptionIds.size > 0) {
-      target.setAttribute(
+      describedElement.setAttribute(
         'aria-describedby',
         Array.from(descriptionIds).join(' '),
       )
     } else {
-      target.removeAttribute('aria-describedby')
+      describedElement.removeAttribute('aria-describedby')
     }
+
+    describedElement = null
+    describedId = undefined
+    descriptionOwned = false
   }
 
   function addDescription(target: HTMLElement) {
-    if (triggerElement && triggerElement !== target) {
-      removeDescription(triggerElement)
+    if (describedElement !== target || describedId !== tooltipId) {
+      removeDescription()
     }
 
     triggerElement = target
@@ -88,11 +114,14 @@
         .filter(Boolean),
     )
 
+    descriptionOwned = !descriptionIds.has(tooltipId)
     descriptionIds.add(tooltipId)
     target.setAttribute(
       'aria-describedby',
       Array.from(descriptionIds).join(' '),
     )
+    describedElement = target
+    describedId = tooltipId
   }
 
   function resolveTrigger(
@@ -111,47 +140,73 @@
     return anchor.querySelector<HTMLElement>(TRIGGER_SELECTOR)
   }
 
-  async function show(target: HTMLElement) {
-    if (disabled || content.length === 0) return
+  async function show(
+    target: HTMLElement,
+    reason: 'pointer' | 'focus',
+  ) {
+    if (disabled || !hasContent) return
+
+    if (open && triggerElement === target) return
 
     const revision = ++showRevision
     clearShowTimer()
+    clearRevealFrame()
     addDescription(target)
+    openedBy = reason
+    positioned = false
+    revealed = false
+    open = true
 
     await tick()
 
     if (
       revision !== showRevision ||
       disabled ||
+      !hasContent ||
       triggerElement !== target
     ) {
       return
     }
-
-    visible = true
   }
 
-  function scheduleShow(target: HTMLElement, immediately = false) {
-    if (disabled || content.length === 0) return
+  function scheduleShow(
+    target: HTMLElement,
+    reason: 'pointer' | 'focus',
+    immediately = false,
+  ) {
+    if (disabled || !hasContent) return
 
     clearShowTimer()
 
-    if (immediately || delay <= 0) {
-      void show(target)
+    const skipPointerDelay =
+      reason === 'pointer' && Date.now() < pointerWarmUntil
+
+    if (immediately || skipPointerDelay || delay <= 0) {
+      void show(target, reason)
       return
     }
 
     showTimer = setTimeout(() => {
       showTimer = undefined
-      void show(target)
+      void show(target, reason)
     }, delay)
   }
 
   function hide() {
+    const warmPointerSequence = open && openedBy === 'pointer'
+
     clearShowTimer()
+    clearRevealFrame()
     showRevision += 1
-    visible = false
+    revealed = false
+    open = false
+    positioned = false
     removeDescription()
+    openedBy = undefined
+
+    if (warmPointerSequence) {
+      pointerWarmUntil = Date.now() + Math.max(0, skipDelay)
+    }
 
     if (!pointerInside && !focusInside) {
       triggerElement = null
@@ -162,6 +217,7 @@
     function handlePointerOver(event: PointerEvent) {
       if (
         event.defaultPrevented ||
+        event.pointerType === 'touch' ||
         (event.relatedTarget instanceof Node &&
           anchor.contains(event.relatedTarget))
       ) {
@@ -171,8 +227,9 @@
       const target = resolveTrigger(event.target, anchor)
       if (!target) return
 
+      suppressPointerFocus = false
       pointerInside = true
-      scheduleShow(target)
+      scheduleShow(target, 'pointer')
     }
 
     function handlePointerOut(event: PointerEvent) {
@@ -184,20 +241,15 @@
       }
 
       pointerInside = false
+      suppressPointerFocus = false
       if (!focusInside) hide()
     }
 
-    function handlePointerDown() {
-      focusFromPointer = true
+    function handlePointerDown(event: PointerEvent) {
+      if (event.defaultPrevented) return
 
-      if (focusResetTimer !== undefined) {
-        clearTimeout(focusResetTimer)
-      }
-
-      focusResetTimer = setTimeout(() => {
-        focusFromPointer = false
-        focusResetTimer = undefined
-      })
+      suppressPointerFocus = true
+      hide()
     }
 
     function handleFocusIn(event: FocusEvent) {
@@ -207,7 +259,9 @@
       if (!target) return
 
       focusInside = true
-      scheduleShow(target, !focusFromPointer)
+      if (!suppressPointerFocus) {
+        scheduleShow(target, 'focus', true)
+      }
     }
 
     function handleFocusOut(event: FocusEvent) {
@@ -219,13 +273,20 @@
       }
 
       focusInside = false
+      suppressPointerFocus = false
       if (!pointerInside) hide()
     }
 
     function handleKeyDown(event: KeyboardEvent) {
-      if (!event.defaultPrevented && event.key === 'Escape') {
-        hide()
-      }
+      if (
+        event.defaultPrevented ||
+        event.key !== 'Escape' ||
+        (!open && showTimer === undefined)
+      ) return
+
+      event.preventDefault()
+      event.stopPropagation()
+      hide()
     }
 
     anchor.addEventListener('pointerover', handlePointerOver)
@@ -238,9 +299,8 @@
     return {
       destroy() {
         clearShowTimer()
-        if (focusResetTimer !== undefined) {
-          clearTimeout(focusResetTimer)
-        }
+        clearRevealFrame()
+        showRevision += 1
         removeDescription()
         anchor.removeEventListener('pointerover', handlePointerOver)
         anchor.removeEventListener('pointerout', handlePointerOut)
@@ -253,9 +313,44 @@
   }
 
   $effect(() => {
-    if ((disabled || content.length === 0) && visible) {
+    if (disabled || !hasContent) {
       hide()
     }
+  })
+
+  $effect(() => {
+    const currentTooltipId = tooltipId
+    const currentTrigger = triggerElement
+
+    if (
+      open &&
+      currentTrigger &&
+      describedId !== currentTooltipId
+    ) {
+      addDescription(currentTrigger)
+    }
+  })
+
+  $effect(() => {
+    if (!open || !positioned) {
+      revealed = false
+      return
+    }
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      revealed = true
+      return
+    }
+
+    revealFrame = requestAnimationFrame(() => {
+      revealFrame = undefined
+
+      if (open && positioned) {
+        revealed = true
+      }
+    })
+
+    return clearRevealFrame
   })
 </script>
 
@@ -263,8 +358,9 @@
   {@render children()}
 
   <FloatingLayer
+    bind:positioned
     anchor={triggerElement}
-    open={visible}
+    {open}
     {placement}
     gap={8}
     viewportPadding={8}
@@ -272,8 +368,8 @@
     id={tooltipId}
     class={`lds-tooltip ${className}`}
     role="tooltip"
-    aria-hidden={!visible}
-    data-visible={visible}
+    aria-hidden={!revealed}
+    data-visible={revealed}
   >
     <span class="lds-tooltip__surface" aria-hidden="true"></span>
     <span class="lds-tooltip__arrow" aria-hidden="true"></span>

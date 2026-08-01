@@ -85,14 +85,13 @@
     flip
     shift
     open
-    positioned
 
-    if (!currentLayer) {
+    if (!open || !currentLayer || !currentAnchor) {
       positioned = false
       return
     }
 
-    if (!currentAnchor) return
+    positioned = false
 
     const observedAnchor: HTMLElement = currentAnchor
     const observedLayer: HTMLDivElement = currentLayer

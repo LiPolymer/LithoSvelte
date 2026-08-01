@@ -445,8 +445,8 @@
         class="gallery-overview"
       >
         <div class="gallery-overview__copy">
-          <p class="lab-kicker">Litho.</p>
           <h1 id="gallery-title">Controls Gallery</h1>
+          <p class="lab-kicker">for Litho.</p>
         </div>
 
         <div class="gallery-overview__metadata" aria-label="Gallery特性">
@@ -2111,11 +2111,11 @@
   }
 
   .gallery-brand__logo-back {
-    fill: var(--md-sys-color-secondary);
+    fill: var(--color-lds-secondary-content);
   }
 
   .gallery-brand__logo-front {
-    fill: var(--md-sys-color-primary);
+    fill: var(--color-lds-primary-content);
   }
 
   .gallery-brand__copy {
@@ -2574,12 +2574,6 @@
     margin: 0;
   }
 
-  .lab-intro {
-    max-width: 34rem;
-    color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.78rem;
-  }
-
   :global(.lab-layout) {
     height: 100%;
     min-height: 0;
@@ -2621,8 +2615,7 @@
     gap: 0.05rem;
   }
 
-  .gallery-sidebar-heading strong,
-  .theme-dock__heading strong {
+  .gallery-sidebar-heading strong {
     font-size: 0.75rem;
     font-weight: 500;
   }
