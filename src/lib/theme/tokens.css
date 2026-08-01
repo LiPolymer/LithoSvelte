@@ -43,6 +43,9 @@
     --lds-control-font-size: 0.875rem;
     --lds-control-padding-inline: 0.75rem;
     --lds-control-gap: 0.4em;
+    --lds-icon-button-icon-size: 1rem;
+    --lds-icon-button-icon-size-compact: 0.875rem;
+    --lds-selection-gap: 0.55em;
 
     --lds-switch-track-width: 2.25em;
     --lds-switch-track-height: 1.25em;
@@ -52,17 +55,35 @@
     --lds-field-padding-inline: 0.625rem;
     --lds-field-padding-block: 0.4rem;
     --lds-field-gap: 0.25rem;
+    --lds-field-meta-font-size: 0.75rem;
+    --lds-field-toggle-size: 1.5rem;
+    --lds-field-icon-size: 0.875rem;
     --lds-listbox-max-height: 16rem;
+    --lds-listbox-padding: 0.2rem;
+    --lds-listbox-option-padding-block: 0.35rem;
+    --lds-listbox-option-padding-inline: 0.5rem;
+    --lds-listbox-empty-padding: 0.5rem;
 
     --lds-tooltip-max-width: 18rem;
     --lds-tooltip-backdrop-blur: 0.9rem;
+    --lds-tooltip-font-size: 0.75rem;
+    --lds-tooltip-padding-block: 0.35rem;
+    --lds-tooltip-padding-inline: 0.55rem;
     --lds-menu-min-width: 11rem;
     --lds-menu-max-width: 20rem;
     --lds-menu-max-height: 20rem;
     --lds-menu-item-min-height: var(--lds-control-min-height-compact);
     --lds-menu-padding: 0.2rem;
     --lds-menu-item-padding-inline: 0.5rem;
+    --lds-menu-item-padding-block: 0.3rem;
     --lds-menu-item-gap: 0.45rem;
+    --lds-menu-accessory-size: 1rem;
+    --lds-menu-icon-size: 0.875rem;
+    --lds-menu-meta-font-size: 0.68rem;
+    --lds-menu-label-padding-block-start: 0.35rem;
+    --lds-menu-label-padding-block-end: 0.2rem;
+    --lds-menu-separator-margin-block: 0.2rem;
+    --lds-menu-separator-margin-inline: 0.35rem;
     --lds-dialog-width-compact: 24rem;
     --lds-dialog-width: 32rem;
     --lds-dialog-width-wide: 44rem;
@@ -72,11 +93,17 @@
     --lds-dialog-header-padding-block: 0.55rem;
     --lds-dialog-padding-block: 0.85rem;
     --lds-dialog-section-gap: 0.75rem;
+    --lds-dialog-actions-gap: 0.4rem;
+    --lds-dialog-actions-padding-block: 0.65rem;
+    --lds-dialog-title-font-size: 1rem;
+    --lds-dialog-description-font-size: 0.75rem;
     --lds-dialog-backdrop-blur: 0.45rem;
     --lds-badge-min-height: 1.25rem;
     --lds-badge-padding-inline: 0.4rem;
+    --lds-badge-padding-block: 0.1rem;
     --lds-badge-gap: 0.3rem;
     --lds-badge-icon-size: 0.75rem;
+    --lds-badge-font-size: 0.68rem;
     --lds-card-padding-compact: 0.75rem;
     --lds-card-padding: 1rem;
     --lds-card-gap-compact: 0.6rem;
@@ -97,11 +124,18 @@
     --lds-navigation-tree-indent: 0.75rem;
     --lds-navigation-tree-icon-size: 0.875rem;
     --lds-navigation-tree-disclosure-size: 0.75rem;
+    --lds-navigation-tree-label-font-size: 0.78rem;
+    --lds-navigation-tree-group-gap: 0.05rem;
+    --lds-navigation-tree-group-padding-start: 0.2rem;
+    --lds-navigation-tree-group-padding-end: 0.15rem;
     --lds-tabs-list-padding: 0.2rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
     --lds-tab-padding-inline: 0.55rem;
     --lds-tab-gap: 0.35rem;
     --lds-tab-icon-size: 0.875rem;
+    --lds-tabs-gap: 0.5rem;
+    --lds-tab-font-size: 0.78rem;
+    --lds-tab-panel-padding: 0.75rem;
     --lds-layer-floating-base: 900;
     --lds-layer-popover: var(--lds-layer-floating-base);
     --lds-layer-tooltip: calc(var(--lds-layer-floating-base) + 100);
@@ -118,6 +152,9 @@
     --lds-list-item-gap: 0.55rem;
     --lds-list-leading-size: 1.75rem;
     --lds-list-actions-edge-margin: 0.5rem;
+    --lds-list-content-gap: 0.05rem;
+    --lds-list-label-font-size: 0.8125rem;
+    --lds-list-description-font-size: 0.7rem;
     --lds-list-divider-leading-inset: calc(
         var(--lds-list-item-padding-inline)
         + var(--lds-list-leading-size)
@@ -131,6 +168,187 @@
     --lds-data-table-selection-column-width: 2.5rem;
     --lds-data-table-actions-edge-margin: 0.1875rem;
     --lds-data-table-sticky-offset: 0rem;
+    --lds-data-table-font-size: 0.75rem;
+    --lds-data-table-caption-padding-block: 0.45rem;
+    --lds-data-table-caption-font-size: 0.7rem;
+    --lds-data-table-header-font-size: 0.68rem;
+
+    --lds-radio-group-gap: 0.35rem;
+    --lds-radio-group-meta-font-size: 0.75rem;
+    --lds-radio-group-option-gap: 0.1rem;
+    --lds-radio-group-horizontal-row-gap: 0.25rem;
+    --lds-radio-group-horizontal-column-gap: 0.9rem;
+
+    --lds-theme-picker-width: 18rem;
+    --lds-theme-picker-padding: 0.75rem;
+    --lds-theme-picker-header-gap: 0.75rem;
+    --lds-theme-picker-control-gap: 0.5rem;
+    --lds-theme-picker-control-margin-block: 0.75rem;
+    --lds-theme-picker-meta-font-size: 0.75rem;
+    --lds-theme-picker-title-font-size: 1rem;
+    --lds-theme-picker-legend-margin: 0.35rem;
+    --lds-theme-picker-reset-padding-inline: 0.55rem;
+    --lds-theme-picker-reset-font-size: 0.75rem;
+    --lds-theme-picker-palette-height: 0.4rem;
+    --lds-theme-picker-palette-margin-block-start: 0.75rem;
+}
+
+/*
+ * Contextual density contract. Apply this attribute to any container to make
+ * its Litho descendants compact. App-level consumers should place it on the
+ * document root so portaled floating surfaces inherit the same measurements.
+ */
+[data-lds-density='compact'] {
+    --lds-control-min-height-compact: 1.75rem;
+    --lds-control-min-height: 2rem;
+    --lds-control-font-size: 0.8125rem;
+    --lds-control-padding-inline: 0.55rem;
+    --lds-control-gap: 0.32em;
+    --lds-icon-button-icon-size: 0.875rem;
+    --lds-icon-button-icon-size-compact: 0.75rem;
+    --lds-selection-gap: 0.45em;
+
+    --lds-switch-track-width: 2em;
+    --lds-switch-track-height: 1.125em;
+    --lds-switch-thumb-size: 0.6875em;
+    --lds-switch-track-inset: 0.125em;
+
+    --lds-field-padding-inline: 0.5rem;
+    --lds-field-padding-block: 0.3rem;
+    --lds-field-gap: 0.18rem;
+    --lds-field-meta-font-size: 0.6875rem;
+    --lds-field-toggle-size: 1.25rem;
+    --lds-field-icon-size: 0.75rem;
+    --lds-listbox-max-height: 14rem;
+    --lds-listbox-padding: 0.15rem;
+    --lds-listbox-option-padding-block: 0.25rem;
+    --lds-listbox-option-padding-inline: 0.4rem;
+    --lds-listbox-empty-padding: 0.4rem;
+
+    --lds-tooltip-max-width: 16rem;
+    --lds-tooltip-font-size: 0.6875rem;
+    --lds-tooltip-padding-block: 0.25rem;
+    --lds-tooltip-padding-inline: 0.4rem;
+
+    --lds-menu-min-width: 10rem;
+    --lds-menu-max-width: 18rem;
+    --lds-menu-max-height: 18rem;
+    --lds-menu-item-min-height: var(--lds-control-min-height-compact);
+    --lds-menu-padding: 0.15rem;
+    --lds-menu-item-padding-inline: 0.4rem;
+    --lds-menu-item-padding-block: 0.22rem;
+    --lds-menu-item-gap: 0.35rem;
+    --lds-menu-accessory-size: 0.875rem;
+    --lds-menu-icon-size: 0.75rem;
+    --lds-menu-meta-font-size: 0.625rem;
+    --lds-menu-label-padding-block-start: 0.25rem;
+    --lds-menu-label-padding-block-end: 0.15rem;
+    --lds-menu-separator-margin-block: 0.15rem;
+    --lds-menu-separator-margin-inline: 0.25rem;
+
+    --lds-dialog-width-compact: 22rem;
+    --lds-dialog-width: 28rem;
+    --lds-dialog-width-wide: 40rem;
+    --lds-dialog-viewport-padding: 0.75rem;
+    --lds-dialog-padding-inline: 0.75rem;
+    --lds-dialog-header-padding-block: 0.45rem;
+    --lds-dialog-padding-block: 0.65rem;
+    --lds-dialog-section-gap: 0.55rem;
+    --lds-dialog-actions-gap: 0.3rem;
+    --lds-dialog-actions-padding-block: 0.5rem;
+    --lds-dialog-title-font-size: 0.9375rem;
+    --lds-dialog-description-font-size: 0.6875rem;
+
+    --lds-badge-min-height: 1.125rem;
+    --lds-badge-padding-inline: 0.3rem;
+    --lds-badge-padding-block: 0.075rem;
+    --lds-badge-gap: 0.22rem;
+    --lds-badge-icon-size: 0.6875rem;
+    --lds-badge-font-size: 0.625rem;
+
+    --lds-card-padding-compact: 0.55rem;
+    --lds-card-padding: 0.75rem;
+    --lds-card-gap-compact: 0.4rem;
+    --lds-card-gap: 0.65rem;
+
+    --lds-split-pane-min-block-size: 10rem;
+    --lds-split-pane-separator-size: 0.625rem;
+    --lds-split-pane-separator-half-size: 0.3125rem;
+    --lds-split-pane-divider-inset: 0.35rem;
+    --lds-split-pane-grip-length: 1.25rem;
+    --lds-split-pane-grip-thickness: 0.2rem;
+
+    --lds-navigation-tree-padding: 0.15rem;
+    --lds-navigation-tree-item-min-height: 1.625rem;
+    --lds-navigation-tree-item-padding-inline: 0.3rem;
+    --lds-navigation-tree-item-gap: 0.25rem;
+    --lds-navigation-tree-indent: 0.6rem;
+    --lds-navigation-tree-icon-size: 0.8125rem;
+    --lds-navigation-tree-disclosure-size: 0.6875rem;
+    --lds-navigation-tree-label-font-size: 0.72rem;
+    --lds-navigation-tree-group-gap: 0.025rem;
+    --lds-navigation-tree-group-padding-start: 0.15rem;
+    --lds-navigation-tree-group-padding-end: 0.1rem;
+
+    --lds-tabs-list-padding: 0.15rem;
+    --lds-tab-min-height: var(--lds-control-min-height-compact);
+    --lds-tab-padding-inline: 0.4rem;
+    --lds-tab-gap: 0.25rem;
+    --lds-tab-icon-size: 0.8125rem;
+    --lds-tabs-gap: 0.35rem;
+    --lds-tab-font-size: 0.72rem;
+    --lds-tab-panel-padding: 0.55rem;
+
+    --lds-toolbar-gap: 0.1rem;
+    --lds-toolbar-padding: 0.1rem;
+    --lds-toolbar-separator-inset: 0.25rem;
+
+    --lds-list-padding: 0.15rem;
+    --lds-list-gap: 0.05rem;
+    --lds-list-item-min-height: 2.5rem;
+    --lds-list-item-padding-inline: 0.45rem;
+    --lds-list-item-padding-block: 0.25rem;
+    --lds-list-item-gap: 0.4rem;
+    --lds-list-leading-size: 1.5rem;
+    --lds-list-actions-edge-margin: 0.3rem;
+    --lds-list-content-gap: 0.025rem;
+    --lds-list-label-font-size: 0.75rem;
+    --lds-list-description-font-size: 0.65rem;
+    --lds-list-divider-leading-inset: calc(
+        var(--lds-list-item-padding-inline)
+        + var(--lds-list-leading-size)
+        + var(--lds-list-item-gap)
+    );
+
+    --lds-data-table-min-width: 42rem;
+    --lds-data-table-row-min-height: var(--lds-control-min-height);
+    --lds-data-table-cell-padding-inline: 0.45rem;
+    --lds-data-table-cell-padding-block: 0.28rem;
+    --lds-data-table-selection-column-width: 2.125rem;
+    --lds-data-table-actions-edge-margin: 0.125rem;
+    --lds-data-table-font-size: 0.6875rem;
+    --lds-data-table-caption-padding-block: 0.35rem;
+    --lds-data-table-caption-font-size: 0.65rem;
+    --lds-data-table-header-font-size: 0.625rem;
+
+    --lds-radio-group-gap: 0.25rem;
+    --lds-radio-group-meta-font-size: 0.6875rem;
+    --lds-radio-group-option-gap: 0.05rem;
+    --lds-radio-group-horizontal-row-gap: 0.2rem;
+    --lds-radio-group-horizontal-column-gap: 0.65rem;
+
+    --lds-theme-picker-width: 16rem;
+    --lds-theme-picker-padding: 0.55rem;
+    --lds-theme-picker-header-gap: 0.5rem;
+    --lds-theme-picker-control-gap: 0.4rem;
+    --lds-theme-picker-control-margin-block: 0.55rem;
+    --lds-theme-picker-meta-font-size: 0.6875rem;
+    --lds-theme-picker-title-font-size: 0.9rem;
+    --lds-theme-picker-legend-margin: 0.25rem;
+    --lds-theme-picker-reset-padding-inline: 0.4rem;
+    --lds-theme-picker-reset-font-size: 0.6875rem;
+    --lds-theme-picker-palette-height: 0.3rem;
+    --lds-theme-picker-palette-margin-block-start: 0.55rem;
 }
 
 /* Color tokens. */

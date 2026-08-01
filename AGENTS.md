@@ -21,6 +21,10 @@
   theme configuration.
 - Put reusable reference and semantic tokens in `tokens.css`. Component state
   styling currently lives in `styles.css`.
+- Contextual density is token-driven. A container with
+  `data-lds-density="compact"` supplies smaller inherited measurements for
+  controls, fields, collections, navigation, cards, and floating surfaces;
+  avoid duplicating that contract as a `density` prop on every component.
 - `src/lib/index.ts` is the stable TypeScript/component entry and
   `src/lib/styles.css` is the stable stylesheet entry. Keep implementation
   contexts and low-level overlay machinery out of the public barrel until
@@ -59,12 +63,18 @@
   Its desktop shell uses Litho controls for the app bar, catalog, theme
   workbench, density switch, and a resizable SplitPane canvas. At narrow
   widths the shell becomes normal document flow rather than preserving a
-  cramped desktop split.
+  cramped desktop split. The Gallery mirrors its selected density to the
+  document root so portaled Tooltip, Menu, and Dialog surfaces inherit the
+  same measurements as their triggers.
 
 ## Intentional interaction decisions
 
 - Standard desktop controls use a 38px minimum height. Compact IconButton uses
   32px; all controls expand to at least 44px for coarse pointers.
+- Contextual compact density reduces both component dimensions and the spacing
+  around their internal content. Explicit component variants such as compact
+  IconButton and Card remain meaningful and use the smaller compact baseline
+  within that context. Density must not weaken coarse-pointer hit targets.
 - PrimaryButton is expressive by default: its standalone hover may add a light
   border and slightly change size. `expressive={false}` opts into the quiet
   Tonal-like behavior. ButtonGroup disables expressive behavior automatically.

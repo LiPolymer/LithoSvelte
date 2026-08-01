@@ -251,14 +251,14 @@
 
 .lds-dialog__title {
     font-family: var(--heading);
-    font-size: 1rem;
+    font-size: var(--lds-dialog-title-font-size);
     font-weight: 500;
     line-height: 1.25;
 }
 
 .lds-dialog__description {
     color: var(--color-lds-dialog-muted);
-    font-size: 0.75rem;
+    font-size: var(--lds-dialog-description-font-size);
     line-height: 1.4;
 }
 
@@ -304,8 +304,9 @@
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-end;
-    gap: 0.4rem;
-    padding: 0.65rem var(--lds-dialog-padding-inline);
+    gap: var(--lds-dialog-actions-gap);
+    padding: var(--lds-dialog-actions-padding-block)
+        var(--lds-dialog-padding-inline);
 }
 
 .lds-dialog[data-has-body='true'] .lds-dialog__actions {
@@ -344,7 +345,7 @@
     opacity: 0;
     visibility: hidden;
     color: var(--color-lds-tooltip-content);
-    font-size: 0.75rem;
+    font-size: var(--lds-tooltip-font-size);
     font-weight: 500;
     line-height: 1.3;
     letter-spacing: 0.01em;
@@ -379,7 +380,8 @@
     position: relative;
     z-index: 1;
     display: block;
-    padding: 0.35rem 0.55rem;
+    padding: var(--lds-tooltip-padding-block)
+        var(--lds-tooltip-padding-inline);
     clip-path: inset(0 50%);
     transition:
             clip-path var(--lds-motion-duration-reveal)
@@ -616,7 +618,8 @@
     min-width: 0;
     align-items: center;
     gap: var(--lds-menu-item-gap);
-    padding: 0.3rem var(--lds-menu-item-padding-inline);
+    padding: var(--lds-menu-item-padding-block)
+        var(--lds-menu-item-padding-inline);
     border: 0;
     border-radius: var(--lds-shape-rest);
     outline: 0;
@@ -707,11 +710,18 @@
 .lds-menu__trailing,
 .lds-menu__indicator {
     display: grid;
-    width: 1rem;
-    height: 1rem;
-    flex: 0 0 1rem;
+    width: var(--lds-menu-accessory-size);
+    height: var(--lds-menu-accessory-size);
+    flex: 0 0 var(--lds-menu-accessory-size);
     place-items: center;
     color: var(--color-lds-menu-muted);
+}
+
+.lds-menu__leading > .lds-icon,
+.lds-menu__trailing > .lds-icon,
+.lds-menu__indicator > .lds-icon {
+    width: var(--lds-menu-icon-size);
+    height: var(--lds-menu-icon-size);
 }
 
 .lds-menu__indicator .lds-icon,
@@ -749,15 +759,17 @@
     color: var(--color-lds-menu-muted);
     background: transparent;
     font-family: inherit;
-    font-size: 0.68rem;
+    font-size: var(--lds-menu-meta-font-size);
     line-height: 1;
     white-space: nowrap;
 }
 
 .lds-menu__label {
-    padding: 0.35rem var(--lds-menu-item-padding-inline) 0.2rem;
+    padding: var(--lds-menu-label-padding-block-start)
+        var(--lds-menu-item-padding-inline)
+        var(--lds-menu-label-padding-block-end);
     color: var(--color-lds-menu-muted);
-    font-size: 0.68rem;
+    font-size: var(--lds-menu-meta-font-size);
     font-weight: 500;
     line-height: 1.2;
     letter-spacing: 0.06em;
@@ -766,7 +778,8 @@
 
 .lds-menu__separator {
     height: 0.1rem;
-    margin: 0.2rem 0.35rem;
+    margin: var(--lds-menu-separator-margin-block)
+        var(--lds-menu-separator-margin-inline);
     background: var(--color-lds-group-divider);
 }
 
@@ -785,11 +798,12 @@
     max-width: 100%;
     align-items: center;
     gap: var(--lds-badge-gap);
-    padding: 0.1rem var(--lds-badge-padding-inline);
+    padding: var(--lds-badge-padding-block)
+        var(--lds-badge-padding-inline);
     border: 0.1rem solid transparent;
     border-radius: var(--lds-shape-rest);
     color: var(--lds-badge-content);
-    font-size: 0.68rem;
+    font-size: var(--lds-badge-font-size);
     font-weight: 500;
     line-height: 1;
     vertical-align: middle;
@@ -1192,7 +1206,7 @@
 .lds-navigation-tree__label {
     min-width: 0;
     overflow: hidden;
-    font-size: 0.78rem;
+    font-size: var(--lds-navigation-tree-label-font-size);
     line-height: 1.2;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -1220,9 +1234,10 @@
 .lds-navigation-tree__group {
     display: grid;
     min-height: 0;
-    gap: 0.05rem;
+    gap: var(--lds-navigation-tree-group-gap);
     margin-inline-start: var(--lds-navigation-tree-indent);
-    padding-inline: 0.2rem 0.15rem;
+    padding-inline: var(--lds-navigation-tree-group-padding-start)
+        var(--lds-navigation-tree-group-padding-end);
     overflow: hidden;
     border-inline-start: 0.1rem solid
         var(--color-lds-navigation-tree-guide);
@@ -1232,7 +1247,7 @@
 .lds-tabs {
     display: grid;
     min-width: 0;
-    gap: 0.5rem;
+    gap: var(--lds-tabs-gap);
 }
 
 .lds-tabs__list {
@@ -1261,7 +1276,7 @@
     color: var(--color-lds-tab-content);
     background: transparent;
     font: inherit;
-    font-size: 0.78rem;
+    font-size: var(--lds-tab-font-size);
     font-weight: 500;
     line-height: 1.2;
     white-space: nowrap;
@@ -1340,7 +1355,7 @@
 }
 
 .lds-tab-panel {
-    padding: 0.75rem;
+    padding: var(--lds-tab-panel-padding);
     border: 0.1rem solid var(--color-lds-tab-panel-border);
     border-radius: var(--lds-shape-rest);
     background: var(--color-lds-tab-panel-surface);
@@ -1714,7 +1729,7 @@
 .lds-list-item__content {
     display: grid;
     min-width: 0;
-    gap: 0.05rem;
+    gap: var(--lds-list-content-gap);
 }
 
 .lds-list-item__label,
@@ -1726,7 +1741,7 @@
 }
 
 .lds-list-item__label {
-    font-size: 0.8125rem;
+    font-size: var(--lds-list-label-font-size);
     font-weight: 500;
     line-height: 1.25;
 }
@@ -1734,7 +1749,7 @@
 .lds-list-item__description,
 .lds-list-item__metadata {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.7rem;
+    font-size: var(--lds-list-description-font-size);
     line-height: 1.25;
 }
 
@@ -1798,16 +1813,17 @@
     border-spacing: 0;
     border-collapse: separate;
     color: var(--md-sys-color-on-surface);
-    font-size: 0.75rem;
+    font-size: var(--lds-data-table-font-size);
     line-height: 1.25;
 }
 
 .lds-data-table__caption {
-    padding: 0.45rem var(--lds-data-table-cell-padding-inline);
+    padding: var(--lds-data-table-caption-padding-block)
+        var(--lds-data-table-cell-padding-inline);
     border-block-end: 0.1rem solid var(--color-lds-data-table-divider);
     color: var(--md-sys-color-on-surface-variant);
     background: var(--color-lds-data-table-header);
-    font-size: 0.7rem;
+    font-size: var(--lds-data-table-caption-font-size);
     font-weight: 500;
     text-align: start;
 }
@@ -1826,7 +1842,7 @@
     z-index: 3;
     color: var(--md-sys-color-on-surface-variant);
     background: var(--color-lds-data-table-header);
-    font-size: 0.68rem;
+    font-size: var(--lds-data-table-header-font-size);
     font-weight: 500;
     letter-spacing: 0.055em;
     text-transform: uppercase;
@@ -2032,7 +2048,7 @@
     position: relative;
     min-height: var(--lds-control-min-height);
     align-items: center;
-    gap: 0.55em;
+    gap: var(--lds-selection-gap);
     color: var(--md-sys-color-on-surface);
     font-size: var(--lds-control-font-size);
     cursor: pointer;
@@ -2143,7 +2159,7 @@
 .lds-radio-group {
     display: grid;
     min-width: 0;
-    gap: 0.35rem;
+    gap: var(--lds-radio-group-gap);
     padding: 0;
     border: 0;
     color: var(--md-sys-color-on-surface);
@@ -2152,7 +2168,7 @@
 .lds-radio-group__legend,
 .lds-radio-group__support {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.75rem;
+    font-size: var(--lds-radio-group-meta-font-size);
 }
 
 .lds-radio-group__legend {
@@ -2171,13 +2187,14 @@
 
 .lds-radio-group--vertical .lds-radio-group__options {
     display: grid;
-    gap: 0.1rem;
+    gap: var(--lds-radio-group-option-gap);
 }
 
 .lds-radio-group--horizontal .lds-radio-group__options {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.25rem 0.9rem;
+    gap: var(--lds-radio-group-horizontal-row-gap)
+        var(--lds-radio-group-horizontal-column-gap);
 }
 
 .lds-radio-group__support {
@@ -2383,7 +2400,7 @@
 .lds-field__label,
 .lds-field__support {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.75rem;
+    font-size: var(--lds-field-meta-font-size);
 }
 
 .lds-field__label {
@@ -2563,6 +2580,8 @@
 }
 
 .lds-select__trigger .lds-icon {
+    width: var(--lds-field-icon-size);
+    height: var(--lds-field-icon-size);
     flex: none;
     color: var(--md-sys-color-on-surface-variant);
     pointer-events: none;
@@ -2614,9 +2633,9 @@
 
 .lds-combobox__toggle {
     display: grid;
-    width: 1.5rem;
-    height: 1.5rem;
-    flex: 0 0 1.5rem;
+    width: var(--lds-field-toggle-size);
+    height: var(--lds-field-toggle-size);
+    flex: 0 0 var(--lds-field-toggle-size);
     padding: 0;
     place-items: center;
     border: 0;
@@ -2628,6 +2647,8 @@
 }
 
 .lds-combobox__toggle .lds-icon {
+    width: var(--lds-field-icon-size);
+    height: var(--lds-field-icon-size);
     transition: transform var(--lds-motion-duration-settle)
         var(--lds-motion-easing-shape);
 }
@@ -2694,7 +2715,7 @@
     position: relative;
     z-index: 1;
     max-height: var(--lds-listbox-max-height);
-    padding: 0.2rem;
+    padding: var(--lds-listbox-padding);
     overflow-y: auto;
     clip-path: inset(0 0 100% 0);
     transition: clip-path
@@ -2723,7 +2744,8 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--lds-control-gap);
-    padding: 0.35rem 0.5rem;
+    padding: var(--lds-listbox-option-padding-block)
+        var(--lds-listbox-option-padding-inline);
     border: 0;
     border-radius: var(--lds-shape-rest);
     color: inherit;
@@ -2761,9 +2783,9 @@
 }
 
 .lds-field__empty {
-    padding: 0.5rem;
+    padding: var(--lds-listbox-empty-padding);
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.75rem;
+    font-size: var(--lds-field-meta-font-size);
 }
 
 @media (pointer: coarse) {
@@ -2779,8 +2801,15 @@
     .lds-menu__item,
     .lds-navigation-tree__row,
     .lds-tab,
-    .lds-field__control {
+    .lds-field__control,
+    .lds-field__option,
+    .lds-list-item__trigger {
         min-height: var(--lds-control-min-height-touch);
+    }
+
+    .lds-data-table th,
+    .lds-data-table td {
+        height: var(--lds-control-min-height-touch);
     }
 
     .lds-icon-btn {

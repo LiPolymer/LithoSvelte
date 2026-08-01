@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onDestroy } from 'svelte'
   import {
     AlertDialog,
     Badge,
@@ -84,6 +85,8 @@
   let alertDialogOpen = false
   let wideDialogOpen = false
   let galleryDensity: string | number = 'comfortable'
+  let resolvedGalleryDensity = 'default'
+  let previousDocumentDensity: string | null | undefined
   let gallerySplit = 22
   let workspaceSplit = 34
   let inspectorSplit = 58
@@ -97,6 +100,32 @@
       : 'smooth'
     section?.scrollIntoView({ behavior, block: 'start' })
   }
+
+  $: resolvedGalleryDensity =
+    galleryDensity === 'compact' ? 'compact' : 'default'
+
+  $: if (typeof document !== 'undefined') {
+    const documentRoot = document.documentElement
+
+    if (previousDocumentDensity === undefined) {
+      previousDocumentDensity = documentRoot.getAttribute('data-lds-density')
+    }
+
+    documentRoot.setAttribute('data-lds-density', resolvedGalleryDensity)
+  }
+
+  onDestroy(() => {
+    if (typeof document === 'undefined') return
+
+    if (previousDocumentDensity === null) {
+      document.documentElement.removeAttribute('data-lds-density')
+    } else if (previousDocumentDensity !== undefined) {
+      document.documentElement.setAttribute(
+        'data-lds-density',
+        previousDocumentDensity,
+      )
+    }
+  })
 
   const accessOptions: readonly ListboxOption[] = [
     { value: 'guest', label: 'Guest' },
@@ -139,7 +168,11 @@
   <title>Litho · Control Gallery</title>
 </svelte:head>
 
-<div class="lab-shell" data-gallery-density={galleryDensity}>
+<div
+  class="lab-shell"
+  data-gallery-density={galleryDensity}
+  data-lds-density={resolvedGalleryDensity}
+>
   <header class="lab-header">
     <div class="gallery-brand">
       <span class="gallery-brand__mark" aria-hidden="true">
@@ -2372,6 +2405,119 @@
   .lab-shell[data-gallery-density='compact'] .section-heading {
     gap: 1rem;
     margin-bottom: 0.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .lab-header {
+    gap: 0.5rem;
+    padding: 0.25rem 0.35rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .gallery-brand {
+    gap: 0.4rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .gallery-brand__mark {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    .gallery-brand__mark
+    :global(.lds-icon) {
+    width: 0.875rem;
+    height: 0.875rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .gallery-header-tools {
+    gap: 0.35rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .lab-sidebar {
+    gap: 0.55rem;
+    padding: 0.5rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .theme-dock {
+    gap: 0.4rem;
+    padding-top: 0.55rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    :is(
+      .button-group-grid,
+      .checkbox-grid,
+      .selection-control-grid,
+      .text-field-grid,
+      .choice-field-grid,
+      .menu-lab,
+      .badge-lab,
+      .navigation-lab,
+      .card-lab,
+      .dialog-lab,
+      .split-pane-lab,
+      .list-lab,
+      .data-table-lab
+    ) {
+    gap: 0.35rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .button-group-grid {
+    margin-top: 0.65rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .state-table th,
+  .lab-shell[data-gallery-density='compact'] .state-table td {
+    padding: 0.55rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] :global(.icon-button-lab),
+  .lab-shell[data-gallery-density='compact'] :global(.toolbar-lab) {
+    gap: 0.65rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    :global(.icon-button-lab) {
+    margin-top: 0.35rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    .menu-lab
+    :global(.menu-card) {
+    min-height: 5.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    .checkbox-grid
+    :global(.lds-card) {
+    min-height: 5.5rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    .selection-control-grid
+    :global(.lds-card) {
+    min-height: 8rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    :is(.text-field-grid, .choice-field-grid)
+    :global(.lds-card) {
+    min-height: 7.5rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    .dialog-lab
+    :global(.dialog-card) {
+    min-height: 8rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    :global(.split-pane-demo) {
+    min-height: 14rem;
+  }
+
+  .lab-shell[data-gallery-density='compact']
+    :global(.split-pane-demo--vertical) {
+    height: 14rem;
   }
 
   .state-table-scroll {

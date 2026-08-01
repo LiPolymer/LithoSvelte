@@ -119,8 +119,8 @@
 
 <style>
   .theme-seed-picker {
-    width: min(18rem, calc(100vw - 2rem));
-    padding: 0.75rem;
+    width: min(var(--lds-theme-picker-width), calc(100vw - 2rem));
+    padding: var(--lds-theme-picker-padding);
     border: 0.15rem solid var(--color-lds-primary-border-light);
     border-radius: var(--radius-lds-md);
     color: var(--md-sys-color-on-surface);
@@ -141,7 +141,7 @@
   header {
     display: flex;
     justify-content: space-between;
-    gap: 0.75rem;
+    gap: var(--lds-theme-picker-header-gap);
   }
 
   .eyebrow,
@@ -154,7 +154,7 @@
   .control-label,
   legend {
     color: var(--md-sys-color-on-surface-variant);
-    font-size: 0.75rem;
+    font-size: var(--lds-theme-picker-meta-font-size);
   }
 
   .eyebrow {
@@ -164,7 +164,7 @@
 
   h2 {
     font-family: var(--heading);
-    font-size: 1rem;
+    font-size: var(--lds-theme-picker-title-font-size);
     font-weight: 500;
     line-height: 1.25;
   }
@@ -172,8 +172,8 @@
   .seed-control {
     display: grid;
     grid-template-columns: auto minmax(0, 1fr);
-    gap: 0.5rem;
-    margin-block: 0.75rem;
+    gap: var(--lds-theme-picker-control-gap);
+    margin-block: var(--lds-theme-picker-control-margin-block);
     align-items: start;
   }
 
@@ -249,13 +249,13 @@
   }
 
   legend {
-    margin-bottom: 0.35rem;
+    margin-bottom: var(--lds-theme-picker-legend-margin);
   }
 
   :global(.picker-reset) {
-    min-height: 2rem;
-    padding-inline: 0.55rem;
-    font-size: 0.75rem;
+    min-height: var(--lds-control-min-height-compact);
+    padding-inline: var(--lds-theme-picker-reset-padding-inline);
+    font-size: var(--lds-theme-picker-reset-font-size);
   }
 
   :global(.seed-hex-field .lds-text-field__input) {
@@ -272,8 +272,8 @@
 
   .palette {
     display: flex;
-    height: 0.4rem;
-    margin-top: 0.75rem;
+    height: var(--lds-theme-picker-palette-height);
+    margin-top: var(--lds-theme-picker-palette-margin-block-start);
     overflow: hidden;
     border-radius: var(--radius-lds-xs);
   }

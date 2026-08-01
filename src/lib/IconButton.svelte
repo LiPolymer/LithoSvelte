@@ -22,7 +22,7 @@
     label,
     variant = 'ghost',
     size = 'compact',
-    iconSize = 16,
+    iconSize,
     class: className = '',
     type = 'button',
     value,
@@ -41,6 +41,12 @@
   let pressed = $derived(isOption ? isSelected : ariaPressed)
   let isVisuallySelected = $derived(
     pressed === true || pressed === 'true',
+  )
+  let resolvedIconSize = $derived(
+    iconSize ??
+      (size === 'compact'
+        ? 'var(--lds-icon-button-icon-size-compact)'
+        : 'var(--lds-icon-button-icon-size)'),
   )
 
   function handleClick(
@@ -72,5 +78,5 @@
   aria-pressed={pressed}
   onclick={handleClick}
 >
-  <Icon name={icon} size={iconSize} />
+  <Icon name={icon} size={resolvedIconSize} />
 </button>
