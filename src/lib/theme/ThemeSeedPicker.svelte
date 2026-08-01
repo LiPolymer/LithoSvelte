@@ -4,7 +4,11 @@
   import IconButton from '../IconButton.svelte'
   import TextField from '../TextField.svelte'
   import Tooltip from '../Tooltip.svelte'
-  import { themeConfig, type ThemeMode } from './config'
+  import {
+    normalizeThemeSeed,
+    themeConfig,
+    type ThemeMode,
+  } from './config'
   import { getThemeConfig, updateTheme } from './index'
 
   const initialConfig = getThemeConfig()
@@ -20,15 +24,10 @@
     { value: 'dark', label: 'Dark', icon: 'moon' },
   ]
 
-  function normalizeHex(value: string): `#${string}` | undefined {
-    const match = value.trim().match(/^#?([0-9a-f]{6})$/i)
-    return match ? `#${match[1].toLowerCase()}` : undefined
-  }
-
   function applySeed(value: string): void {
     seedInput = value
 
-    const nextSeed = normalizeHex(value)
+    const nextSeed = normalizeThemeSeed(value)
     invalid = nextSeed === undefined
 
     if (!nextSeed) return

@@ -19,6 +19,12 @@
 - `src/lib/theme/materialTokens.css` is the first-paint and IDE fallback.
 - Runtime seed changes are handled by `materialTheme.ts`; preserve HMR for
   theme configuration.
+- Seed color and appearance mode persist together in the `litho-theme` Cookie.
+  Theme module initialization validates and reads that Cookie before
+  `installTheme()` runs and before Svelte mounts; `updateTheme()` is the single
+  runtime write path. Invalid or partial Cookie data falls back per field to
+  `themeConfig`, and the Cookie uses `Path=/`, `SameSite=Lax`, and a one-year
+  lifetime.
 - Put reusable reference and semantic tokens in `tokens.css`. Component state
   styling currently lives in `styles.css`.
 - Contextual density is token-driven. A container with
@@ -58,7 +64,8 @@
   Menu/Dialog, and reserved for future Popover components rather than
   consumer-facing components.
 - ThemeSeedPicker is built from Litho controls and remains the live dynamic
-  color probe.
+  color probe. Its Color, Hex, and Appearance editors share one compact row;
+  Appearance is an options ButtonGroup of labeled IconButtons with Tooltips.
 - App.svelte is the Control Gallery and manual interaction-regression surface.
   Its desktop shell uses Litho controls for the app bar, catalog, theme
   workbench, density switch, and a resizable SplitPane canvas. At narrow
@@ -74,7 +81,9 @@
 - Contextual compact density reduces both component dimensions and the spacing
   around their internal content. Explicit component variants such as compact
   IconButton and Card remain meaningful and use the smaller compact baseline
-  within that context. Density must not weaken coarse-pointer hit targets.
+  within that context. Compact control and surface insets stay symmetric on
+  all four edges; row controls may use their min-height to produce the same
+  optical inset. Density must not weaken coarse-pointer hit targets.
 - PrimaryButton is expressive by default: its standalone hover may add a light
   border and slightly change size. `expressive={false}` opts into the quiet
   Tonal-like behavior. ButtonGroup disables expressive behavior automatically.
