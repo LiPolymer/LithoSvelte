@@ -24,6 +24,8 @@
     MenuRadioGroup,
     MenuRadioItem,
     MenuSeparator,
+    NavigationRail,
+    NavigationRailItem,
     NavigationTree,
     NavigationTreeItem,
     PrimaryButton,
@@ -46,6 +48,7 @@
     type ListboxValue,
     type ListValue,
     type MenuValue,
+    type NavigationRailValue,
     type NavigationTreeValue,
     type RadioValue,
   } from './lib'
@@ -78,6 +81,8 @@
   let workspaceSort: MenuValue = 'recent'
   let activeLabSection: NavigationTreeValue | undefined = 'button-lab-title'
   let navigationTreePreview: NavigationTreeValue | undefined = 'tree-overview'
+  let navigationRailPreview: NavigationRailValue | undefined = 'rail-overview'
+  let navigationRailExpanded = false
   let navigationTab = 'overview'
   let summaryDialogOpen = false
   let editDialogOpen = false
@@ -347,7 +352,7 @@
         <NavigationTreeItem label="Navigation" icon="link" expanded>
           <NavigationTreeItem
             value="navigation-lab-title"
-            label="Tree & tabs"
+            label="Tree, rail & tabs"
             icon="project"
           />
         </NavigationTreeItem>
@@ -1478,7 +1483,7 @@
         <div class="section-heading">
           <div>
             <p class="section-index">11 / Navigation</p>
-            <h2 id="navigation-lab-title">Tree & tabs</h2>
+            <h2 id="navigation-lab-title">Tree, rail & tabs</h2>
           </div>
           <p>
             Hierarchical destinations and peer views with distinct keyboard
@@ -1520,6 +1525,54 @@
                 />
               </NavigationTreeItem>
             </NavigationTree>
+          </Card>
+
+          <Card as="article">
+            <span>Navigation rail / high-frequency destinations</span>
+            <div class="navigation-rail-demo">
+              <NavigationRail
+                label="Workspace quick navigation"
+                bind:value={navigationRailPreview}
+                bind:expanded={navigationRailExpanded}
+              >
+                <NavigationRailItem
+                  value="rail-overview"
+                  label="Overview"
+                  icon="applications"
+                />
+                <NavigationRailItem
+                  value="rail-activity"
+                  label="Activity"
+                  icon="status-running"
+                />
+                <NavigationRailItem
+                  value="rail-members"
+                  label="Members"
+                  icon="users"
+                />
+                <NavigationRailItem
+                  value="rail-settings"
+                  label="Settings"
+                  icon="settings"
+                />
+                <NavigationRailItem
+                  value="rail-integrations"
+                  label="Integrations unavailable"
+                  icon="link"
+                  disabled
+                />
+              </NavigationRail>
+
+              <div class="navigation-rail-copy">
+                <strong>Current destination</strong>
+                <span>{navigationRailPreview}</span>
+                <small>
+                  {navigationRailExpanded
+                    ? 'Expanded compact sidebar'
+                    : 'Collapsed icon-only rail'}
+                </small>
+              </div>
+            </div>
           </Card>
 
           <Card as="article">
@@ -2084,7 +2137,7 @@
 
   .navigation-lab {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 0.5rem;
   }
 
@@ -2107,6 +2160,39 @@
   .navigation-panel-copy span {
     color: var(--md-sys-color-on-surface-variant);
     font-size: 0.72rem;
+  }
+
+  .navigation-rail-demo {
+    display: flex;
+    min-width: 0;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  .navigation-rail-copy {
+    display: grid;
+    min-width: 0;
+    align-content: start;
+    gap: 0.15rem;
+    padding-block: 0.2rem;
+  }
+
+  .navigation-rail-copy strong {
+    font-size: 0.75rem;
+    font-weight: 500;
+  }
+
+  .navigation-rail-copy span,
+  .navigation-rail-copy small {
+    overflow: hidden;
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.68rem;
+    text-overflow: ellipsis;
+  }
+
+  .navigation-rail-copy span {
+    color: var(--md-sys-color-on-surface);
+    white-space: nowrap;
   }
 
   .card-lab {

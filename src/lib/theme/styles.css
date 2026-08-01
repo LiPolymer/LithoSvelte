@@ -1148,12 +1148,12 @@
 
 .lds-navigation-tree__item:focus-visible > .lds-navigation-tree__row {
     box-shadow: inset 0 0 0 0.1rem
-        color-mix(in srgb, var(--md-sys-color-primary) 45%, transparent);
+        var(--color-lds-navigation-focus-ring);
 }
 
 .lds-navigation-tree__item[data-selected='true']
     > .lds-navigation-tree__row {
-    color: var(--color-lds-primary-content);
+    color: var(--color-lds-navigation-selected-content);
     background: var(--color-lds-navigation-tree-selected);
 }
 
@@ -1245,6 +1245,168 @@
     overflow: hidden;
     border-inline-start: 0.1rem solid
         var(--color-lds-navigation-tree-guide);
+}
+
+/*navigation rail*/
+.lds-navigation-rail {
+    display: inline-grid;
+    box-sizing: border-box;
+    width: calc(
+        var(--lds-navigation-rail-item-size)
+        + var(--lds-navigation-rail-padding)
+        + var(--lds-navigation-rail-padding)
+        + 0.2rem
+    );
+    max-width: 100%;
+    align-content: start;
+    gap: var(--lds-navigation-rail-gap);
+    padding: var(--lds-navigation-rail-padding);
+    overflow: clip;
+    border: 0.1rem solid var(--color-lds-navigation-rail-border);
+    border-radius: var(--lds-shape-rest);
+    background: var(--color-lds-navigation-rail-surface);
+    isolation: isolate;
+    transition: width var(--lds-motion-duration-collapse)
+        var(--lds-motion-easing-collapse);
+}
+
+.lds-navigation-rail[data-expanded='true'] {
+    width: var(--lds-navigation-rail-expanded-width);
+    transition-duration: var(--lds-motion-duration-navigation-rail-reveal);
+    transition-timing-function: var(--lds-motion-easing-reveal);
+}
+
+.lds-navigation-rail__list {
+    display: grid;
+    gap: var(--lds-navigation-rail-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lds-navigation-rail__entry {
+    display: grid;
+}
+
+.lds-navigation-rail__item,
+.lds-navigation-rail__toggle {
+    display: grid;
+    box-sizing: border-box;
+    width: 100%;
+    height: var(--lds-navigation-rail-item-size);
+    min-height: var(--lds-navigation-rail-item-size);
+    grid-template-columns: var(--lds-navigation-rail-item-size)
+        minmax(0, 1fr);
+    align-items: center;
+    padding: 0;
+    border: 0;
+    border-radius: var(--lds-shape-rest);
+    outline: 0;
+    color: var(--color-lds-navigation-rail-content);
+    background: transparent;
+    font-family: inherit;
+    line-height: 0;
+    cursor: pointer;
+    transition:
+            transform var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-spring),
+            border-radius var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-shape),
+            box-shadow var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state),
+            background-color var(--lds-motion-duration-fast)
+                var(--lds-motion-easing-state);
+}
+
+.lds-navigation-rail__item > .lds-icon,
+.lds-navigation-rail__toggle > .lds-icon {
+    justify-self: center;
+}
+
+.lds-navigation-rail__item:not(:disabled):hover,
+.lds-navigation-rail__item:not(:disabled):focus-visible,
+.lds-navigation-rail__toggle:hover,
+.lds-navigation-rail__toggle:focus-visible {
+    border-radius: var(--lds-shape-hover-soft);
+    background: var(--color-lds-navigation-rail-hover);
+}
+
+.lds-navigation-rail__item:focus-visible,
+.lds-navigation-rail__toggle:focus-visible {
+    box-shadow: inset 0 0 0 0.1rem
+        var(--color-lds-navigation-rail-focus-ring);
+}
+
+.lds-navigation-rail__item[data-selected='true'] {
+    color: var(--color-lds-navigation-rail-selected-content);
+    background: var(--color-lds-navigation-rail-selected);
+}
+
+.lds-navigation-rail__item[data-selected='true']:not(:disabled):hover,
+.lds-navigation-rail__item[data-selected='true']:not(:disabled):focus-visible {
+    background: var(--color-lds-navigation-rail-selected-hover);
+}
+
+.lds-navigation-rail__item:not(:disabled):active,
+.lds-navigation-rail__toggle:active {
+    border-radius: var(--lds-shape-pressed);
+    transform: scale(0.96);
+}
+
+.lds-navigation-rail__item:disabled {
+    opacity: 0.38;
+    cursor: not-allowed;
+}
+
+.lds-navigation-rail__label {
+    min-width: 0;
+    padding-inline-end: var(--lds-navigation-rail-label-padding-end);
+    overflow: hidden;
+    color: currentColor;
+    font-size: var(--lds-navigation-rail-label-font-size);
+    font-weight: 500;
+    line-height: 1.2;
+    text-align: start;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    clip-path: inset(0 100% 0 0);
+    transition:
+            opacity var(--lds-motion-duration-collapse)
+                var(--lds-motion-easing-collapse),
+            clip-path var(--lds-motion-duration-collapse)
+                var(--lds-motion-easing-collapse),
+            visibility 0s linear var(--lds-motion-duration-collapse);
+}
+
+.lds-navigation-rail[data-expanded='true']
+    .lds-navigation-rail__label {
+    opacity: 1;
+    visibility: visible;
+    clip-path: inset(0);
+    transition-duration:
+        var(--lds-motion-duration-navigation-rail-reveal),
+        var(--lds-motion-duration-navigation-rail-reveal),
+        0s;
+    transition-delay: 0s;
+    transition-timing-function:
+        var(--lds-motion-easing-reveal),
+        var(--lds-motion-easing-reveal),
+        linear;
+}
+
+.lds-navigation-rail__toggle > .lds-icon {
+    transition: transform var(--lds-motion-duration-collapse)
+        var(--lds-motion-easing-collapse);
+}
+
+.lds-navigation-rail__toggle[data-expanded='true'] > .lds-icon {
+    transform: rotate(180deg);
+    transition-duration: var(--lds-motion-duration-navigation-rail-reveal);
+    transition-timing-function: var(--lds-motion-easing-reveal);
 }
 
 /*tabs*/
@@ -2940,6 +3102,11 @@
     .lds-icon-btn {
         --lds-icon-button-size: var(--lds-control-min-height-touch);
     }
+
+    .lds-navigation-rail {
+        --lds-navigation-rail-item-size:
+            var(--lds-control-min-height-touch);
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2980,6 +3147,11 @@
     .lds-navigation-tree__row,
     .lds-navigation-tree__group-clip,
     .lds-navigation-tree__disclosure .lds-icon,
+    .lds-navigation-rail,
+    .lds-navigation-rail__item,
+    .lds-navigation-rail__toggle,
+    .lds-navigation-rail__label,
+    .lds-navigation-rail__toggle > .lds-icon,
     .lds-tab,
     .lds-tab::after,
     .lds-dialog__backdrop,

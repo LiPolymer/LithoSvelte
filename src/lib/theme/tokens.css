@@ -24,6 +24,7 @@
     --lds-motion-duration-settle: 120ms;
     --lds-motion-duration-menu-reveal: 180ms;
     --lds-motion-duration-tree-reveal: 180ms;
+    --lds-motion-duration-navigation-rail-reveal: 240ms;
     --lds-motion-duration-dialog-reveal: 240ms;
     --lds-motion-duration-listbox-reveal: 300ms;
     --lds-motion-duration-collapse: 120ms;
@@ -135,6 +136,14 @@
     --lds-navigation-tree-group-gap: 0.05rem;
     --lds-navigation-tree-group-padding-start: 0.2rem;
     --lds-navigation-tree-group-padding-end: 0.15rem;
+    --lds-navigation-rail-padding: 0.2rem;
+    --lds-navigation-rail-gap: 0.1rem;
+    --lds-navigation-rail-item-size: 2rem;
+    --lds-navigation-rail-expanded-width: 11rem;
+    --lds-navigation-rail-icon-size: 0.875rem;
+    --lds-navigation-rail-toggle-icon-size: 0.75rem;
+    --lds-navigation-rail-label-font-size: 0.78rem;
+    --lds-navigation-rail-label-padding-end: 0.5rem;
     --lds-tabs-list-padding: 0.2rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
     --lds-tab-padding-block: 0;
@@ -307,6 +316,14 @@
     --lds-navigation-tree-group-gap: 0.025rem;
     --lds-navigation-tree-group-padding-start: 0.15rem;
     --lds-navigation-tree-group-padding-end: 0.1rem;
+    --lds-navigation-rail-padding: 0.15rem;
+    --lds-navigation-rail-gap: 0.075rem;
+    --lds-navigation-rail-item-size: 1.75rem;
+    --lds-navigation-rail-expanded-width: 9.5rem;
+    --lds-navigation-rail-icon-size: 0.8125rem;
+    --lds-navigation-rail-toggle-icon-size: 0.6875rem;
+    --lds-navigation-rail-label-font-size: 0.72rem;
+    --lds-navigation-rail-label-padding-end: 0.375rem;
 
     --lds-tabs-list-padding: 0.15rem;
     --lds-tab-min-height: var(--lds-control-min-height-compact);
@@ -468,14 +485,32 @@
     --color-lds-split-pane-divider-active: var(--md-sys-color-primary);
     --color-lds-split-pane-focus-ring: var(--color-lds-selection-focus-ring);
 
-    --color-lds-navigation-tree-surface: var(--color-lds-list-surface);
-    --color-lds-navigation-tree-border: var(--color-lds-list-border);
-    --color-lds-navigation-tree-content: var(--md-sys-color-on-surface);
-    --color-lds-navigation-tree-muted: var(--md-sys-color-on-surface-variant);
+    --color-lds-navigation-surface: var(--color-lds-list-surface);
+    --color-lds-navigation-border: var(--color-lds-list-border);
+    --color-lds-navigation-content: var(--md-sys-color-on-surface);
+    --color-lds-navigation-muted: var(--md-sys-color-on-surface-variant);
+    --color-lds-navigation-hover: var(--color-lds-list-hover);
+    --color-lds-navigation-selected: var(--color-lds-list-selected);
+    --color-lds-navigation-selected-hover: var(--color-lds-list-selected-hover);
+    --color-lds-navigation-selected-content: var(--color-lds-primary-content);
+    --color-lds-navigation-focus-ring: var(--color-lds-selection-focus-ring);
+
+    --color-lds-navigation-tree-surface: var(--color-lds-navigation-surface);
+    --color-lds-navigation-tree-border: var(--color-lds-navigation-border);
+    --color-lds-navigation-tree-content: var(--color-lds-navigation-content);
+    --color-lds-navigation-tree-muted: var(--color-lds-navigation-muted);
     --color-lds-navigation-tree-guide: var(--color-lds-group-divider);
-    --color-lds-navigation-tree-hover: var(--color-lds-list-hover);
-    --color-lds-navigation-tree-selected: var(--color-lds-list-selected);
-    --color-lds-navigation-tree-selected-hover: var(--color-lds-list-selected-hover);
+    --color-lds-navigation-tree-hover: var(--color-lds-navigation-hover);
+    --color-lds-navigation-tree-selected: var(--color-lds-navigation-selected);
+    --color-lds-navigation-tree-selected-hover: var(--color-lds-navigation-selected-hover);
+    --color-lds-navigation-rail-surface: var(--color-lds-navigation-surface);
+    --color-lds-navigation-rail-border: var(--color-lds-navigation-border);
+    --color-lds-navigation-rail-content: var(--color-lds-navigation-muted);
+    --color-lds-navigation-rail-hover: var(--color-lds-navigation-hover);
+    --color-lds-navigation-rail-selected: var(--color-lds-navigation-selected);
+    --color-lds-navigation-rail-selected-hover: var(--color-lds-navigation-selected-hover);
+    --color-lds-navigation-rail-selected-content: var(--color-lds-navigation-selected-content);
+    --color-lds-navigation-rail-focus-ring: var(--color-lds-navigation-focus-ring);
     --color-lds-tabs-surface: var(--color-lds-group-surface);
     --color-lds-tabs-border: var(--color-lds-toolbar-border);
     --color-lds-tab-content: var(--md-sys-color-on-surface-variant);

@@ -51,7 +51,8 @@
 - Card is the non-interactive grouping surface for content hierarchy. Lab
   example tiles use Card instead of maintaining parallel surface recipes.
 - Navigation primitives: NavigationTree/NavigationTreeItem for hierarchical
-  destinations and Tabs/Tab/TabPanel for peer views.
+  destinations, NavigationRail/NavigationRailItem for icon-only high-frequency
+  top-level destinations, and Tabs/Tab/TabPanel for peer views.
 - SplitPane is the resizable layout primitive for side-by-side or stacked work
   regions, with percentage binding and an accessible keyboard separator.
 - Compact floating actions: Menu/MenuItem, MenuLabel, MenuSeparator,
@@ -213,6 +214,23 @@
   natural proportions and are exposed by clipping. Collapse uses the faster
   shared collapse timing, keeps the group mounted until its visual height is
   zero, and removes collapsed descendants from keyboard navigation immediately.
+- NavigationRail is a separate flat navigation primitive, not an icon-only
+  NavigationTree variant. It deliberately has no branches, indentation, or
+  disclosure keys. Its destination set is one roving Tab stop: Up/Down move
+  among enabled destinations, Home/End reach the boundaries, and typeahead uses
+  the accessible labels. The built-in expand/collapse control is a separate
+  normal Tab stop. Each item exposes its label with `aria-label`, marks the
+  selected destination with `aria-current="page"`, and uses Tooltip only while
+  the Rail is collapsed.
+- NavigationRail may expand from its icon-only width into a compact labeled
+  sidebar through `bind:expanded`; expansion does not turn it into a hierarchy.
+  Animate the Rail width horizontally while keeping the icon column fixed.
+  Labels retain natural proportions and are revealed by clipping rather than
+  scaling. Opening uses the dedicated Rail reveal duration/easing, collapse is
+  faster, and reduced-motion disables both transitions.
+- Tree and Rail keep independent geometry tokens but share the semantic
+  `--color-lds-navigation-*` state layer. Their component-specific color tokens
+  are aliases so consumers can still tune either primitive independently.
 - Tabs use automatic activation because their panels switch immediately with
   no network wait. Horizontal Tabs use Left/Right, vertical Tabs use Up/Down,
   Home/End move to boundaries, disabled tabs are skipped, and the selected tab
@@ -326,6 +344,12 @@
   value; a leaf supplies a value. Keep nested items inside their owning branch
   so tree levels and parent navigation remain valid. Consumer item and tree
   handlers run first, and `preventDefault()` vetoes compound behavior.
+- NavigationRailItem must be nested in NavigationRail and requires `label`,
+  `icon`, and `value`. Keep the Rail to a small set of stable top-level
+  destinations; use NavigationTree when labels, nesting, or disclosure are
+  necessary. `showToggle={false}` allows an application-owned expansion
+  control. Consumer item and Rail handlers run first, and `preventDefault()`
+  vetoes selection or keyboard movement.
 - Tabs receives tab triggers through its named `tabs` snippet and TabPanel
   children through its default snippet. Every TabPanel value must match one
   Tab value. Consumer Tab and Tabs handlers run first, and `preventDefault()`
