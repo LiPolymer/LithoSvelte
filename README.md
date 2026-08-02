@@ -9,10 +9,29 @@ The repository contains two separate build targets:
 - `dist/` is the installable component package.
 - `site-dist/` is the Control Gallery application.
 
+## Install from Git
+
+Git installations build `dist/` on the fly through the `prepare` script, so no
+prebuilt artifacts are committed. Pin a version tag instead of a moving branch:
+
+```sh
+# GitLab
+pnpm add litho@gitlab:LiPolymer/LithoSvelte#v0.1.0
+
+# GitHub
+pnpm add litho@github:LiPolymer/LithoSvelte#v0.1.0
+```
+
+The repository must stay public (or the consumer CI needs read credentials)
+because the package manager clones it during installation. The lockfile pins
+the exact commit, so `pnpm install --frozen-lockfile` stays reproducible.
+Consumer CI that runs `--ignore-scripts` will skip the build and break this
+workflow; use a registry package in that environment.
+
 ## Use it from another local project
 
-Litho is still private and pre-release, so the simplest development workflow is
-a local file dependency.
+Litho is still private and pre-release, so for local development the simplest
+workflow is a file dependency.
 
 First build the package in this repository:
 
@@ -107,7 +126,7 @@ pnpm run build          # Build both package and Gallery
 ## GitHub Pages
 
 `.github/workflows/deploy-pages.yml` checks and builds the Control Gallery on
-each push to `master`, then deploys `site-dist/` with GitHub's Pages actions.
+each push to `prototype`, then deploys `site-dist/` with GitHub's Pages actions.
 The workflow reads the configured Pages base path before building, so project
 sites, account root sites, and custom domains share the same Vite config.
 
