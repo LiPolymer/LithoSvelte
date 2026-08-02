@@ -1,5 +1,9 @@
 # Litho
 
+> contents below are all generated with AI, just for reference purpose... ~~I'm lazy lol~~
+> 
+> 下面都是 AI 写的, 当个参考就行 ~~我是懒狗哈哈~~
+
 Litho is a compact Svelte 5 design system for productivity interfaces. It uses
 Material Color Utilities for the dynamic color foundation and Tailwind CSS 4
 for its shared design tokens.
