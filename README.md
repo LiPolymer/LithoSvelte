@@ -25,8 +25,20 @@ pnpm add litho@github:LiPolymer/LithoSvelte#v0.1.0
 The repository must stay public (or the consumer CI needs read credentials)
 because the package manager clones it during installation. The lockfile pins
 the exact commit, so `pnpm install --frozen-lockfile` stays reproducible.
-Consumer CI that runs `--ignore-scripts` will skip the build and break this
-workflow; use a registry package in that environment.
+
+pnpm 10 blocks dependency build scripts by default, so pnpm consumers must
+allowlist Litho before installing, otherwise the clone is rejected with
+`ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED`. Add a `pnpm-workspace.yaml` in the
+consumer project:
+
+```yaml
+onlyBuiltDependencies:
+  - "litho"
+```
+
+npm consumers need no such configuration. Consumer CI that runs
+`--ignore-scripts` skips the build and breaks this workflow; use a registry
+package in that environment.
 
 ## Use it from another local project
 
