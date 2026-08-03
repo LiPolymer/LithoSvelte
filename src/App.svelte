@@ -99,7 +99,7 @@
   let dialogWorkspaceName = 'Litho.'
   let alertDialogOpen = false
   let wideDialogOpen = false
-  let galleryDensity: string | number = 'comfortable'
+  let galleryDensity: string | number = 'compact'
   let resolvedGalleryDensity = 'default'
   let previousDocumentDensity: string | null | undefined
   let gallerySplit = 22
@@ -2055,6 +2055,51 @@
           </Card>
         </div>
       </section>
+
+      <footer class="gallery-footer">
+        <div class="gallery-footer__identity">
+          <span class="gallery-footer__mark" aria-hidden="true">
+            <svg viewBox="0 0 500 500" fill="none" focusable="false">
+              <path
+                class="gallery-footer__logo-back"
+                fill-rule="evenodd"
+                d="M427 69H159a5 5 0 0 0-5 5v268a5 5 0 0 0 5 5h268a5 5 0 0 0 5-5V74a5 5 0 0 0-5-5Zm-54 55H213a5 5 0 0 0-5 5v160a5 5 0 0 0 5 5h160a5 5 0 0 0 5-5V129a5 5 0 0 0-5-5Z"
+              />
+              <path
+                class="gallery-footer__logo-front"
+                fill-rule="evenodd"
+                d="M341 153H73a5 5 0 0 0-5 5v268a5 5 0 0 0 5 5h268a5 5 0 0 0 5-5V158a5 5 0 0 0-5-5Zm-54 55H127a5 5 0 0 0-5 5v160a5 5 0 0 0 5 5h160a5 5 0 0 0 5-5V213a5 5 0 0 0-5-5Z"
+              />
+            </svg>
+          </span>
+
+          <div>
+            <strong>Litho.</strong>
+            <p>神人设计语言。</p>
+          </div>
+        </div>
+
+        <nav class="gallery-footer__links" aria-label="项目链接">
+          <a href="https://github.com/LiPolymer/LithoSvelte">
+            <Icon name="github" size={14} />
+            <span>GitHub</span>
+            <Icon name="external-link" size={12} />
+          </a>
+          <a href="https://gitlab.com/LiPolymer/LithoSvelte">
+            <Icon name="git" size={14} />
+            <span>GitLab</span>
+            <Icon name="external-link" size={12} />
+          </a>
+        </nav>
+
+        <div class="gallery-footer__meta">
+          <span>Svelte 5 · TypeScript · Tailwind CSS 4 · 正文字体使用 <a href="https://hyperos.mi.com/font">MiSans</a></span>
+          <span class="gallery-footer__status">
+            <span aria-hidden="true"></span>
+            v0.1.0 preview
+          </span>
+        </div>
+      </footer>
     </main>
     {/snippet}
   </SplitPane>
@@ -2189,6 +2234,149 @@
     flex-wrap: wrap;
     justify-content: flex-end;
     gap: 0.35rem;
+  }
+
+  .gallery-footer {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    min-width: 0;
+    align-items: center;
+    gap: 0.8rem 1.5rem;
+    padding: 1rem 1.1rem;
+    border: 0.1rem solid var(--color-lds-toolbar-border);
+    border-radius: var(--radius-lds-md);
+    background:
+      linear-gradient(
+        120deg,
+        color-mix(
+          in srgb,
+          var(--md-sys-color-primary) 5%,
+          transparent
+        ),
+        transparent 42%
+      ),
+      color-mix(
+        in srgb,
+        var(--md-sys-color-secondary) 2%,
+        var(--md-sys-color-surface)
+      );
+  }
+
+  .gallery-footer__identity {
+    display: flex;
+    min-width: 0;
+    align-items: center;
+    gap: 0.7rem;
+  }
+
+  .gallery-footer__mark {
+    width: 2.25rem;
+    height: 2.25rem;
+    flex: 0 0 auto;
+  }
+
+  .gallery-footer__mark svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .gallery-footer__logo-back {
+    fill: var(--color-lds-secondary-content);
+  }
+
+  .gallery-footer__logo-front {
+    fill: var(--color-lds-primary-content);
+  }
+
+  .gallery-footer__identity > div {
+    display: grid;
+    min-width: 0;
+    gap: 0.15rem;
+  }
+
+  .gallery-footer__identity strong {
+    font-family: var(--heading);
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.025em;
+  }
+
+  .gallery-footer__identity p,
+  .gallery-footer__meta {
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+  }
+
+  .gallery-footer__identity p {
+    line-height: 1.4;
+  }
+
+  .gallery-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.35rem 0.8rem;
+  }
+
+  .gallery-footer__links a {
+    display: inline-flex;
+    min-height: 2rem;
+    align-items: center;
+    gap: 0.3rem;
+    border-radius: var(--radius-lds-sm);
+    color: var(--md-sys-color-on-surface-variant);
+    font-size: 0.7rem;
+    text-decoration-color: color-mix(
+      in srgb,
+      currentColor 35%,
+      transparent
+    );
+    text-underline-offset: 0.18em;
+    transition:
+      color var(--lds-motion-duration-fast) var(--lds-motion-easing-state),
+      background-color var(--lds-motion-duration-fast)
+        var(--lds-motion-easing-state);
+  }
+
+  .gallery-footer__links a:hover {
+    color: var(--color-lds-primary-content);
+  }
+
+  .gallery-footer__links a:focus-visible {
+    outline: 0.1rem solid var(--color-lds-selection-focus-ring);
+    outline-offset: 0.15rem;
+  }
+
+  .gallery-footer__meta {
+    display: flex;
+    grid-column: 1 / -1;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-top: 0.65rem;
+    border-top: 0.1rem solid var(--color-lds-group-divider);
+  }
+
+  .gallery-footer__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    white-space: nowrap;
+  }
+
+  .gallery-footer__status > span {
+    width: 0.4rem;
+    height: 0.4rem;
+    border-radius: 50%;
+    background: var(--color-lds-primary-content);
+    box-shadow: 0 0 0 0.18rem
+      color-mix(
+        in srgb,
+        var(--color-lds-primary-content) 12%,
+        transparent
+      );
   }
 
   .lab-kicker,
@@ -2678,6 +2866,20 @@
     padding: 0.75rem;
   }
 
+  .lab-shell[data-gallery-density='compact'] .gallery-footer {
+    gap: 0.6rem 1rem;
+    padding: 0.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .gallery-footer__mark {
+    width: 1.75rem;
+    height: 1.75rem;
+  }
+
+  .lab-shell[data-gallery-density='compact'] .gallery-footer__meta {
+    padding-top: 0.5rem;
+  }
+
   .lab-shell[data-gallery-density='compact'] .section-heading {
     gap: 1rem;
     margin-bottom: 0.75rem;
@@ -3116,6 +3318,19 @@
       justify-content: flex-start;
     }
 
+    .gallery-footer {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    .gallery-footer__links {
+      justify-content: flex-start;
+    }
+
+    .gallery-footer__meta {
+      grid-column: 1;
+      flex-wrap: wrap;
+    }
+
     .section-heading {
       display: grid;
       gap: 0.75rem;
@@ -3177,6 +3392,18 @@
 
     .gallery-overview__metadata {
       display: none;
+    }
+  }
+
+  @media (pointer: coarse) {
+    .gallery-footer__links a {
+      min-height: 2.75rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .gallery-footer__links a {
+      transition: none;
     }
   }
 </style>
