@@ -19,6 +19,11 @@
 - `src/lib/theme/materialTokens.css` is the first-paint and IDE fallback.
 - Runtime seed changes are handled by `materialTheme.ts`; preserve HMR for
   theme configuration.
+- `installTheme()` derives `data-lds-device="phone"` from
+  `navigator.userAgent` before Svelte mounts. Only recognized phone UAs enable
+  the larger touch-target geometry; tablets, touch-capable computers, and
+  unknown UAs keep standard geometry. Do not use `pointer: coarse` as a sizing
+  proxy.
 - Seed color and appearance mode persist together in the `litho-theme` Cookie.
   Theme module initialization validates and reads that Cookie before
   `installTheme()` runs and before Svelte mounts; `updateTheme()` is the single
@@ -88,7 +93,7 @@
 ## Intentional interaction decisions
 
 - Standard desktop controls use a 2.375rem minimum height (nominally 38px at a
-  16px root). Compact IconButton uses 2rem, and coarse pointers expand controls
+  16px root). Compact IconButton uses 2rem, and phone UA mode expands controls
   to at least 2.75rem. Keep cross-component geometry in `rem` so it follows
   user/root scaling; use `em` for indicators and spacing that should follow a
   control's own type size. CSS pixels are reference pixels and remain suitable
@@ -98,7 +103,7 @@
   IconButton and Card remain meaningful and use the smaller compact baseline
   within that context. Compact control and surface insets stay symmetric on
   all four edges; row controls may use their min-height to produce the same
-  optical inset. Density must not weaken coarse-pointer hit targets.
+  optical inset. Density must not weaken phone-mode touch targets.
 - PrimaryButton is expressive by default: its standalone hover may add a light
   border and slightly change size. `expressive={false}` opts into the quiet
   Tonal-like behavior. ButtonGroup disables expressive behavior automatically.
@@ -187,10 +192,10 @@
   the bounds, and double-click restores `resetValue`. Keyboard direction is
   RTL-aware for horizontal layouts.
 - SplitPane panels own their overflow scrolling. The separator has a compact
-  visual rail with a larger hit target, expands for coarse pointers, and must
+  visual rail with a larger hit target, expands in phone UA mode, and must
   not react while disabled.
 - Menu is compact-first: desktop items use the 32px compact control height and
-  coarse pointers expand them to 44px. Its surface reveals from the resolved
+  phone UA mode expands them to 44px. Its surface reveals from the resolved
   anchor edge while item content keeps its natural proportions and is exposed
   through clipping.
 - Menu opening is staged: mount the Overlay, invalidate any zero-size hidden
@@ -221,7 +226,7 @@
   interactive geometry. Its label/body is not clickable; only the right-hand
   native button requests removal. The divider and fixed removal region remain
   independent of icon press motion, and the complete control expands to the
-  coarse-pointer minimum. `onremove` reports intent while the consumer remains
+  phone-mode minimum. `onremove` reports intent while the consumer remains
   responsible for updating its tag collection. Disabled Tag removal must not
   react to hover or pressed states.
 - Card is intentionally static: it has no hover, pressed, selected, or whole-
@@ -229,8 +234,8 @@
   hierarchy; `compact` and `default` adjust only reusable padding and gap.
   Card defaults to a semantic-neutral `div`, while `as` may opt into `article`,
   `section`, or `aside` when the content genuinely has that meaning.
-- NavigationTree is compact-first: its desktop rows are 30px and coarse
-  pointers expand them to 44px. It is one roving Tab stop. Up/Down traverse
+- NavigationTree is compact-first: its desktop rows are 30px and phone UA mode
+  expands them to 44px. It is one roving Tab stop. Up/Down traverse
   visible enabled items, Home/End move to the boundaries, typeahead finds
   labels, and direction-aware Left/Right collapse, expand, or move between a
   branch and its children. Branch items only own disclosure state; leaf items
@@ -423,7 +428,7 @@
 - Preserve intentional user changes and unrelated worktree modifications.
 - Add tokens for reusable design decisions; avoid one-off state colors and
   motion constants in component markup.
-- Check desktop, coarse-pointer, disabled, readonly, error, keyboard, and
+- Check desktop, phone-UA touch mode, disabled, readonly, error, keyboard, and
   reduced-motion states when changing a control.
 - `data-demo-state` is a Control Gallery-only visual probe for keeping
   hover/focus/pressed states visible side by side. It must not become part of a

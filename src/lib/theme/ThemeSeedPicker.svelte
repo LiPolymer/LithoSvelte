@@ -293,11 +293,9 @@
     background: var(--md-sys-color-surface);
   }
 
-  @media (pointer: coarse) {
-    .color-input {
-      width: var(--lds-control-min-height-touch);
-      height: var(--lds-control-min-height-touch);
-    }
+  :global(:root[data-lds-device='phone']) .color-input {
+    width: var(--lds-control-min-height-touch);
+    height: var(--lds-control-min-height-touch);
   }
 
   @media (max-width: 20rem) {

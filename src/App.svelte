@@ -3395,10 +3395,8 @@
     }
   }
 
-  @media (pointer: coarse) {
-    .gallery-footer__links a {
-      min-height: 2.75rem;
-    }
+  :global(:root[data-lds-device='phone']) .gallery-footer__links a {
+    min-height: 2.75rem;
   }
 
   @media (prefers-reduced-motion: reduce) {

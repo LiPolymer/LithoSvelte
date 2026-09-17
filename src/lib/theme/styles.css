@@ -3328,43 +3328,43 @@
     font-size: var(--lds-field-meta-font-size);
 }
 
-@media (pointer: coarse) {
-    .lds-split-pane {
-        --lds-split-pane-current-separator-size:
-            var(--lds-split-pane-separator-size-touch);
-        --lds-split-pane-current-separator-half-size:
-            var(--lds-split-pane-separator-half-size-touch);
-    }
+:where(:root[data-lds-device='phone']) .lds-split-pane {
+    --lds-split-pane-current-separator-size:
+        var(--lds-split-pane-separator-size-touch);
+    --lds-split-pane-current-separator-half-size:
+        var(--lds-split-pane-separator-half-size-touch);
+}
 
-    .lds-btn,
-    .lds-selection,
-    .lds-menu__item,
-    .lds-navigation-tree__row,
-    .lds-tab,
-    .lds-field__control,
-    .lds-field__option,
-    .lds-list-item__trigger {
-        min-height: var(--lds-control-min-height-touch);
-    }
+:where(:root[data-lds-device='phone'])
+    :is(
+        .lds-btn,
+        .lds-selection,
+        .lds-menu__item,
+        .lds-navigation-tree__row,
+        .lds-tab,
+        .lds-field__control,
+        .lds-field__option,
+        .lds-list-item__trigger
+    ) {
+    min-height: var(--lds-control-min-height-touch);
+}
 
-    .lds-data-table th,
-    .lds-data-table td {
-        height: var(--lds-control-min-height-touch);
-    }
+:where(:root[data-lds-device='phone']) .lds-data-table :is(th, td) {
+    height: var(--lds-control-min-height-touch);
+}
 
-    .lds-icon-btn {
-        --lds-icon-button-size: var(--lds-control-min-height-touch);
-    }
+:where(:root[data-lds-device='phone']) .lds-icon-btn {
+    --lds-icon-button-size: var(--lds-control-min-height-touch);
+}
 
-    .lds-navigation-rail {
-        --lds-navigation-rail-item-size:
-            var(--lds-control-min-height-touch);
-    }
+:where(:root[data-lds-device='phone']) .lds-navigation-rail {
+    --lds-navigation-rail-item-size:
+        var(--lds-control-min-height-touch);
+}
 
-    .lds-tag {
-        --lds-tag-min-height: var(--lds-control-min-height-touch);
-        --lds-tag-remove-size: var(--lds-control-min-height-touch);
-    }
+:where(:root[data-lds-device='phone']) .lds-tag {
+    --lds-tag-min-height: var(--lds-control-min-height-touch);
+    --lds-tag-remove-size: var(--lds-control-min-height-touch);
 }
 
 @media (prefers-reduced-motion: reduce) {

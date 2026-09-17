@@ -102,7 +102,10 @@ if (import.meta.hot) {
 The controller reads the saved seed color and theme mode before applying the
 runtime tokens. It also writes changes made through `updateTheme` or
 `ThemeSeedPicker` back to the theme cookie. `materialTokens.css` remains the
-first-paint and IDE fallback.
+first-paint and IDE fallback. During the same pre-mount initialization, Litho
+uses `navigator.userAgent` to enable its larger touch targets only for phone
+user agents. Tablets, touch-capable computers, and unrecognized user agents
+retain the standard control geometry.
 
 Components and their public TypeScript types come from the root entry:
 

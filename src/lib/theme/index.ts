@@ -10,16 +10,19 @@ import {
     createMaterialThemeController,
     type MaterialThemeController,
 } from './materialTheme'
+import { installPhoneDeviceMode } from '../internal/deviceMode'
 
 let currentConfig: ThemeConfig = readThemeConfigCookie()
 let controller: MaterialThemeController | undefined
 
 export function installTheme() {
+    const disposeDeviceMode = installPhoneDeviceMode()
     const installedController = createMaterialThemeController(currentConfig)
     controller = installedController
 
     return () => {
         installedController.dispose()
+        disposeDeviceMode()
 
         if (controller === installedController) {
             controller = undefined
